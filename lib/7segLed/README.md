@@ -30,3 +30,6 @@ led.set(9); // display 9 on 7 segment LED
 * Sample
 
 https://github.com/amitesh-singh/amiduino/blob/master/samples/display/Seg7Led.ino
+
+* Circuit sample
+   https://123d.circuits.io/circuits/1401194-7-segment-display
