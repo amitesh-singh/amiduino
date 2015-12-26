@@ -31,7 +31,7 @@ byte Seg7Led::convert(byte value)
   void Seg7Led::reset()
   {
     for (byte i = 0; i < 7; ++i)
-      digitalWrite(ledIndex[i], LOW);
+      digitalWrite(ledIndex[i], isHighV ? HIGH : LOW);
   }
 
   Seg7Led::Seg7Led(byte bytes[])
@@ -41,6 +41,7 @@ byte Seg7Led::convert(byte value)
     {
       pinMode(bytes[i], OUTPUT);
     }
+    isHighV = 0;
   }
 
   void Seg7Led::set(byte value)
@@ -51,7 +52,18 @@ byte Seg7Led::convert(byte value)
     {
       if ((value >> (i)) & 1)
       {
-        digitalWrite(ledIndex[i], HIGH);
+        digitalWrite(ledIndex[i], isHighV ? LOW : HIGH);
       }
     }
+  }
+
+  void Seg7Led::setHighV(byte o)
+  {
+    if (o == isHighV) return;
+    isHighV = o;
+  }
+
+  bool Seg7Led::isHighV()
+  {
+    return !!isHighV;
   }

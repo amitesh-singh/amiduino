@@ -22,11 +22,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 class Seg7Led
 {
   byte *ledIndex;
+  byte isHighV;
   byte convert(byte value);
 public:
+  void setHigh(byte o);
   void reset();
   Seg7Led(byte bytes[]);
   void set(byte value);
+  bool isHighV();
 };
 
 #endif
