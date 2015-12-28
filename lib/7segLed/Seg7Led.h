@@ -30,6 +30,7 @@ public:
   Seg7Led(byte bytes[]);
   void set(byte value);
   bool isHighV();
+  void setDot(byte on, byte pin);
 };
 
 #endif

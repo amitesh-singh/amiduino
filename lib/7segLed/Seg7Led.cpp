@@ -67,3 +67,8 @@ byte Seg7Led::convert(byte value)
   {
     return !!isHighV;
   }
+
+void Seg7Led::setDot(byte on, byte pin)
+{
+  digitalWrite(pin, on);  
+}
