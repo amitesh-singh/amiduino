@@ -20,3 +20,7 @@ Links:
   http://www.codeproject.com/Articles/144606/Arduino-Platform-Working-with-Shift-Registers
 4. some advanced stuffs: avr dude etcs
 https://pragprog.com/magazines/2011-04/advanced-arduino-hacking
+5. Arduino bases games on 16x2 LCDs
+  a. http://www.raywenderlich.com/66560/arduino-tutorial-creating-pong
+  6. LCD basics
+  http://www.circuitbasics.com/how-to-set-up-an-lcd-display-on-an-arduino/
