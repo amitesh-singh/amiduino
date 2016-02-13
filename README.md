@@ -22,5 +22,16 @@ Links:
 https://pragprog.com/magazines/2011-04/advanced-arduino-hacking
 5. Arduino bases games on 16x2 LCDs
   a. http://www.raywenderlich.com/66560/arduino-tutorial-creating-pong
-  6. LCD basics
+
   http://www.circuitbasics.com/how-to-set-up-an-lcd-display-on-an-arduino/
+
+6. communication:
+http://www.circuitbasics.com/basics-uart-communication/
+http://www.circuitbasics.com/basics-of-the-spi-communication-protocol
+http://www.circuitbasics.com/basics-of-the-i2c-communication-protocol/
+
+7. how to add your library "manage library"
+  https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ
+  https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5:-Library-specification#library-metadata
+  https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5:-Library-specification
+  
