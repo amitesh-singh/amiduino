@@ -35,3 +35,14 @@ http://www.circuitbasics.com/basics-of-the-i2c-communication-protocol/
   https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5:-Library-specification#library-metadata
   https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5:-Library-specification
   
+
+how to setup on linux/ubuntu
+-----------------------------
+1. download the linux binary from arduino.cc website and install.
+2. while uploading the sketch, you might get following errors.
+  ===
+  permission denied: /dev/ttyUSB0 or /dev/ttyUSBX where X is a number from
+0 to N.
+To solve this problem,
+  #sudo chmod 666 /dev/ttyUSB0 or /dev/ttyUSBX
+
