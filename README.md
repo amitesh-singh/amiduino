@@ -45,4 +45,8 @@ how to setup on linux/ubuntu
 0 to N.
 To solve this problem,
   #sudo chmod 666 /dev/ttyUSB0 or /dev/ttyUSBX
+ you might get error in opening serial console on arduino, change
+the owner of the file to user ami.
+ #  sudo chown ami /dev/ttyUSB0
+
 
