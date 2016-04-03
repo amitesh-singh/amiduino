@@ -1,4 +1,6 @@
 
+#include "Seg7Led.h"
+
 byte bytes[] = {2, 3, 4, 5, 6, 7, 8}; // Arduino digital ports number
 Seg7Led led(bytes);
 
