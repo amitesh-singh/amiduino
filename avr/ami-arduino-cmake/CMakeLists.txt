@@ -10,8 +10,8 @@ set(CMAKE_TOOLCHAIN_FILE cmake/avr-arduino-toolchain.cmake)
 project(ami-arduino C CXX ASM)
 
 # adding our libraries, sources
+add_libraries(lib)
 # we don't need it now - ami
-#add_libraries(lib)
 #add_sources(src)
 
 # add the sketches directory (contains sketch directories and
