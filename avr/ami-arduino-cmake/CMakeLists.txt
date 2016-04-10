@@ -6,11 +6,16 @@ include(config.cmake)
 # the toolchain file (see https://github.com/ubirch/avr-arduino-cmake)
 set(CMAKE_TOOLCHAIN_FILE cmake/avr-arduino-toolchain.cmake)
 
+include_directories(display PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} 
+${ARDUINO_CORES_PATH} ${ARDUINO_VARIANTS_PATH} ${ARDUINO_VARIANTS_PATH}
+)
+
 # project name and code types we use
 project(ami-arduino C CXX ASM)
 
 # adding our libraries, sources
-add_libraries(lib)
+#add_libraries(lib)
+add_sources(lib)
 # we don't need it now - ami
 #add_sources(src)
 

@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>
 #ifndef __SEG7_LED_H
 #define __SEG7_LED_H
 
-#include <Arduino.h>
+#include "Arduino.h"
 
 class Seg7Led
 {
