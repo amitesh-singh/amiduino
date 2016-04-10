@@ -6,7 +6,7 @@ include(config.cmake)
 # the toolchain file (see https://github.com/ubirch/avr-arduino-cmake)
 set(CMAKE_TOOLCHAIN_FILE cmake/avr-arduino-toolchain.cmake)
 
-include_directories(display PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} 
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} 
 ${ARDUINO_CORES_PATH} ${ARDUINO_VARIANTS_PATH} ${ARDUINO_VARIANTS_PATH}
 )
 
