@@ -3,15 +3,13 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
-// LED  - PB2
-// Switch - PD2 - on Atmega16, PD2 is INT0
-// INT1 - PD3
-// INT2 - PB2
+// LED  - PB0
+// Switch - PB2
 
 volatile int8_t button_was_pressed = 0;
 void initInterrupt0()
 {
-   EIMSK |= (1 << INT0); // enable INT0 interrupt
+   EIMSK |= (1 << INT2); // enable INT2 interrupt, PB2
    EICRA |= (1 << ISC00); // trigger on switch change
    sei(); //Set global enable interrupts
 }
@@ -23,8 +21,8 @@ ISR(INT0_vect)
 
 int main()
 {
-   DDRB |= _BV(PB2);
-   PORTD |= _BV(PD2); // pullup
+   DDRB |= _BV(PB0);
+   PORTB |= _BV(PB2); // pullup
 
    initInterrupt0();
 
@@ -32,7 +30,7 @@ int main()
      {
         if (button_was_pressed == 1)
           {
-             PORTB ^= _BV(PB2); // toggle LED
+             PORTB ^= _BV(PB0); // toggle LED
              _delay_ms(1000);
              // TODO: make below statement atomic though?
              // Probably not needed since used int8_t type and MCU is of 8 bits type hence the below statement should be single statement in asm?
