@@ -1,4 +1,4 @@
-#define __AVR_ATmega16U4__
+//#define __AVR_ATmega16U4__
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
@@ -9,10 +9,23 @@
 // INT2 - PB2
 // LED1 is keep toggling and when interrupt is pressed, LEDSwitch is set toggle
 
+#if defined(__AVR_ATmega16A__)
+#warning ("This code is compiled for Atmega16A");
+#endif
+
+#if defined(__AVR_ATmega168P__)
+#warning ("This code is compiled for Atmega168P");
+#endif
+
 void initInterrupt0()
 {
+#if defined(__AVR_ATmega168P__)
    EIMSK |= (1 << INT0); // enable INT0 interrupt, PD2 on Atmega16
    EICRA |= (1 << ISC00); // trigger on switch change
+#elif defined(__AVR_ATmega16A__)
+   GICR |= _BV(INT0);
+   MCUCR |= _BV(ISC00);
+#endif
    sei(); //Set global enable interrupts
 }
 

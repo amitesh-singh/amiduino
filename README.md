@@ -50,3 +50,10 @@ the owner of the file to user ami.
  #  sudo chown ami /dev/ttyUSB0
 
 
+install colormake if u want to show warnings/errors in color
+
+sudo apt-get install colormake
+
+$colormake # instead of make
+
+

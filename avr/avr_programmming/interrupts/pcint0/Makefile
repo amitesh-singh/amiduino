@@ -5,7 +5,7 @@
 ##########------------------------------------------------------##########
 
 #MCU   = atmega168p
-MCU   = atmega16a
+MCU   = atmega16
 F_CPU = 1000000UL  
 BAUD  = 9600UL
 ## Also try BAUD = 19200 or 38400 if you're feeling lucky.

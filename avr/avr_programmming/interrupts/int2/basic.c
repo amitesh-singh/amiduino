@@ -1,4 +1,3 @@
-#define __AVR_ATmega16U4__
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
@@ -6,11 +5,21 @@
 // LED  - PB0
 // Switch - PB2
 
+#if defined(__AVR_ATmega168P__)
+#warning ("This code is compiled for Atmega168P");
+#elif defined(__AVR_ATmega16A__)
+#warning ("This code is compiled for Atmega16A");
+#endif
 volatile int8_t button_was_pressed = 0;
 void initInterrupt0()
 {
+#if defined(__AVR_ATmega168P__)
    EIMSK |= (1 << INT2); // enable INT2 interrupt, PB2
    EICRA |= (1 << ISC00); // trigger on switch change
+#elif defined(__AVR_ATmega16A__)
+   GICR |= _BV(INT2);
+   MCUCR |= _BV(ISC00);
+#endif
    sei(); //Set global enable interrupts
 }
 
