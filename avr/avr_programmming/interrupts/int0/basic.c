@@ -1,4 +1,4 @@
-#define __AVR_ATmega16U4__
+//#define __AVR_ATmega16A__ ---> we are passing this macro as compile option in avr-gcc -mmcu=atmega16a
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
@@ -8,11 +8,36 @@
 // INT1 - PD3
 // INT2 - PB2
 
+// Add this code to check if this code compiles for __AVR_ATmega16A__ only.
+#if defined(__AVR_ATmega16A__)
+#warning ("This code is compiled for __AVR_ATmega16A__");
+#endif
+
+#if defined(__AVR_ATmega168__)
+#warning ("This code is compiled for atmega168");
+#endif
+
+#if defined(__AVR_ATmega168P__)
+#warning ("This code is compiled for atmega168P");
+#endif
 volatile int8_t button_was_pressed = 0;
 void initInterrupt0()
 {
-   EIMSK |= (1 << INT0); // enable INT0 interrupt
-   EICRA |= (1 << ISC00); // trigger on switch change
+   // Interrupt registers are different across chips.
+   // The below code works for atmega168 and arduino uno probably
+   // change the makefile and change the MCU macro to atmega168p
+//   EIMSK |= (1 << INT0); // enable INT0 interrupt
+//   EICRA |= (1 << ISC00); // trigger on switch change
+
+   //We are here trying to write code for Atmega16a
+   // look into iom16a.h file in /usr/lib/avr/include/avr/
+#if defined(__AVR_ATmega16A__)
+   GICR |= _BV(INT0); //enable INT0 interrupt
+   MCUCR |= _BV(ISC00); // trigger on change (high to low or low to high)
+#elif defined(__AVR_ATmega168P__)
+   EIMSK |= _BV(INT0);
+   EICRA |= _BV(ISC00);
+#endif
    sei(); //Set global enable interrupts
 }
 
