@@ -1,0 +1,2 @@
+/usr/bin/avr-ar cq libsegdisplay.a  CMakeFiles/segdisplay.dir/Seg7Led.cpp.obj
+/usr/bin/avr-ranlib libsegdisplay.a

@@ -1,0 +1,239 @@
+The target system is: Generic -  - 
+The host system is: Linux - 4.2.0-16-generic - x86_64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /usr/bin/avr-gcc 
+Build flags: -Os;-Wall;-Wno-unknown-pragmas;-Wextra;-MMD;-mmcu=atmega16;-std=gnu99;-mcall-prologues;-ffunction-sections;-fdata-sections
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.d"
+
+The C compiler identification is GNU, found in "/home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/3.2.2/CompilerIdC/a.out"
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: /usr/bin/avr-g++ 
+Build flags: -Os;-Wall;-Wno-unknown-pragmas;-Wextra;-MMD;-mmcu=atmega16;-std=c++0x;-felide-constructors;-fpermissive;-fno-exceptions;-ffunction-sections;-fdata-sections;-fno-threadsafe-statics
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.d"
+
+The CXX compiler identification is GNU, found in "/home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/3.2.2/CompilerIdCXX/a.out"
+
+Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":
+avr-gcc (GCC) 4.8.1
+Copyright (C) 2013 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+Determining if the C compiler works passed with the following output:
+Change Dir: /home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec491246766/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec491246766.dir/build.make CMakeFiles/cmTryCompileExec491246766.dir/build
+make[1]: Entering directory '/home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec491246766.dir/testCCompiler.c.obj
+/usr/bin/avr-gcc  -DBAUD=115200 -DF_CPU=16000000 -DMCU=\"atmega328p\" -Os -Wall -Wno-unknown-pragmas -Wextra -MMD -mmcu=atmega16 -std=gnu99 -mcall-prologues -ffunction-sections -fdata-sections    -o CMakeFiles/cmTryCompileExec491246766.dir/testCCompiler.c.obj   -c /home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTryCompileExec491246766
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec491246766.dir/link.txt --verbose=1
+/usr/bin/avr-gcc  -Os -Wall -Wno-unknown-pragmas -Wextra -MMD -mmcu=atmega16 -std=gnu99 -mcall-prologues -ffunction-sections -fdata-sections   -Wl,--relax -Wl,--gc-sections -Wl,-u,vfscanf -lscanf_min -Wl,-u,vfprintf -lprintf_min   CMakeFiles/cmTryCompileExec491246766.dir/testCCompiler.c.obj  -o cmTryCompileExec491246766  
+make[1]: Leaving directory '/home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp'
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec1703799149/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1703799149.dir/build.make CMakeFiles/cmTryCompileExec1703799149.dir/build
+make[1]: Entering directory '/home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec1703799149.dir/CMakeCCompilerABI.c.obj
+/usr/bin/avr-gcc  -DBAUD=115200 -DF_CPU=16000000 -DMCU=\"atmega328p\" -Os -Wall -Wno-unknown-pragmas -Wextra -MMD -mmcu=atmega16 -std=gnu99 -mcall-prologues -ffunction-sections -fdata-sections    -o CMakeFiles/cmTryCompileExec1703799149.dir/CMakeCCompilerABI.c.obj   -c /usr/share/cmake-3.2/Modules/CMakeCCompilerABI.c
+Linking C executable cmTryCompileExec1703799149
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1703799149.dir/link.txt --verbose=1
+/usr/bin/avr-gcc  -Os -Wall -Wno-unknown-pragmas -Wextra -MMD -mmcu=atmega16 -std=gnu99 -mcall-prologues -ffunction-sections -fdata-sections   -Wl,--relax -Wl,--gc-sections -Wl,-u,vfscanf -lscanf_min -Wl,-u,vfprintf -lprintf_min  -v CMakeFiles/cmTryCompileExec1703799149.dir/CMakeCCompilerABI.c.obj  -o cmTryCompileExec1703799149   
+Using built-in specs.
+COLLECT_GCC=/usr/bin/avr-gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/avr/4.8.1/lto-wrapper
+Target: avr
+Configured with: ../src/configure -v --enable-languages=c,c++ --prefix=/usr/lib --infodir=/usr/share/info --mandir=/usr/share/man --bindir=/usr/bin --libexecdir=/usr/lib --libdir=/usr/lib --enable-shared --with-system-zlib --enable-long-long --enable-nls --without-included-gettext --disable-libssp --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=avr
+Thread model: single
+gcc version 4.8.1 (GCC) 
+COMPILER_PATH=/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/:/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/:/usr/lib/gcc/avr/4.8.1/../../../avr/bin/
+LIBRARY_PATH=/usr/lib/gcc/avr/4.8.1/avr5/:/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5/:/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/4.8.1/../../../avr/lib/
+COLLECT_GCC_OPTIONS='-Os' '-Wall' '-Wno-unknown-pragmas' '-Wextra' '-MMD' '-mmcu=atmega16' '-std=gnu99' '-mcall-prologues' '-ffunction-sections' '-fdata-sections' '-v' '-o' 'cmTryCompileExec1703799149'
+ /usr/lib/gcc/avr/4.8.1/collect2 -m avr5 -o cmTryCompileExec1703799149 /usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5/crtm16.o -L/usr/lib/gcc/avr/4.8.1/avr5 -L/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5 -L/usr/lib/gcc/avr/4.8.1 -L/usr/lib/gcc/avr/4.8.1/../../../avr/lib --relax --gc-sections -u vfscanf -lscanf_min -u vfprintf -lprintf_min CMakeFiles/cmTryCompileExec1703799149.dir/CMakeCCompilerABI.c.obj --start-group -lgcc -lm -lc --end-group
+make[1]: Leaving directory '/home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp'
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(avr-ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTryCompileExec1703799149/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTryCompileExec1703799149.dir/build.make CMakeFiles/cmTryCompileExec1703799149.dir/build]
+  ignore line: [make[1]: Entering directory '/home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/bin/cmake -E cmake_progress_report /home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building C object CMakeFiles/cmTryCompileExec1703799149.dir/CMakeCCompilerABI.c.obj]
+  ignore line: [/usr/bin/avr-gcc  -DBAUD=115200 -DF_CPU=16000000 -DMCU=\"atmega328p\" -Os -Wall -Wno-unknown-pragmas -Wextra -MMD -mmcu=atmega16 -std=gnu99 -mcall-prologues -ffunction-sections -fdata-sections    -o CMakeFiles/cmTryCompileExec1703799149.dir/CMakeCCompilerABI.c.obj   -c /usr/share/cmake-3.2/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTryCompileExec1703799149]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1703799149.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/avr-gcc  -Os -Wall -Wno-unknown-pragmas -Wextra -MMD -mmcu=atmega16 -std=gnu99 -mcall-prologues -ffunction-sections -fdata-sections   -Wl,--relax -Wl,--gc-sections -Wl,-u,vfscanf -lscanf_min -Wl,-u,vfprintf -lprintf_min  -v CMakeFiles/cmTryCompileExec1703799149.dir/CMakeCCompilerABI.c.obj  -o cmTryCompileExec1703799149   ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/usr/bin/avr-gcc]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/avr/4.8.1/lto-wrapper]
+  ignore line: [Target: avr]
+  ignore line: [Configured with: ../src/configure -v --enable-languages=c,c++ --prefix=/usr/lib --infodir=/usr/share/info --mandir=/usr/share/man --bindir=/usr/bin --libexecdir=/usr/lib --libdir=/usr/lib --enable-shared --with-system-zlib --enable-long-long --enable-nls --without-included-gettext --disable-libssp --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=avr]
+  ignore line: [Thread model: single]
+  ignore line: [gcc version 4.8.1 (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/:/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/:/usr/lib/gcc/avr/4.8.1/../../../avr/bin/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/avr/4.8.1/avr5/:/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5/:/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/4.8.1/../../../avr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-Os' '-Wall' '-Wno-unknown-pragmas' '-Wextra' '-MMD' '-mmcu=atmega16' '-std=gnu99' '-mcall-prologues' '-ffunction-sections' '-fdata-sections' '-v' '-o' 'cmTryCompileExec1703799149']
+  link line: [ /usr/lib/gcc/avr/4.8.1/collect2 -m avr5 -o cmTryCompileExec1703799149 /usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5/crtm16.o -L/usr/lib/gcc/avr/4.8.1/avr5 -L/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5 -L/usr/lib/gcc/avr/4.8.1 -L/usr/lib/gcc/avr/4.8.1/../../../avr/lib --relax --gc-sections -u vfscanf -lscanf_min -u vfprintf -lprintf_min CMakeFiles/cmTryCompileExec1703799149.dir/CMakeCCompilerABI.c.obj --start-group -lgcc -lm -lc --end-group]
+    arg [/usr/lib/gcc/avr/4.8.1/collect2] ==> ignore
+    arg [-m] ==> ignore
+    arg [avr5] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec1703799149] ==> ignore
+    arg [/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5/crtm16.o] ==> ignore
+    arg [-L/usr/lib/gcc/avr/4.8.1/avr5] ==> dir [/usr/lib/gcc/avr/4.8.1/avr5]
+    arg [-L/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5] ==> dir [/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5]
+    arg [-L/usr/lib/gcc/avr/4.8.1] ==> dir [/usr/lib/gcc/avr/4.8.1]
+    arg [-L/usr/lib/gcc/avr/4.8.1/../../../avr/lib] ==> dir [/usr/lib/gcc/avr/4.8.1/../../../avr/lib]
+    arg [--relax] ==> ignore
+    arg [--gc-sections] ==> ignore
+    arg [-u] ==> ignore
+    arg [vfscanf] ==> ignore
+    arg [-lscanf_min] ==> lib [scanf_min]
+    arg [-u] ==> ignore
+    arg [vfprintf] ==> ignore
+    arg [-lprintf_min] ==> lib [printf_min]
+    arg [CMakeFiles/cmTryCompileExec1703799149.dir/CMakeCCompilerABI.c.obj] ==> ignore
+    arg [--start-group] ==> ignore
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lm] ==> lib [m]
+    arg [-lc] ==> lib [c]
+    arg [--end-group] ==> ignore
+  remove lib [gcc]
+  collapse library dir [/usr/lib/gcc/avr/4.8.1/avr5] ==> [/usr/lib/gcc/avr/4.8.1/avr5]
+  collapse library dir [/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5] ==> [/usr/lib/avr/lib/avr5]
+  collapse library dir [/usr/lib/gcc/avr/4.8.1] ==> [/usr/lib/gcc/avr/4.8.1]
+  collapse library dir [/usr/lib/gcc/avr/4.8.1/../../../avr/lib] ==> [/usr/lib/avr/lib]
+  implicit libs: [scanf_min;printf_min;m;c]
+  implicit dirs: [/usr/lib/gcc/avr/4.8.1/avr5;/usr/lib/avr/lib/avr5;/usr/lib/gcc/avr/4.8.1;/usr/lib/avr/lib]
+  implicit fwks: []
+
+
+Determining if the CXX compiler works passed with the following output:
+Change Dir: /home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec1622607315/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1622607315.dir/build.make CMakeFiles/cmTryCompileExec1622607315.dir/build
+make[1]: Entering directory '/home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec1622607315.dir/testCXXCompiler.cxx.obj
+/usr/bin/avr-g++   -DBAUD=115200 -DF_CPU=16000000 -DMCU=\"atmega328p\" -Os -Wall -Wno-unknown-pragmas -Wextra -MMD -mmcu=atmega16 -std=c++0x -felide-constructors -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics    -o CMakeFiles/cmTryCompileExec1622607315.dir/testCXXCompiler.cxx.obj -c /home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTryCompileExec1622607315
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1622607315.dir/link.txt --verbose=1
+/usr/bin/avr-g++   -Os -Wall -Wno-unknown-pragmas -Wextra -MMD -mmcu=atmega16 -std=c++0x -felide-constructors -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics   -Wl,--relax -Wl,--gc-sections -Wl,-u,vfscanf -lscanf_min -Wl,-u,vfprintf -lprintf_min   CMakeFiles/cmTryCompileExec1622607315.dir/testCXXCompiler.cxx.obj  -o cmTryCompileExec1622607315  
+make[1]: Leaving directory '/home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp'
+
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: /home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTryCompileExec1615518901/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec1615518901.dir/build.make CMakeFiles/cmTryCompileExec1615518901.dir/build
+make[1]: Entering directory '/home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building CXX object CMakeFiles/cmTryCompileExec1615518901.dir/CMakeCXXCompilerABI.cpp.obj
+/usr/bin/avr-g++   -DBAUD=115200 -DF_CPU=16000000 -DMCU=\"atmega328p\" -Os -Wall -Wno-unknown-pragmas -Wextra -MMD -mmcu=atmega16 -std=c++0x -felide-constructors -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics    -o CMakeFiles/cmTryCompileExec1615518901.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-3.2/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTryCompileExec1615518901
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1615518901.dir/link.txt --verbose=1
+/usr/bin/avr-g++   -Os -Wall -Wno-unknown-pragmas -Wextra -MMD -mmcu=atmega16 -std=c++0x -felide-constructors -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics   -Wl,--relax -Wl,--gc-sections -Wl,-u,vfscanf -lscanf_min -Wl,-u,vfprintf -lprintf_min  -v CMakeFiles/cmTryCompileExec1615518901.dir/CMakeCXXCompilerABI.cpp.obj  -o cmTryCompileExec1615518901   
+Using built-in specs.
+COLLECT_GCC=/usr/bin/avr-g++
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/avr/4.8.1/lto-wrapper
+Target: avr
+Configured with: ../src/configure -v --enable-languages=c,c++ --prefix=/usr/lib --infodir=/usr/share/info --mandir=/usr/share/man --bindir=/usr/bin --libexecdir=/usr/lib --libdir=/usr/lib --enable-shared --with-system-zlib --enable-long-long --enable-nls --without-included-gettext --disable-libssp --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=avr
+Thread model: single
+gcc version 4.8.1 (GCC) 
+COMPILER_PATH=/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/:/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/:/usr/lib/gcc/avr/4.8.1/../../../avr/bin/
+LIBRARY_PATH=/usr/lib/gcc/avr/4.8.1/avr5/:/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5/:/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/4.8.1/../../../avr/lib/
+COLLECT_GCC_OPTIONS='-Os' '-Wall' '-Wno-unknown-pragmas' '-Wextra' '-MMD' '-mmcu=atmega16' '-std=c++11' '-felide-constructors' '-fpermissive' '-fno-exceptions' '-ffunction-sections' '-fdata-sections' '-fno-threadsafe-statics' '-v' '-o' 'cmTryCompileExec1615518901'
+ /usr/lib/gcc/avr/4.8.1/collect2 -m avr5 -o cmTryCompileExec1615518901 /usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5/crtm16.o -L/usr/lib/gcc/avr/4.8.1/avr5 -L/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5 -L/usr/lib/gcc/avr/4.8.1 -L/usr/lib/gcc/avr/4.8.1/../../../avr/lib --relax --gc-sections -u vfscanf -lscanf_min -u vfprintf -lprintf_min CMakeFiles/cmTryCompileExec1615518901.dir/CMakeCXXCompilerABI.cpp.obj -lgcc -lm --start-group -lgcc -lm -lc --end-group
+make[1]: Leaving directory '/home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp'
+
+
+Parsed CXX implicit link information from above output:
+  link line regex: [^( *|.*[/\])(avr-ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTryCompileExec1615518901/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTryCompileExec1615518901.dir/build.make CMakeFiles/cmTryCompileExec1615518901.dir/build]
+  ignore line: [make[1]: Entering directory '/home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/bin/cmake -E cmake_progress_report /home/ami/repos/amiduino/avr/atmega16a-cmake/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building CXX object CMakeFiles/cmTryCompileExec1615518901.dir/CMakeCXXCompilerABI.cpp.obj]
+  ignore line: [/usr/bin/avr-g++   -DBAUD=115200 -DF_CPU=16000000 -DMCU=\"atmega328p\" -Os -Wall -Wno-unknown-pragmas -Wextra -MMD -mmcu=atmega16 -std=c++0x -felide-constructors -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics    -o CMakeFiles/cmTryCompileExec1615518901.dir/CMakeCXXCompilerABI.cpp.obj -c /usr/share/cmake-3.2/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTryCompileExec1615518901]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec1615518901.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/avr-g++   -Os -Wall -Wno-unknown-pragmas -Wextra -MMD -mmcu=atmega16 -std=c++0x -felide-constructors -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics   -Wl,--relax -Wl,--gc-sections -Wl,-u,vfscanf -lscanf_min -Wl,-u,vfprintf -lprintf_min  -v CMakeFiles/cmTryCompileExec1615518901.dir/CMakeCXXCompilerABI.cpp.obj  -o cmTryCompileExec1615518901   ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/usr/bin/avr-g++]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/avr/4.8.1/lto-wrapper]
+  ignore line: [Target: avr]
+  ignore line: [Configured with: ../src/configure -v --enable-languages=c,c++ --prefix=/usr/lib --infodir=/usr/share/info --mandir=/usr/share/man --bindir=/usr/bin --libexecdir=/usr/lib --libdir=/usr/lib --enable-shared --with-system-zlib --enable-long-long --enable-nls --without-included-gettext --disable-libssp --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=avr]
+  ignore line: [Thread model: single]
+  ignore line: [gcc version 4.8.1 (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/:/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/:/usr/lib/gcc/avr/4.8.1/../../../avr/bin/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/avr/4.8.1/avr5/:/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5/:/usr/lib/gcc/avr/4.8.1/:/usr/lib/gcc/avr/4.8.1/../../../avr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-Os' '-Wall' '-Wno-unknown-pragmas' '-Wextra' '-MMD' '-mmcu=atmega16' '-std=c++11' '-felide-constructors' '-fpermissive' '-fno-exceptions' '-ffunction-sections' '-fdata-sections' '-fno-threadsafe-statics' '-v' '-o' 'cmTryCompileExec1615518901']
+  link line: [ /usr/lib/gcc/avr/4.8.1/collect2 -m avr5 -o cmTryCompileExec1615518901 /usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5/crtm16.o -L/usr/lib/gcc/avr/4.8.1/avr5 -L/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5 -L/usr/lib/gcc/avr/4.8.1 -L/usr/lib/gcc/avr/4.8.1/../../../avr/lib --relax --gc-sections -u vfscanf -lscanf_min -u vfprintf -lprintf_min CMakeFiles/cmTryCompileExec1615518901.dir/CMakeCXXCompilerABI.cpp.obj -lgcc -lm --start-group -lgcc -lm -lc --end-group]
+    arg [/usr/lib/gcc/avr/4.8.1/collect2] ==> ignore
+    arg [-m] ==> ignore
+    arg [avr5] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec1615518901] ==> ignore
+    arg [/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5/crtm16.o] ==> ignore
+    arg [-L/usr/lib/gcc/avr/4.8.1/avr5] ==> dir [/usr/lib/gcc/avr/4.8.1/avr5]
+    arg [-L/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5] ==> dir [/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5]
+    arg [-L/usr/lib/gcc/avr/4.8.1] ==> dir [/usr/lib/gcc/avr/4.8.1]
+    arg [-L/usr/lib/gcc/avr/4.8.1/../../../avr/lib] ==> dir [/usr/lib/gcc/avr/4.8.1/../../../avr/lib]
+    arg [--relax] ==> ignore
+    arg [--gc-sections] ==> ignore
+    arg [-u] ==> ignore
+    arg [vfscanf] ==> ignore
+    arg [-lscanf_min] ==> lib [scanf_min]
+    arg [-u] ==> ignore
+    arg [vfprintf] ==> ignore
+    arg [-lprintf_min] ==> lib [printf_min]
+    arg [CMakeFiles/cmTryCompileExec1615518901.dir/CMakeCXXCompilerABI.cpp.obj] ==> ignore
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lm] ==> lib [m]
+    arg [--start-group] ==> ignore
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lm] ==> lib [m]
+    arg [-lc] ==> lib [c]
+    arg [--end-group] ==> ignore
+  remove lib [gcc]
+  remove lib [gcc]
+  collapse library dir [/usr/lib/gcc/avr/4.8.1/avr5] ==> [/usr/lib/gcc/avr/4.8.1/avr5]
+  collapse library dir [/usr/lib/gcc/avr/4.8.1/../../../avr/lib/avr5] ==> [/usr/lib/avr/lib/avr5]
+  collapse library dir [/usr/lib/gcc/avr/4.8.1] ==> [/usr/lib/gcc/avr/4.8.1]
+  collapse library dir [/usr/lib/gcc/avr/4.8.1/../../../avr/lib] ==> [/usr/lib/avr/lib]
+  implicit libs: [scanf_min;printf_min;m;m;c]
+  implicit dirs: [/usr/lib/gcc/avr/4.8.1/avr5;/usr/lib/avr/lib/avr5;/usr/lib/gcc/avr/4.8.1;/usr/lib/avr/lib]
+  implicit fwks: []
+
+

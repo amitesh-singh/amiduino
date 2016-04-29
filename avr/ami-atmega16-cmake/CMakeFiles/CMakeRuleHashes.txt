@@ -1,0 +1,10 @@
+# Hashes of file build rules.
+e4b3d5b65d4ed4926f76bf7ca3d88740 sketches/blink/CMakeFiles/blink-flash
+c2716694602ba528248166cf9d9655d3 sketches/blink/CMakeFiles/blink-monitor
+99d3b54f3b7be89cfcb7d1dc945cb344 sketches/blink/CMakeFiles/blink-strip
+94b97b0cbdf9df7aeebd835501f8661d sketches/blink/blink.hex
+f58f0683eb8f286e35b3e68c11282efd sketches/segdisplay/CMakeFiles/avr-reset
+acad15c1e9cd184bcf378458935b988c sketches/segdisplay/CMakeFiles/display-flash
+7ab3e033a5e38bc651695579e3304aac sketches/segdisplay/CMakeFiles/display-monitor
+d82c25f871aebb75ff8e2f498b9fc3f0 sketches/segdisplay/CMakeFiles/display-strip
+69f66d69921d09e7fab936be242e4306 sketches/segdisplay/display.hex

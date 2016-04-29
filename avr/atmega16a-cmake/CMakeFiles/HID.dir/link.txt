@@ -1,0 +1,2 @@
+/usr/bin/avr-ar cq libHID.a  CMakeFiles/HID.dir/home/ami/Downloads/arduino-1.6.8/hardware/arduino/avr/libraries/HID/src/HID.cpp.obj
+/usr/bin/avr-ranlib libHID.a

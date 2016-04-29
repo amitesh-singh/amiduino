@@ -1,0 +1,12 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ami/Downloads/arduino-1.6.8/hardware/arduino/avr/cores/arduino/wiring_pulse.S
+avr/io.h
+-
+
