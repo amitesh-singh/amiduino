@@ -155,7 +155,9 @@ function(setup_arduino_core)
     if (DEFINED ARDUINO_SDK_PATH AND IS_DIRECTORY ${ARDUINO_SDK_PATH} AND NOT (TARGET arduino-core))
         # set the paths
         set(ARDUINO_CORES_PATH ${ARDUINO_SDK_PATH}/hardware/arduino/avr/cores/arduino CACHE STRING "")
-        set(ARDUINO_VARIANTS_PATH ${ARDUINO_SDK_PATH}/hardware/arduino/avr/variants/standard CACHE STRING "")
+# change this to atmega16A pin location
+        #set(ARDUINO_VARIANTS_PATH ${ARDUINO_SDK_PATH}/hardware/arduino/avr/variants/standard CACHE STRING "")
+        set(ARDUINO_VARIANTS_PATH variants/atmega16a CACHE STRING "")
         set(ARDUINO_LIBRARIES_PATH ${ARDUINO_SDK_PATH}/hardware/arduino/avr/libraries CACHE STRING "")
 
         # find arduino-core sources
