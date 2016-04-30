@@ -4,3 +4,6 @@
 *.a
 *.map
 CMakeFiles/
+CMakeCache.txt
+*.eep
+cmake_install.cmake
