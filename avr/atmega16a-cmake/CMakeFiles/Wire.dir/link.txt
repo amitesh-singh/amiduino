@@ -1,2 +1,0 @@
-/usr/bin/avr-ar cq libWire.a  CMakeFiles/Wire.dir/home/ami/Downloads/arduino-1.6.8/hardware/arduino/avr/libraries/Wire/src/Wire.cpp.obj CMakeFiles/Wire.dir/home/ami/Downloads/arduino-1.6.8/hardware/arduino/avr/libraries/Wire/src/utility/twi.c.obj
-/usr/bin/avr-ranlib libWire.a

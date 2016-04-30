@@ -1,2 +1,0 @@
-/usr/bin/avr-ar cq libSoftwareSerial.a  CMakeFiles/SoftwareSerial.dir/home/ami/Downloads/arduino-1.6.8/hardware/arduino/avr/libraries/SoftwareSerial/src/SoftwareSerial.cpp.obj
-/usr/bin/avr-ranlib libSoftwareSerial.a

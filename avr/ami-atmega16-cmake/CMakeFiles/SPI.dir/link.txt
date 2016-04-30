@@ -1,2 +1,0 @@
-/usr/bin/avr-ar cq libSPI.a  CMakeFiles/SPI.dir/home/ami/Downloads/arduino-1.6.8/hardware/arduino/avr/libraries/SPI/src/SPI.cpp.obj
-/usr/bin/avr-ranlib libSPI.a
