@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-#define LED 13
+#define LED 0 // At PB0
 
 void setup() {
     // set the LED pin to be an output pin
