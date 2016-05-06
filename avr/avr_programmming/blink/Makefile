@@ -5,7 +5,7 @@
 ##########------------------------------------------------------##########
 
 #MCU   = atmega168p
-MCU   = atmega16
+MCU   = atmega16a
 F_CPU = 1000000UL  
 BAUD  = 9600UL
 ## Also try BAUD = 19200 or 38400 if you're feeling lucky.
@@ -31,6 +31,7 @@ PROGRAMMER_ARGS =
 ##########------------------------------------------------------##########
 
 CC = avr-gcc
+STRIP = avr-strip
 OBJCOPY = avr-objcopy
 OBJDUMP = avr-objdump
 AVRSIZE = avr-size
@@ -68,7 +69,7 @@ LDFLAGS = -Wl,-Map,$(TARGET).map
 ## Optional, but often ends up with smaller code
 LDFLAGS += -Wl,--gc-sections 
 ## Relax shrinks code even more, but makes disassembly messy
-## LDFLAGS += -Wl,--relax
+LDFLAGS += -Wl,--relax
 ## LDFLAGS += -Wl,-u,vfprintf -lprintf_flt -lm  ## for floating-point printf
 ## LDFLAGS += -Wl,-u,vfprintf -lprintf_min      ## for smaller printf
 TARGET_ARCH = -mmcu=$(MCU)
@@ -82,7 +83,9 @@ $(TARGET).elf: $(OBJECTS)
 	$(CC) $(LDFLAGS) $(TARGET_ARCH) $^ $(LDLIBS) -o $@
 
 %.hex: %.elf
+	 avr-strip $<
 	 $(OBJCOPY) -j .text -j .data -O ihex $< $@
+	 avr-size --mcu=$(MCU) -C --format=avr $<
 
 %.eeprom: %.elf
 	$(OBJCOPY) -j .eeprom --change-section-lma .eeprom=0 -O ihex $< $@ 
