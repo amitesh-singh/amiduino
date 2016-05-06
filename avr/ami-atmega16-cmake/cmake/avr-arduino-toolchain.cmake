@@ -66,7 +66,7 @@ set(COMPILER_FLAGS "-Os -Wall -Wno-unknown-pragmas -Wextra -MMD -mmcu=${MCU}" CA
 set(CMAKE_C_FLAGS "${COMPILER_FLAGS} -std=gnu99 -mcall-prologues -ffunction-sections -fdata-sections" CACHE STRING "")
 set(CMAKE_CXX_FLAGS "${COMPILER_FLAGS} -std=c++0x -felide-constructors -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics" CACHE STRING "")
 set(CMAKE_ASM_FLAGS "-x assembler-with-cpp ${COMPILER_FLAGS} " CACHE STRING "")
-set(CMAKE_EXE_LINKER_FLAGS "-Wl,--relax -Wl,--gc-sections -Wl,-u,vfscanf -lscanf_min -Wl,-u,vfprintf -lprintf_min ${EXTRA_LIBS}" CACHE STRING "")
+#set(CMAKE_EXE_LINKER_FLAGS "-Wl,--relax -Wl,--gc-sections -Wl,-u,vfscanf -lscanf_min -Wl,-u,vfprintf -lprintf_min ${EXTRA_LIBS}" CACHE STRING "")
 
 # some definitions that are common
 add_definitions(-DMCU=\"${MCU}\")
