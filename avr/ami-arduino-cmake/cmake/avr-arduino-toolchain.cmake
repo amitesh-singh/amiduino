@@ -24,6 +24,7 @@ cmake_minimum_required(VERSION 3.0)
 # find compiler and toolchain programs
 find_program(AVRCPP avr-g++)
 find_program(AVRC avr-gcc)
+find_program(AVRAR avr-ar)
 find_program(AVRSTRIP avr-strip)
 find_program(OBJCOPY avr-objcopy)
 find_program(OBJDUMP avr-objdump)
@@ -66,7 +67,8 @@ set(COMPILER_FLAGS "-Os -Wall -Wno-unknown-pragmas -Wextra -MMD -mmcu=${MCU}" CA
 set(CMAKE_C_FLAGS "${COMPILER_FLAGS} -std=gnu99 -mcall-prologues -ffunction-sections -fdata-sections" CACHE STRING "")
 set(CMAKE_CXX_FLAGS "${COMPILER_FLAGS} -std=c++0x -felide-constructors -fpermissive -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics" CACHE STRING "")
 set(CMAKE_ASM_FLAGS "-x assembler-with-cpp ${COMPILER_FLAGS} " CACHE STRING "")
-set(CMAKE_EXE_LINKER_FLAGS "-Wl,--relax -Wl,--gc-sections -Wl,-u,vfscanf -lscanf_min -Wl,-u,vfprintf -lprintf_min ${EXTRA_LIBS}" CACHE STRING "")
+#ami: comment this. somehow it was adding 2kb to hex file.
+#set(CMAKE_EXE_LINKER_FLAGS "-Wl,--relax -Wl,--gc-sections -Wl,-u,vfscanf -lscanf_min -Wl,-u,vfprintf -lprintf_min ${EXTRA_LIBS}" CACHE STRING "")
 
 # some definitions that are common
 add_definitions(-DMCU=\"${MCU}\")
@@ -169,7 +171,8 @@ function(setup_arduino_core)
         target_include_directories(arduino-core PUBLIC ${ARDUINO_VARIANTS_PATH})
 
         # configure all the additional libraries in the core
-        file(GLOB CORE_DIRS ${ARDUINO_LIBRARIES_PATH}/*)
+#ami removes ot
+        #file(GLOB CORE_DIRS ${ARDUINO_LIBRARIES_PATH}/*)
         foreach (libdir ${CORE_DIRS})
             get_filename_component(libname ${libdir} NAME)
             if (IS_DIRECTORY ${libdir})
