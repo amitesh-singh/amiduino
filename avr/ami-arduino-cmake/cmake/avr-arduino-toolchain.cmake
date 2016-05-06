@@ -197,7 +197,8 @@ function(setup_arduino_core)
         endforeach ()
 
         # add some of the default definitions (TODO: identify from Arduino IDE)
-        add_definitions(-DARDUINO=10605)
+        #ami: This is Arduino ide version. using 1.6.8
+        add_definitions(-DARDUINO=10608)
         add_definitions(-DARDUINO_AVR_UNO)
         add_definitions(-DARDUINO_ARCH_AVR)
     endif ()
