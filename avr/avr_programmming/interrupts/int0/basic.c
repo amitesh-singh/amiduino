@@ -32,13 +32,15 @@ void initInterrupt0()
    //We are here trying to write code for Atmega16a
    // look into iom16a.h file in /usr/lib/avr/include/avr/
 #if defined(__AVR_ATmega16A__)
+         7    6
+   // [INT1][INT0][INT2][]...   ==> GICR
    GICR |= _BV(INT0); //enable INT0 interrupt
    MCUCR |= _BV(ISC00); // trigger on change (high to low or low to high)
 #elif defined(__AVR_ATmega168P__)
    EIMSK |= _BV(INT0);
    EICRA |= _BV(ISC00);
 #endif
-   sei(); //Set global enable interrupts
+   sei(); //Set global enable interrupts == asm("SEI");
 }
 
 ISR(INT0_vect)
