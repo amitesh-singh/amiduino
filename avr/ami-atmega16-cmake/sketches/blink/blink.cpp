@@ -12,9 +12,9 @@ void loop() {
     while (true) {
         // write a 1 (digital signal high)
         digitalWrite(LED, HIGH);
-        delay(100);
+        delay(1000);
         // write a 0 (digital signal low)
         digitalWrite(LED, LOW);
-        delay(200);
+        delay(2000);
     }
 }
