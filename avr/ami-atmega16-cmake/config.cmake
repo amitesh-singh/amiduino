@@ -1,7 +1,7 @@
 # necessary settings for the chip we use
 #set(MCU atmega328p)
 set(MCU atmega16a)
-set(F_CPU 1000000)
+set(F_CPU 1000000L)
 set(BAUD 95600)
 
 # set the programmer and the device to use (default is to use simavr)
