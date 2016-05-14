@@ -17,7 +17,7 @@ void initInterrupt0()
    EIMSK |= (1 << INT2); // enable INT2 interrupt, PB2
    EICRA |= (1 << ISC00); // trigger on switch change
 #elif defined(__AVR_ATmega16A__)
-   GICR |= _BV(INT2);
+   GICR |= _BV(INT2); // enable INT2 interrupt, PB2 on Atmega16a
    MCUCR |= _BV(ISC00);
 #endif
    sei(); //Set global enable interrupts

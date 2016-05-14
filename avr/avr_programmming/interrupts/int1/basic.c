@@ -11,6 +11,10 @@
 #warning ("This code is getting compiled for AVR Atmega16A chip");
 #endif
 
+#if defined(__AVR_ATmega168P__)
+#warning ("This code is getting compiled for Atmega168p");
+#endif
+
 //Always declare the global variable volatile if its shared between main and ISRs.
 // This is to tell compiler not to optimize the codeblock related to this variable.
 volatile int8_t button_was_pressed = 0;
@@ -19,10 +23,10 @@ void initInterrupt0()
 {
    // or arduino uno may be? Atmega328p
 #if defined(__AVR_ATmega168P__)
-   EIMSK |= (1 << INT1); // enable INT0 interrupt
+   EIMSK |= (1 << INT1); // enable INT1 interrupt
    EICRA |= (1 << ISC00); // trigger on switch change, either from 0V to 5V or 5V to 0V.
 #elif defined(__AVR_ATmega16A__)
-   GICR |= _BV(INT1);
+   GICR |= _BV(INT1); // enable INT1 interrupt PD3 port of Atmega16a
    MCUCR |= _BV(ISC00);
 #endif
    sei(); //Set global enable interrupts

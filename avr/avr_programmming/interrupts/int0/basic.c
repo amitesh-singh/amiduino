@@ -37,7 +37,7 @@ void initInterrupt0()
    GICR |= _BV(INT0); //enable INT0 interrupt
    MCUCR |= _BV(ISC00); // trigger on change (high to low or low to high)
 #elif defined(__AVR_ATmega168P__)
-   EIMSK |= _BV(INT0);
+   EIMSK |= _BV(INT0); //enable INT0 interrupt, PD0
    EICRA |= _BV(ISC00);
 #endif
    sei(); //Set global enable interrupts == asm("SEI");

@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 2.6)
+include(config.cmake)
+include(toolchain-avr-gcc.cmake)
+set(CMAKE_TOOLCHAIN_FILE toolchain-avr-gcc.cmake)
+add_avr_executable(blink Blink_AVR.c)
