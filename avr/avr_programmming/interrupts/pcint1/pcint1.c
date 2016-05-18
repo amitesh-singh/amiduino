@@ -14,7 +14,7 @@ void initPinChangeInt1()
 {
 #if defined(__AVR_ATmega168P__)
    PCICR |= _BV(PCIE1); // Set pin-change interrupt for C pins
-   PCMSK2 |= _BV(PC2); // PCINT1 at PC2
+   PCMSK1 |= _BV(PC2); // PCINT1 at PC2
 #elif defined(__AVR_ATmega16A__)
 #error ("Atmega16A does not have Pin Change Interrupts (PCINTs) ");
 #endif
