@@ -13,7 +13,7 @@
 volatile int8_t button_was_pressed = 0;
 void initInterrupt0()
 {
-#if defined(__AVR_ATmega168P__)
+#if defined(__AVR_ATmega168P__) || defined(__AVR_ATmega328P__)
    EIMSK |= (1 << INT2); // enable INT2 interrupt, PB2
    EICRA |= (1 << ISC00); // trigger on switch change
 #elif defined(__AVR_ATmega16A__)

@@ -22,7 +22,7 @@ volatile int8_t button_was_pressed = 0;
 void initInterrupt0()
 {
    // or arduino uno may be? Atmega328p
-#if defined(__AVR_ATmega168P__)
+#if defined(__AVR_ATmega168P__) || defined(__AVR_ATmega328P__)
    EIMSK |= (1 << INT1); // enable INT1 interrupt
    EICRA |= (1 << ISC00); // trigger on switch change, either from 0V to 5V or 5V to 0V.
 #elif defined(__AVR_ATmega16A__)

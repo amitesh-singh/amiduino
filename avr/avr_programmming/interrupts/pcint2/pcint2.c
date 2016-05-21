@@ -12,7 +12,7 @@ PCINT2 -> PCINT2_vect -> PD0..PD7
 */
 void initPinChangeInt0()
 {
-#if defined(__AVR_ATmega168P__)
+#if defined(__AVR_ATmega168P__) || defined(__AVR_ATmega328P__)
    PCICR |= _BV(PCIE2); // Set pin-change interrupt for D pins
    //PCMSK2 |= _BV(PCINT18); //this should also work.
    PCMSK2 |= _BV(PD2); // PCINT2 at PD2
@@ -31,7 +31,6 @@ int main()
    while (1)
      {
      }
-
 
    return 0;
 }

@@ -12,7 +12,7 @@ PCINT2 -> PCINT2_vect -> PD0..PD7
 volatile uint8_t button_pressed = 0;
 void initPinChangeInt1()
 {
-#if defined(__AVR_ATmega168P__)
+#if defined(__AVR_ATmega168P__) || defined(__AVR_ATmega328P__)
    PCICR |= _BV(PCIE1); // Set pin-change interrupt for C pins
    PCMSK1 |= _BV(PC2); // PCINT1 at PC2
 #elif defined(__AVR_ATmega16A__)

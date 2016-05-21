@@ -20,6 +20,11 @@
 #if defined(__AVR_ATmega168P__)
 #warning ("This code is compiled for atmega168P");
 #endif
+
+#if defined(__AVR_ATmega328P__)
+#warning ("This code is compiled for Atmega328p");
+#endif
+
 volatile int8_t button_was_pressed = 0;
 void initInterrupt0()
 {
@@ -36,7 +41,7 @@ void initInterrupt0()
    // [INT1][INT0][INT2][]...   ==> GICR
    GICR |= _BV(INT0); //enable INT0 interrupt
    MCUCR |= _BV(ISC00); // trigger on change (high to low or low to high)
-#elif defined(__AVR_ATmega168P__)
+#elif defined(__AVR_ATmega168P__) || defined(__AVR_ATmega328P__)
    EIMSK |= _BV(INT0); //enable INT0 interrupt, PD0
    EICRA |= _BV(ISC00);
 #endif
