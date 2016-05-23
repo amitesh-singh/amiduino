@@ -6,12 +6,17 @@ ISR(TIMER0_COMP_vect)
    PORTB ^= (1 << PB2);
 }
 
+/*
+
+   WGM01      WGM00
+   1              0   -> CTC mode compare mode based on software
+ */
 int main()
 {
    DDRB |= (1 << PB2); //set PB2 as output
 
    //init timer0 in ctc mode. not sure if its gonna work
-   TCCR0 |= (1 << COM00) |  //enable CTC mode
+   TCCR0 |= (1 << WGM01) |  //enable CTC mode
       (1 << CS00) | (1 << CS02); // Prescalar = 1024
    TCNT0 = 0;
 
