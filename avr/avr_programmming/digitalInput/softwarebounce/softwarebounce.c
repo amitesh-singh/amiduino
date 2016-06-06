@@ -24,7 +24,7 @@ int8_t debounce()
      {
         //there might be some fluctuation, read the port again after 1 s
         _delay_ms(1000);
-        if (bit_is_clear(PINB, PB0))
+        if (bit_is_clear(PINB, PB0)) // ((PINB) & (1 << PB0))
           return 1;
      }
 
