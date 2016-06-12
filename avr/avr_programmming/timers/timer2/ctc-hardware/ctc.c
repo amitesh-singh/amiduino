@@ -11,10 +11,11 @@ ISR(TIMER2_COMP_vect)
 
 int main()
 {
-   DDRD |= (1 << PD7); //set PD4- OC2 at output
+   DDRD |= (1 << PD7); //set PD7- OC2 at output
 
    //init timer2 in ctc mode.
-   TCCR2 |= (1 << COM20) |  //enable CTC mode, non-pwm mode - Toggle OC2 on compare match
+   TCCR2 |= (1 << WGM21); // enable CTC mode: Refer DS
+   TCCR2 |= (1 << COM20) |  //non-pwm mode - Toggle OC2 on compare match
       (1 << CS20) | (1 << CS22) | (1 << CS21); // Prescalar = 1024
    TCNT2 = 0;
 

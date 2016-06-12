@@ -14,7 +14,8 @@ int main()
    DDRB |= (1 << PB3); //set PB3 - OC0 at output
 
    //init timer0 in ctc mode. not sure if its gonna work
-   TCCR0 |= (1 << COM00) |  //enable CTC mode
+   TCCR0 |= (1 << WGM01); // this enables CTC mode
+   TCCR0 |= (1 << COM00) |  //Toggle OC0 on compare match
       (1 << CS00) | (1 << CS02); // Prescalar = 1024
    TCNT0 = 0;
 
