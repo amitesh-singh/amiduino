@@ -8,7 +8,7 @@ static void pwm_init()
 {
    TCCR0 |= (1 << WGM00) | (1 << WGM01) //enable FAST PWM mode
       | (1 << CS00) | (1 << CS02) // prescalar = 1024
-      | (1 << COM01);
+      | (1 << COM01); // Clear OC0 on compare match, set OC0 at BOTTOM (non-inverting mode.
 
    DDRB |= (1 << PB3); // set OC0 port as OUTPUT
 }
