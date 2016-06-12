@@ -16,8 +16,7 @@ int main()
    DDRB |= (1 << PB2); //set PB2 as output
 
    //init timer0 in ctc mode. not sure if its gonna work
-   TCCR0 |= (1 << WGM01) |  //enable CTC mode
-      (1 << CS00) | (1 << CS02); // Prescalar = 1024
+   TCCR0 |= (1 << CS00) | (1 << CS02); // Prescalar = 1024
    TCNT0 = 0;
 
    OCR0 = 97; // close to 100 ms
