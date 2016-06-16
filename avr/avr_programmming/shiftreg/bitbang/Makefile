@@ -49,7 +49,7 @@ AVRDUDE = avrdude
 # TARGET = blinkLED
 ## Or name it automatically after the enclosing directory
 #TARGET = $(lastword $(subst /, ,$(CURDIR)))
-TARGET = shift
+TARGET = bitbang
 
 # Object files: will find all .c/.h files in current directory
 #  and in LIBDIR.  If you have any other (sub-)directories with code,
