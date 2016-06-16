@@ -6,8 +6,8 @@
 #warning ("This code is compiled for __AVR_ATmega16A__");
 #endif
 
-#define S_DDR DDRC
-#define S_PORT PORTC
+#define S_DDR DDRB
+#define S_PORT PORTB
 
 //For 74HC595 Serial-In/Parallel Out shift register
 // Experiment with 74HC165 when you get one: TODO:
@@ -67,19 +67,26 @@ void shift_out(uint8_t lpin, uint8_t dpin, uint8_t cpin, enum BitOrder bitorder,
 
 int main()
 {
-   int lpin = PC1, dpin = PC0, cpin = PC2;
+   int lpin = PB4, dpin = PB5, cpin = PB7;
    shift_init(lpin, dpin, cpin);
    //issue with this was that, the led did remain on for very short period
-   // of time. :(
-   shift_out(lpin, dpin, cpin, MSB, 0b00100101);
+   // of time. :( -- update: Issue was 
+   // OE is not grounded :P. problem is solved. ;)
+   // Keep ports high for 10 seconds
+   shift_out(lpin, dpin, cpin, MSB, 0b00100111);
    _delay_ms(10000);
 
    while (1)
      {
-        // blink 3 LEDs
-        shift_out(lpin, dpin, cpin, MSB, 0b00100101);
-        // shift_out(lpin, dpin, cpin, MSB, 0x00);
-         _delay_ms(75);
+        // blink 4 LEDs
+        shift_out(lpin, dpin, cpin, MSB, 0b00100111);
+         _delay_ms(200);
+         shift_out(lpin, dpin, cpin, MSB, 0x00);
+         _delay_ms(200);
+        shift_out(lpin, dpin, cpin, MSB, 0b00100111);
+         _delay_ms(100);
+         shift_out(lpin, dpin, cpin, MSB, 0x00);
+         _delay_ms(100);
      }
 
    return 0;
