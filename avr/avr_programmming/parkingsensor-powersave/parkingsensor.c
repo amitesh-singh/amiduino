@@ -5,7 +5,7 @@
 #include <util/delay.h>
 
 
-//
+// f_cpu = 8Mhz
 //  PD2 --> IR proximity sensor output, since i have used
 // UA741cn IC, LOW = 1.5V, HIGH = 4.1V. It was a bad idea to use 741 op-amp :/
 // PB3 - connect Buzzer or speaker 
@@ -24,7 +24,7 @@ void playBuzzer()
    DDRB |= (1 << PB3); //set PB3 - OC0 at output
    TCCR0 |= (1 << WGM01); // this enables CTC mode
    TCCR0 |= (1 << COM00);   //Toggle OC0 on compare match
-   TCCR0 |= (1 << CS01); // Prescalar = 8
+   TCCR0 |= (1 << CS01) | (1 << CS00); // Prescalar = 64
    TCNT0 = 0;
    OCR0 = 141; // generate 440Hz sound
 }
