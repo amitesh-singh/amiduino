@@ -4,6 +4,7 @@
 
 //This program checks all digital ports
 // and do a classic LED blink on all ports
+// PORTAs are the analog ones, read only
 int main()
 {
    DDRB = 0xff;
