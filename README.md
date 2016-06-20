@@ -56,4 +56,21 @@ sudo apt-get install colormake
 
 $colormake # instead of make
 
+how to make usb based AVR devices
+----------------------------------
+http://codeandlife.com/2012/01/22/avr-attiny-usb-tutorial-part-1
 
+http://codeandlife.com/2012/02/11/v-usb-tutorial-continued-hid-mouse/
+http://codeandlife.com/2012/02/22/v-usb-with-attiny45-attiny85-without-a-crystal/
+http://vusb.wikidot.com/examples
+
+http://www.recursion.jp/prose/avrcdc/cdc-232.html
+
+http://www.recursion.jp/prose/avrcdc/cdc-spi.html (USB to SPI)
+
+https://fabiobaltieri.com/2012/05/20/linux-kernel-device-drivers-for-avr-v-usb-devices/
+https://github.com/fabiobaltieri/avr-micro-usb/tree/master/firmware-sensor
+
+https://fabiobaltieri.com/2011/10/19/fun-with-attiny-and-v-usb/
+
+http://pid.codes/
