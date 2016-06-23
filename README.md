@@ -64,6 +64,15 @@ http://codeandlife.com/2012/02/11/v-usb-tutorial-continued-hid-mouse/
 http://codeandlife.com/2012/02/22/v-usb-with-attiny45-attiny85-without-a-crystal/
 http://vusb.wikidot.com/examples
 
+AVR project
+------------
+1. http://runawaybrainz.blogspot.in/2013/08/avr-attiny-2313-v-usb-media-volume.html
+2. https://www.adafruit.com/products/1501  Trinket - bootloader is using V-USB
+3. https://www.obdev.at/products/vusb/powerswitch.html
+4. https://www.obdev.at/products/vusb/remotesensor.html
+5. https://www.obdev.at/products/vusb/prjobdev.html
+6. https://www.obdev.at/products/vusb/projects.html
+
 http://www.recursion.jp/prose/avrcdc/cdc-232.html
 
 http://www.recursion.jp/prose/avrcdc/cdc-spi.html (USB to SPI)
