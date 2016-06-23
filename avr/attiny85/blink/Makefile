@@ -6,7 +6,7 @@
 
 #MCU   = atmega168p
 MCU   = attiny85
-F_CPU = 1000000UL  
+F_CPU = 16000000UL  
 BAUD  = 9600UL
 ## Also try BAUD = 19200 or 38400 if you're feeling lucky.
 
