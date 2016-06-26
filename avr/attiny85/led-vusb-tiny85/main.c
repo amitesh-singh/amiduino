@@ -1,107 +1,70 @@
+/*
+
+   connect D+ (without any caps, 100 pf(104) was creating issues) to INT0 (PB2)
+   connect D- (without any caps, 100 pf (104) was creating issues) to PB0
+   connect a LED with resistor on PB1 to Ground
+
+*/
+
 #include <avr/io.h>
-#include <avr/interrupt.h>
 #include <avr/wdt.h>
+#include <avr/interrupt.h>  /* for sei() */
+#include <util/delay.h>     /* for _delay_ms() */
 
+#include <avr/pgmspace.h>   /* required by usbdrv.h */
 #include "usbdrv.h"
+#include "oddebug.h"        /* This is also an example for using debug macros */
 
-#include <util/delay.h>
-#include <avr/eeprom.h>
-
+#define USB_LED_ON 1
 #define USB_LED_OFF 0
-#define USB_LED_ON  1
 
-static void calibrateOscillator(void)
+//This is where custom message is handled from HOST
+usbMsgLen_t usbFunctionSetup(uchar data[8])
 {
-   uchar       step = 128;
-   uchar       trialValue = 0, optimumValue;
-   int         x, optimumDev, targetValue = (unsigned)(1499 * (double)F_CPU / 10.5e6 + 0.5);
-
-   /* do a binary search: */
-   do{
-        OSCCAL = trialValue + step;
-        x = usbMeasureFrameLength();    // proportional to current real frequency
-        if(x < targetValue)             // frequency still too low
-          trialValue += step;
-        step >>= 1;
-   }while(step > 0);
-   /* We have a precision of +/- 1 for optimum OSCCAL here */
-   /* now do a neighborhood search for optimum value */
-   optimumValue = trialValue;
-   optimumDev = x; // this is certainly far away from optimum
-   for(OSCCAL = trialValue - 1; OSCCAL <= trialValue + 1; OSCCAL++){
-        x = usbMeasureFrameLength() - targetValue;
-        if(x < 0)
-          x = -x;
-        if(x < optimumDev){
-             optimumDev = x;
-             optimumValue = OSCCAL;
-        }
-   }
-   OSCCAL = optimumValue;
-}
-
-void    usbEventResetReady(void)
-{
-   cli();  // usbMeasureFrameLength() counts CPU cycles, so disable interrupts.
-   calibrateOscillator();
-   sei();
-   eeprom_write_byte(0, OSCCAL);   // store the calibrated value in EEPROM
-}
-
-// this gets called when custom control message is received
-USB_PUBLIC uchar usbFunctionSetup(uchar data[8])
-{
-   /*
-      typedef struct usbRequest
-      {
-      uchar       bmRequestType;
-      uchar       bRequest;
-      usbWord_t   wValue;
-      usbWord_t   wIndex;
-      usbWord_t   wLength;
-      }usbRequest_t;
-    */
    usbRequest_t *rq = (void *)data; // cast data to correct type
 
    switch(rq->bRequest)
      { // custom command is in the bRequest field
       case USB_LED_ON:
-         PORTB |= (1 << PB0); // turn LED on
+         PORTB |= (1 << PB1); // turn LED on
          return 0;
       case USB_LED_OFF:
-         PORTB &= ~(1 << PB0); // turn LED off
+         PORTB &= ~(1 << PB1); // turn LED off
          return 0;
      }
 
    return 0; // should not get here
 }
 
-int main()
+
+int __attribute__((noreturn)) main(void)
 {
-   int8_t i;
+   uchar   i;
+   DDRB |= (1 << PB1); //define DDRB before doing usb stuffs
 
-   DDRB |= (1 << PB0); // PB0 as output
-
-   wdt_enable(WDTO_1S); // enable 1s watchdog timer
-
+   wdt_enable(WDTO_1S);
+   /* Even if you don't use the watchdog, turn it off here. On newer devices,
+    * the status of the watchdog (on/off, period) is PRESERVED OVER RESET!
+    */
+   /* RESET status: all port bits are inputs without pull-up.
+    * That's the way we need D+ and D-. Therefore we don't need any
+    * additional hardware initialization.
+    */
+//   odDebugInit();
+//   DBG1(0x00, 0, 0);       /* debug output: main starts */
    usbInit();
-
-   usbDeviceDisconnect(); // enforce re-enumeration
-
-   for(i = 0; i<250; i++)
-     { // wait 500 ms
-        wdt_reset(); // keep the watchdog happy
-        _delay_ms(2);
-     }
+   usbDeviceDisconnect();  /* enforce re-enumeration, do this while interrupts are disabled! */
+   i = 0;
+   while(--i){             /* fake USB disconnect for > 250 ms */
+        wdt_reset();
+        _delay_ms(1);
+   }
    usbDeviceConnect();
-
-   sei(); // Enable interrupts after re-enumeration
-
-   while(1)
-     {
-        wdt_reset(); // keep the watchdog happy
+   sei();
+ //  DBG1(0x01, 0, 0);       /* debug output: main loop starts */
+   for(;;){                /* main event loop */
+  //      DBG1(0x02, 0, 0);   /* debug output: main loop iterates */
+        wdt_reset();
         usbPoll();
-     }
-
-   return 0;
+   }
 }

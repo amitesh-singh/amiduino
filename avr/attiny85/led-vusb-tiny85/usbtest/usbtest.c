@@ -128,7 +128,7 @@ int main(int argc, char **argv) {
           exit(1);
      }
 
-     handle = usbOpenDevice(0x16C0, "obdev.at", 0x05DC, "Template");
+     handle = usbOpenDevice(0x16C0, "ami.com", 0x03E8, "Mouse");
 
      if(handle == NULL) {
           fprintf(stderr, "Could not find USB device!\n");
