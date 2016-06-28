@@ -10,7 +10,7 @@
 #include <string.h>
 
 // this is libusb, see http://libusb.sourceforge.net/ 
-#include <usb.h>
+#include "./libusb/include/usb.h"
 
 // same as in main.c
 #define USB_LED_OFF 0
@@ -128,7 +128,7 @@ int main(int argc, char **argv) {
           exit(1);
      }
 
-     handle = usbOpenDevice(0x16C0, "codeandlife.com", 0x05DC, "USBexample");
+     handle = usbOpenDevice(0x16C0, "ami.com", 0x03E8, "Mouse");
 
      if(handle == NULL) {
           fprintf(stderr, "Could not find USB device!\n");

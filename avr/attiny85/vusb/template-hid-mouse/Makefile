@@ -7,14 +7,14 @@
 # License: GNU GPL v2 (see License.txt), GNU GPL v3 or proprietary (CommercialLicense.txt)
 # This Revision: $Id: Makefile 692 2008-11-07 15:07:40Z cs $
 
-DEVICE  = atmega16a
-F_CPU   = 16000000	# in Hz
-FUSE_L  = # see below for fuse values for particular devices
-FUSE_H  = 
-AVRDUDE = avrdude -c usbasp -p $(DEVICE) # edit this line for your programmer
+DEVICE=attiny85
+F_CPU   = 16500000    # in Hz
+FUSE_L  = 0xE1
+FUSE_H  = 0xDD
+AVRDUDE = avrdude -c usbasp  -p $(DEVICE)
 
-CFLAGS  = -Iusbdrv -I. -DDEBUG_LEVEL=0
-OBJECTS = usbdrv/usbdrv.o usbdrv/usbdrvasm.o usbdrv/oddebug.o main.o
+CFLAGS  = -Iusbdrv -I. -Ilibs-device -DDEBUG_LEVEL=0
+OBJECTS = usbdrv/usbdrv.o usbdrv/usbdrvasm.o usbdrv/oddebug.o main.o libs-device/osccal.o
 
 COMPILE = avr-gcc -Wall -Os -DF_CPU=$(F_CPU) $(CFLAGS) -mmcu=$(DEVICE)
 
@@ -123,7 +123,7 @@ flash: main.hex
 
 # rule for deleting dependent files (those which can be built by Make):
 clean:
-	rm -f main.hex main.lst main.obj main.cof main.list main.map main.eep.hex main.elf *.o usbdrv/*.o main.s usbdrv/oddebug.s usbdrv/usbdrv.s
+	rm -f main.hex main.lst main.obj main.cof main.list main.map main.eep.hex main.elf *.o usbdrv/*.o main.s usbdrv/oddebug.s usbdrv/usbdrv.s  libs-device/osccal.o
 
 # Generic rule for compiling C files:
 .c.o:
@@ -146,6 +146,7 @@ clean:
 # Since we don't want to ship the driver multipe times, we copy it into this project:
 usbdrv:
 	cp -r ../../../usbdrv .
+	cp -r ../../../libs-device .
 
 main.elf: usbdrv $(OBJECTS)	# usbdrv dependency only needed because we copy it
 	$(COMPILE) -o main.elf $(OBJECTS)
