@@ -1,0 +1,18 @@
+(9:48:35 PM) LeoNerd: _ami_: You might like to use an I²C chip like the PCF8574
+(9:48:35 PM) veek [~veek@unaffiliated/veek] entered the room.
+(9:48:35 PM) LeoNerd: I²C only needs two IO pins, whereas SPI would need -atleast- 3 and in practice I've never found an SPI-compatible shift register for -reading- parallel inputs
+(9:48:35 PM) LeoNerd: But really, you want to use something like a 16U2 or U4. Plenty of GPIO pins and talks USB natively
+(9:48:35 PM) orbiter left the room (quit: Ping timeout: 246 seconds).
+(9:48:36 PM) _ami_ left the room (quit: Ping timeout: 272 seconds).
+(9:48:36 PM) The_Coolest left the room (quit: Ping timeout: 244 seconds).
+(9:48:36 PM) skz81: _ami_1, for a joystick i guess I will do with no problem ! I?C can go up to 400KHz IIRC. If you send your data on USB @40Hz, it is more than needed I guess :)
+   (9:48:36 PM) The_Coolest [~Arthur_Li@bzq-79-178-133-225.red.bezeqint.net] entered the room.
+(9:48:36 PM) skz81: <LeoNerd> But really, you want to use something like  >> Maybe he choosed the hard way to learn something ?
+(9:57:54 PM) _ami_1: thanks guys! :)
+   (9:59:19 PM) robopal left the room (quit: Ping timeout: 276 seconds).
+   (10:01:30 PM) _ami_1: 74HC165 should work fine?
+   (10:02:02 PM) LeoNerd: Nop
+   (10:02:37 PM) LeoNerd: '165 isn't SPI'able for two reasons. 1: its MISO line doesn't hiZ - though in a single-slave scenario that likely doesn't matter; 2: it doesn't have a convenient SS line
+   (10:03:29 PM) LeoNerd: You -can- turn it SPI-capable if you add some buffer chips and whatnot around it, but by that point it would be easier/nicer/cheaper/smaller to start from a sensible MCU in the first place
+   (10:03:47 PM) _ami_1: ok, made a note of it.
+   (10:03:52 PM) _ami_1: thank  you.
