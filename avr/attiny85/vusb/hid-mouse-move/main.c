@@ -150,12 +150,14 @@ int __attribute__((noreturn)) main(void)
         DBG1(0x02, 0, 0);   /* debug output: main loop iterates */
         wdt_reset();
         usbPoll();
-        _delay_ms(100);
+        // This was resulting into timeout issue
+        //_delay_ms(100);
         if(usbInterruptIsReady() && updated == 1)
           /* called after every poll of the interrupt endpoint */
           {
              reportBuffer.dx += x;
              reportBuffer.dy += y;
+             x = 0; y = 0;
              usbSetInterrupt((void *)&reportBuffer, sizeof(reportBuffer));
              updated = 0;
           }
