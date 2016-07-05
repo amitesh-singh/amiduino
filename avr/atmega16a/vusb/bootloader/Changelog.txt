@@ -1,0 +1,3 @@
+avrusbboot.2006-06-25
+-----------------
+- first public version
