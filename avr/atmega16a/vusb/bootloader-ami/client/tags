@@ -1,0 +1,50 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CBootloader	cbootloader.cpp	/^CBootloader::CBootloader() {$/;"	f	class:CBootloader
+CBootloader	cbootloader.h	/^class CBootloader {$/;"	c
+CFlashmem	cflashmem.cpp	/^CFlashmem::CFlashmem(unsigned int pagesize) {$/;"	f	class:CFlashmem
+CFlashmem	cflashmem.h	/^class CFlashmem {$/;"	c
+CPage	cpage.cpp	/^CPage::CPage(unsigned int pageaddress, unsigned int pagesize) {$/;"	f	class:CPage
+CPage	cpage.h	/^class CPage {$/;"	c
+USBDEV_SHARED_PRODUCT	cbootloader.h	19;"	d
+USBDEV_SHARED_VENDOR	cbootloader.h	18;"	d
+_H_CPAGE_	cpage.h	11;"	d
+display	cflashmem.cpp	/^void CFlashmem::display() {$/;"	f	class:CFlashmem
+display	cpage.cpp	/^void CPage::display() {$/;"	f	class:CPage
+findDevice	cbootloader.cpp	/^static usb_dev_handle   *findDevice(void)$/;"	f	file:
+getData	cpage.cpp	/^unsigned char * CPage::getData() {$/;"	f	class:CPage
+getFirstpage	cflashmem.cpp	/^CPage * CFlashmem::getFirstpage() {$/;"	f	class:CFlashmem
+getNext	cpage.cpp	/^CPage* CPage::getNext() {$/;"	f	class:CPage
+getPageToAddress	cflashmem.cpp	/^CPage* CFlashmem::getPageToAddress(unsigned int nAddress) {$/;"	f	class:CFlashmem
+getPageaddress	cpage.cpp	/^unsigned int CPage::getPageaddress() {$/;"	f	class:CPage
+getPagesize	cbootloader.cpp	/^unsigned int CBootloader::getPagesize() {$/;"	f	class:CBootloader
+getPagesize	cpage.cpp	/^unsigned int CPage::getPagesize() {$/;"	f	class:CPage
+getPrev	cpage.cpp	/^CPage* CPage::getPrev() {$/;"	f	class:CPage
+insert	cpage.cpp	/^CPage* CPage::insert(unsigned int nAddress, unsigned char bValue) {$/;"	f	class:CPage
+insertData	cflashmem.cpp	/^void CFlashmem::insertData(unsigned int nAddress, unsigned char bData) {$/;"	f	class:CFlashmem
+m_nPageaddress	cpage.h	/^  int m_nPageaddress;$/;"	m	class:CPage
+m_nPagecount	cflashmem.h	/^  unsigned int m_nPagecount;$/;"	m	class:CFlashmem
+m_nPagesize	cflashmem.h	/^  unsigned int m_nPagesize;$/;"	m	class:CFlashmem
+m_nPagesize	cpage.h	/^  int m_nPagesize;$/;"	m	class:CPage
+m_pData	cpage.h	/^  unsigned char * m_pData;$/;"	m	class:CPage
+m_pFirstpage	cflashmem.h	/^  CPage* m_pFirstpage;$/;"	m	class:CFlashmem
+m_pLastpage	cflashmem.h	/^  CPage* m_pLastpage;$/;"	m	class:CFlashmem
+m_pNextpage	cpage.h	/^  CPage* m_pNextpage;$/;"	m	class:CPage
+m_pPrevpage	cpage.h	/^  CPage* m_pPrevpage;$/;"	m	class:CPage
+main	main.cpp	/^int main(int argc, char **argv) {$/;"	f
+readFromIHEX	cflashmem.cpp	/^void CFlashmem::readFromIHEX(char* filename) {$/;"	f	class:CFlashmem
+readhex	cflashmem.cpp	/^int readhex( FILE *fp, unsigned int *addr, unsigned char *data){$/;"	f
+setNext	cpage.cpp	/^void CPage::setNext(CPage* pPage) {$/;"	f	class:CPage
+setPrev	cpage.cpp	/^void CPage::setPrev(CPage* pPage) {$/;"	f	class:CPage
+sscanhex	cflashmem.cpp	/^int sscanhex( unsigned char *str, unsigned int *hexout, int n )$/;"	f
+startApplication	cbootloader.cpp	/^void CBootloader::startApplication() {$/;"	f	class:CBootloader
+usbGetStringAscii	cbootloader.cpp	/^static int  usbGetStringAscii(usb_dev_handle *dev, int index, int langid, char *buf, int buflen)$/;"	f	file:
+usbhandle	cbootloader.h	/^  usb_dev_handle *usbhandle;$/;"	m	class:CBootloader
+writePage	cbootloader.cpp	/^void CBootloader::writePage(CPage* page) {$/;"	f	class:CBootloader
+~CBootloader	cbootloader.cpp	/^CBootloader::~CBootloader() {$/;"	f	class:CBootloader
+~CFlashmem	cflashmem.cpp	/^CFlashmem::~CFlashmem() {$/;"	f	class:CFlashmem
+~CPage	cpage.cpp	/^CPage::~CPage() {$/;"	f	class:CPage

@@ -3,8 +3,7 @@
    ----------
    INT0 - PD2
    connect D+ (without any caps, 100 pf(104) was creating issues) to INT0 (PD2)
-   connect D- (without any caps, 100 pf (104) was creating issues) to PD0
-
+   connect D- (without any caps, 100 pf (104) was creating issues) to PD4
 */
 
 #include <avr/io.h>
@@ -12,11 +11,8 @@
 #include <avr/interrupt.h>  /* for sei() */
 #include <util/delay.h>     /* for _delay_ms() */
 
-#include <avr/boot.h>
-
-#include <avr/pgmspace.h>   /* required by usbdrv.h */
+#include <avr/boot.h> //for boot related functions
 #include "usbdrv.h"
-#include "oddebug.h"        /* This is also an example for using debug macros */
 
 #define GET_PAGE_SIZE 1
 #define LEAVE_BOOTLOADER 2
@@ -26,13 +22,13 @@ void (*jump_to_app)(void) = 0x0000;
 
 void leave_bootloader()
 {
-   uchar temp;
-   cli();
-   boot_rww_enable(); //enable the rww region
-   temp = GICR;
-   GICR = temp | (1 << IVCE); // enable change of interrupt vectors
-   GICR = temp & ~(1 << IVSEL); // move interrupts to application flash section
-//   asm("jmp 0x0000");
+   wdt_disable();
+   //better than boot_rww_enable() 
+   boot_rww_enable_safe(); //enable the rww region and wait for job to be finished
+   //boot_rww_enable(); //enable the rww region
+   GICR  = (1 << IVCE); // enable change of interrupt vectors
+   GICR = (0 << IVSEL); // move interrupts to application flash section
+// asm("jmp 0x0000"); -- this should also work
    jump_to_app();
 }
 
@@ -42,6 +38,7 @@ static int8_t state = STATE_IDLE;
 static unsigned int page_address;
 static unsigned int page_offset;
 static uchar replyBuf[8];
+
 //This is where custom message is handled from HOST
 usbMsgLen_t usbFunctionSetup(uchar data[8])
 {
@@ -49,6 +46,7 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
 
    switch(rq->bRequest)
      { // custom command is in the bRequest field
+        //atmega16a SPM_PAGESIZE is  128 bytes
       case GET_PAGE_SIZE:
          replyBuf[0] = SPM_PAGESIZE >> 8;
          replyBuf[1] = SPM_PAGESIZE & 0xff;
@@ -58,7 +56,7 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
          //We are leaving bootloader.. disconnect usb
          usbDeviceDisconnect();
          leave_bootloader();
-         break;
+         return 0;
       case UPLOAD_NEW_PROGRAM:
          state = STATE_WRITE;
 
