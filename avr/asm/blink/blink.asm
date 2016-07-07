@@ -15,19 +15,31 @@
 Loop:
    out PORTB,r16
    ; delay here
-   ldi r21, 100
-   rcall delay
+   rcall delay100ms
    out PORTB,r17
    ;delay here
-   ldi r21, 100
-   rcall delay
+   rcall delay100ms
    rjmp Loop ; just loop baby
 
+delay100ms:
+   clr r19
+   loopme:
+      nop
+      rcall delay
+      rcall delay
+      rcall delay
+      rcall delay
+      dec r19
+      brne loopme
+
 delay:
-   clr r17
+   clr r18
    sec_count:
-      cpse r17, r21
-      rjmp sec_count
+      nop
+      nop
+      nop
+      nop
+      nop
+      dec r18
+      brne sec_count
    ret
-
-

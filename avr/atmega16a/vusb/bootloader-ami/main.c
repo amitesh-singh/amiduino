@@ -39,6 +39,8 @@ static unsigned int page_address;
 static unsigned int page_offset;
 static uchar replyBuf[8];
 
+static int8_t isbootloader_exit = 0;
+
 //This is where custom message is handled from HOST
 usbMsgLen_t usbFunctionSetup(uchar data[8])
 {
@@ -54,8 +56,9 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
          return 2;
       case LEAVE_BOOTLOADER:
          //We are leaving bootloader.. disconnect usb
-         usbDeviceDisconnect();
-         leave_bootloader();
+         isbootloader_exit = 1; // exit gracefully
+         //usbDeviceDisconnect(); 
+         //leave_bootloader();
          return 0;
       case UPLOAD_NEW_PROGRAM:
          state = STATE_WRITE;
@@ -123,5 +126,10 @@ int __attribute__((noreturn)) main(void)
      {                /* main event loop */
         wdt_reset();
         usbPoll();
+        if (isbootloader_exit)
+          {
+             usbDeviceDisconnect();
+             leave_bootloader();
+          }
      }
 }
