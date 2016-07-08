@@ -31,6 +31,7 @@ delay100ms:
       rcall delay
       dec r19
       brne loopme
+      ret
 
 delay:
    clr r18
