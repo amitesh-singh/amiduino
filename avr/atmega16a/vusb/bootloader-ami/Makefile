@@ -14,7 +14,7 @@ F_CPU = 16000000
 BOOTLOADER_ADDRESS = 3800
 MCU = atmega16a
 
-LDFLAGS += -Wl,--section-start=.text=$(BOOTLOADER_ADDRESS)
+LDFLAGS += -Wl,--relax  -Wl,--section-start=.text=$(BOOTLOADER_ADDRESS)
 
 SERIAL = `echo /dev/tty.KeySerial*`
 UISP = uisp -dprog=avr910 -dserial=$(SERIAL) -dpart=auto
