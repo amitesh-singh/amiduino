@@ -17,13 +17,14 @@
 #define GET_PAGE_SIZE 1
 #define LEAVE_BOOTLOADER 2
 #define UPLOAD_NEW_PROGRAM 3
+#define READ_PROGRAM 4
 
 void (*jump_to_app)(void) = 0x0000;
 
 void leave_bootloader()
 {
    wdt_disable();
-   //better than boot_rww_enable() 
+   //better than boot_rww_enable()
    boot_rww_enable_safe(); //enable the rww region and wait for job to be finished
    //boot_rww_enable(); //enable the rww region
    GICR  = (1 << IVCE); // enable change of interrupt vectors
@@ -34,6 +35,8 @@ void leave_bootloader()
 
 #define STATE_IDLE 0
 #define STATE_WRITE 1
+#define STATE_READ 2
+
 static int8_t state = STATE_IDLE;
 static unsigned int page_address;
 static unsigned int page_offset;
@@ -57,7 +60,7 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
       case LEAVE_BOOTLOADER:
          //We are leaving bootloader.. disconnect usb
          isbootloader_exit = 1; // exit gracefully
-         //usbDeviceDisconnect(); 
+         //usbDeviceDisconnect();
          //leave_bootloader();
          return 0;
       case UPLOAD_NEW_PROGRAM:
@@ -72,9 +75,27 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
          sei();
          boot_spm_busy_wait(); //wait until page is erased
          return USB_NO_MSG; //usbfunctionwrite
+         //we are reading each page (128 bytes) in one request
+         case READ_PROGRAM:
+            state = STATE_READ;
+            page_address = (rq->wIndex.word << 8) | rq->wValue.word;
+            page_offset = 0;
+            return USB_NO_MSG; // call usbFunctionRead
      }
 
    return 0; // should not get here
+}
+
+uchar usbFunctionRead(uchar *data, uchar len)
+{
+  uchar i = 0;
+  for (; i < len; ++i)
+  {
+    //only reading flash section
+    data[i] = pgm_read_byte(page_address++);
+  }
+
+  return i;
 }
 
 uchar usbFunctionWrite(uchar *data, uchar len)
