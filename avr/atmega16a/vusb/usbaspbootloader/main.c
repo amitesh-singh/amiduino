@@ -11,7 +11,7 @@
 */
 
 #include <avr/io.h>
-#include <avr/wdt.h>
+//#include <avr/wdt.h>
 #include <avr/interrupt.h>  /* for sei() */
 #include <util/delay.h>     /* for _delay_ms() */
 
@@ -31,7 +31,7 @@ void (*jump_to_app)(void) = 0x0000;
 
 void leave_bootloader()
 {
-   wdt_disable();
+   //wdt_disable();
    //better than boot_rww_enable()
    //boot_rww_enable_safe(); //enable the rww region and wait for job to be finished
    boot_rww_enable(); //enable the rww region
@@ -41,16 +41,15 @@ void leave_bootloader()
    jump_to_app();
 }
 
-static unsigned int page_address;
-static uchar page_size = 128;
-static uchar page_offset;
-static uchar replyBuf[4];
+unsigned int page_address;
+uchar page_size;
+uchar page_offset;
+uchar replyBuf[4];
 
-static uchar isbootloader_exit = 0;
+uchar isbootloader_exit = 0;
 
-
-static int bytes_remaining = 0;
-static uchar is_last_page = 0;
+int bytes_remaining;
+uchar is_last_page;
 //This is where custom message is handled from HOST
 usbMsgLen_t usbFunctionSetup(uchar data[8])
 {
@@ -170,30 +169,29 @@ uchar usbFunctionWrite(uchar *data, uchar len)
 
 int main(void)
 {
-   uchar   i;
+   uchar   i = 0;
 
    //This is important or else bootloader won't get loaded
    GICR = (1 << IVCE);  /* enable change of interrupt vectors */
    GICR = (1 << IVSEL); /* move interrupts to boot flash section */
 
-   wdt_enable(WDTO_1S);
+   //wdt_enable(WDTO_1S);
    usbInit();
    usbDeviceDisconnect();  /* enforce re-enumeration, do this while interrupts are disabled! */
-   i = 0;
    while(--i)
      {             /* fake USB disconnect for > 250 ms */
-        wdt_reset();
+        //wdt_reset();
         _delay_ms(1);
      }
    usbDeviceConnect();
    sei();
    while(1)
      {                /* main event loop */
-        wdt_reset();
+        //wdt_reset();
         usbPoll();
         if (isbootloader_exit)
           {
-             _delay_ms(100);
+             _delay_ms(10);
              break;
           }
 
