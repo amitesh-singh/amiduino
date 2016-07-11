@@ -56,6 +56,10 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
      { // custom command is in the bRequest field
         //atmega16a SPM_PAGESIZE is  128 bytes
       case 5: // USBASP_ENABLPROG
+      case 10: // USBASP_FUNC_SETISPSCK 10
+         // This fixes the annoying message i got avrdude: warning: cannot set sck period. please check for usbasp firmware update.
+         // there is no spi speed concept here, we are just emulating the usbasp programmer into our
+         // bootloader, we really don't bother. so just satisfy avrdude by sending a fake reply. ;P
          len = 1;
          break;
 
