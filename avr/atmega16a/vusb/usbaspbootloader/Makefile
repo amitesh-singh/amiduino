@@ -14,7 +14,7 @@ F_CPU = 16000000
 BOOTLOADER_ADDRESS = 3800
 MCU = atmega16a
 
-LDFLAGS += -Wl,--relax  -Wl,--section-start=.text=$(BOOTLOADER_ADDRESS)
+LDFLAGS += -Os -Wl,--relax -Wl,--gc-sections  -Wl,--section-start=.text=$(BOOTLOADER_ADDRESS)
 
 SERIAL = `echo /dev/tty.KeySerial*`
 UISP = uisp -dprog=avr910 -dserial=$(SERIAL) -dpart=auto
@@ -22,7 +22,7 @@ UISP = uisp -dprog=avr910 -dserial=$(SERIAL) -dpart=auto
 # to a Keyspan USB to serial converter to a Mac running Mac OS X.
 # Choose your favorite programmer and interface.
 
-COMPILE = avr-gcc -DF_CPU=$(F_CPU) -Wall -Os -Iusbdrv -I. -mmcu=$(MCU)
+COMPILE = avr-gcc -w -ffunction-sections -fdata-sections -MMD -DF_CPU=$(F_CPU) -Wall -Os -Iusbdrv -I. -mmcu=$(MCU)
 #-DDEBUG_LEVEL=2
 # NEVER compile the final product with debugging! Any debug output will
 # distort timing so that the specs can't be met.

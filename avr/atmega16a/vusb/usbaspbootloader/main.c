@@ -1,9 +1,13 @@
 /*
-   Atmega16A
+   Atmega16A - vusb based bootloader for atmega16a
    ----------
    INT0 - PD2
    connect D+ (without any caps, 100 pf(104) was creating issues) to INT0 (PD2)
    connect D- (without any caps, 100 pf (104) was creating issues) to PD4
+   Author: Amitesh Singh <singh.amitesh at gmail.com>
+   how to use:
+   avrdude -c usbasp-clone -p atmega16 
+   avrdude -c usbasp-clone -p atmega16 -U flash:w:somebinary.hex
 */
 
 #include <avr/io.h>
@@ -18,6 +22,10 @@
 #define USBASP_DISCONNECT  2 // we are not handling this case.
 #define USBASP_TRANSMIT    3 // this is for giving information like device sign, lfuse, hfuse, efuse 
 #define USBASP_READFLASH   4 // this reads the whole flash
+#define USBASP_ENABLEPROG  5 // enable th prog, we do need to return 0 with len = 1
+#define USBASP_SETISPSCK   10 // this sets the speed of spi. we don't bother abt it. I added this to shut 
+                             // the annoying message i got from avrdude.
+#define USBASP_WRITEFLASH   6 // write to flash - into app section
 
 void (*jump_to_app)(void) = 0x0000;
 
@@ -25,38 +33,36 @@ void leave_bootloader()
 {
    wdt_disable();
    //better than boot_rww_enable()
-   boot_rww_enable_safe(); //enable the rww region and wait for job to be finished
-   //boot_rww_enable(); //enable the rww region
+   //boot_rww_enable_safe(); //enable the rww region and wait for job to be finished
+   boot_rww_enable(); //enable the rww region
    GICR  = (1 << IVCE); // enable change of interrupt vectors
    GICR = (0 << IVSEL); // move interrupts to application flash section
 // asm("jmp 0x0000"); -- this should also work
    jump_to_app();
 }
 
-#define STATE_IDLE 0
-#define STATE_WRITE 1
-#define STATE_READ 2
-
-static int8_t state = STATE_IDLE;
 static unsigned int page_address;
+static uchar page_size = 128;
+static uchar page_offset;
 static uchar replyBuf[4];
+
+static uchar isbootloader_exit = 0;
 
 
 static int bytes_remaining = 0;
 static uchar is_last_page = 0;
-static int8_t isbootloader_exit = 0;
-static uchar device_signature[] = {0x1e, 0x94, 0x03};
 //This is where custom message is handled from HOST
 usbMsgLen_t usbFunctionSetup(uchar data[8])
 {
+   static uchar device_signature[] = {0x1e, 0x94, 0x03};
    usbRequest_t *rq = (void *)data; // cast data to correct type
    uchar len = 0;
 
    switch(rq->bRequest)
      { // custom command is in the bRequest field
         //atmega16a SPM_PAGESIZE is  128 bytes
-      case 5: // USBASP_ENABLPROG
-      case 10: // USBASP_FUNC_SETISPSCK 10
+      case USBASP_ENABLEPROG: // USBASP_ENABLPROG
+      case USBASP_SETISPSCK: // USBASP_FUNC_SETISPSCK 10
          // This fixes the annoying message i got avrdude: warning: cannot set sck period. please check for usbasp firmware update.
          // there is no spi speed concept here, we are just emulating the usbasp programmer into our
          // bootloader, we really don't bother. so just satisfy avrdude by sending a fake reply. ;P
@@ -85,20 +91,36 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
            }
          len = 4;
          break;
+         //TODO: make read code smaller, write everything in asm
+         // macro for read function is disabled as the size was crossing > 2k
       case USBASP_READFLASH:
-         state = STATE_READ;
          page_address = rq->wValue.word;
          bytes_remaining = rq->wLength.bytes[0];
          is_last_page = rq->wIndex.bytes[1] & 0x02;
 
          len = USB_NO_MSG;
          break;
+      case USBASP_WRITEFLASH:
+         page_address = rq->wValue.word;
+         page_size = rq->wIndex.bytes[0]; //128
+         page_offset = 0;
+
+         eeprom_busy_wait();
+         cli();
+         boot_page_erase(page_address);
+         sei();
+         boot_spm_busy_wait(); //wait until page is erased
+         len = USB_NO_MSG;
+
+         break;
          //replyBuf[0] = SPM_PAGESIZE >> 8;
          //replyBuf[1] = SPM_PAGESIZE & 0xff;
          //usbMsgPtr = replyBuf;
          //return 2;
       case USBASP_DISCONNECT:
-        // isbootloader_exit = 1; // exit gracefully
+         //usbDeviceDisconnect();
+         //leave_bootloader();
+         isbootloader_exit = 1; // exit gracefully
          //return 0;
          break;
      }
@@ -123,7 +145,30 @@ uchar usbFunctionRead(uchar *data, uchar len)
   return i;
 }
 
-int __attribute__((noreturn)) main(void)
+uchar usbFunctionWrite(uchar *data, uchar len)
+{
+   uchar i= 0;
+
+   for (; i < len; i+=2)
+     {
+        cli();
+        boot_page_fill(page_address + page_offset, data[i] | data[i + 1] << 8);
+        sei();
+        page_offset += 2;
+        if (page_offset >= page_size)
+          {
+             cli();
+             boot_page_write(page_address);
+             sei();
+             boot_spm_busy_wait();
+             return 1; //done with writing
+          }
+     }
+
+   return 0;
+}
+
+int main(void)
 {
    uchar   i;
 
@@ -148,8 +193,13 @@ int __attribute__((noreturn)) main(void)
         usbPoll();
         if (isbootloader_exit)
           {
-             usbDeviceDisconnect();
-             leave_bootloader();
+             _delay_ms(100);
+             break;
           }
+
      }
+   usbDeviceDisconnect();
+   leave_bootloader();
+
+   return 0;
 }
