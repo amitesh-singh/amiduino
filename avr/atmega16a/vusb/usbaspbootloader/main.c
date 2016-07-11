@@ -50,18 +50,21 @@ static uchar device_signature[] = {0x1e, 0x94, 0x03};
 usbMsgLen_t usbFunctionSetup(uchar data[8])
 {
    usbRequest_t *rq = (void *)data; // cast data to correct type
-   uchar rval = 0;
+   uchar len = 0;
 
    switch(rq->bRequest)
      { // custom command is in the bRequest field
         //atmega16a SPM_PAGESIZE is  128 bytes
+      case 5: // USBASP_ENABLPROG
+         len = 1;
+         break;
+
       case USBASP_TRANSMIT:
          replyBuf[1] = rq->wValue.bytes[0];
          replyBuf[2] = rq->wValue.bytes[1];
          if (rq->wValue.bytes[0] == 0x30)
            {
-              rval = rq->wIndex.bytes[0] & 3;
-              replyBuf[3] = device_signature[rval];
+              replyBuf[3] = device_signature[rq->wIndex.bytes[0] & 3];
            }
          else if (rq->wValue.bytes[0] == 0x58 && rq->wValue.bytes[1] == 0x00)
            {
@@ -76,27 +79,28 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
            {
               replyBuf[3] = boot_lock_fuse_bits_get(GET_HIGH_FUSE_BITS);
            }
-         usbMsgPtr = replyBuf;
-         return 4;
+         len = 4;
+         break;
       case USBASP_READFLASH:
          state = STATE_READ;
          page_address = rq->wValue.word;
          bytes_remaining = rq->wLength.bytes[0];
          is_last_page = rq->wIndex.bytes[1] & 0x02;
 
-         return USB_NO_MSG;
-
+         len = USB_NO_MSG;
+         break;
          //replyBuf[0] = SPM_PAGESIZE >> 8;
          //replyBuf[1] = SPM_PAGESIZE & 0xff;
          //usbMsgPtr = replyBuf;
-         return 2;
+         //return 2;
       case USBASP_DISCONNECT:
         // isbootloader_exit = 1; // exit gracefully
-         return 0;
+         //return 0;
+         break;
      }
    usbMsgPtr = replyBuf;
 
-   return 0; // should not get here
+   return len; // should not get here
 }
 
 uchar usbFunctionRead(uchar *data, uchar len)
