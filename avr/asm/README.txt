@@ -26,4 +26,6 @@ To generate map file: avra -m file.map file.asm
 To generate list file: avra -l file.list file.asm
 
 
+We can use atmel avrasm2.exe (located in ./bin) too
+
 
