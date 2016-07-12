@@ -1,5 +1,5 @@
 ; blink 1 second without using timer
-
+; Author: ami <singh.amitesh at gmail.com>
 ; device atmega16a, 8 Mhz
 
 .device ATmega16
