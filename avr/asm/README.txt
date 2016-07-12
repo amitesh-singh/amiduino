@@ -19,3 +19,11 @@ Notes
  ldi r16, 0b00000101
  mov r2, r16
 
+avra quick tips
+----------------
+
+To generate map file: avra -m file.map file.asm
+To generate list file: avra -l file.list file.asm
+
+
+
