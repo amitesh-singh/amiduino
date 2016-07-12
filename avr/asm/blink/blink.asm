@@ -1,5 +1,7 @@
 
 .include "../defs/m16def.inc"
+.cseg ; this code goes into flash section
+.org 0 ; start assembling at address 0
 
    ; initialize stack ptr
    ldi r16, LOW(RAMEND)
