@@ -9,6 +9,9 @@ _start:
    ldi r16, HIGH(RAMEND) ; mov won't work
    out SPH, r16
    rcall set_portb_high
+
+   loop_always:
+      rjmp loop_always
    ret
 
 set_portb_high:
