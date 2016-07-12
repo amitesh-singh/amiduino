@@ -55,7 +55,3 @@ _delay_1s:
    brne delay_1 ; 2clk
 
 ret
-
-  
-	
-

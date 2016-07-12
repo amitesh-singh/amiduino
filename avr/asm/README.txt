@@ -2,6 +2,8 @@ install avra
 ------------
 - sudo apt-get install avra
 
+Most of programs are for atmega16
+
 how to compile
 --------------
 - avra blink.asm

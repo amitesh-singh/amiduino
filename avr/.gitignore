@@ -7,3 +7,5 @@ CMakeFiles/
 CMakeCache.txt
 *.eep
 cmake_install.cmake
+*.cof
+*.obj
