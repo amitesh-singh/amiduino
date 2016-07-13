@@ -72,6 +72,13 @@ AVR project
 4. https://www.obdev.at/products/vusb/remotesensor.html
 5. https://www.obdev.at/products/vusb/prjobdev.html
 6. https://www.obdev.at/products/vusb/projects.html
+7. 
+http://www.semicomplete.com/projects/xdotool/ 
+Xdotool can be used to generate fake key/mouse events. you could use libxdo3 library 
+to integerate this in your code too.
+xdotool key --clearmodifiers ctrl+l
+xdotool key j --> prints j
+
 
 http://www.recursion.jp/prose/avrcdc/cdc-232.html
 

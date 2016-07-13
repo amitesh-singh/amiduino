@@ -30,4 +30,7 @@ To generate list file: avra -l file.list file.asm
 
 We can use atmel avrasm2.exe (located in ./bin) too
 
+good avr asm simualator for windows
+-----------------------------------
 
+http://www.amctools.com/atmel.htm
