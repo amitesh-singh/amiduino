@@ -18,4 +18,5 @@ set_portb_high:
    ldi r16, 0b11111111
    out DDRB, r16 ; set port OUTPUT
    out PORTB, r16 ; set PORTB high, all pins, PB0...7
+   jmp PC ; keep looping here
    ret
