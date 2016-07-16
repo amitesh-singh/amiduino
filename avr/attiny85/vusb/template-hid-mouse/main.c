@@ -97,21 +97,29 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
    /* The following requests are never used. But since they are required by
     * the specification, we implement them in this example.
     */
-   if((rq->bmRequestType & USBRQ_TYPE_MASK) == USBRQ_TYPE_CLASS){    /* class request type */
+   if((rq->bmRequestType & USBRQ_TYPE_MASK) == USBRQ_TYPE_CLASS)
+     {    /* class request type */
         DBG1(0x50, &rq->bRequest, 1);   /* debug output: print our request */
-        if(rq->bRequest == USBRQ_HID_GET_REPORT){  /* wValue: ReportType (highbyte), ReportID (lowbyte) */
+        if(rq->bRequest == USBRQ_HID_GET_REPORT)
+          {  /* wValue: ReportType (highbyte), ReportID (lowbyte) */
              /* we only have one report type, so don't look at wValue */
              usbMsgPtr = (void *)&reportBuffer;
              return sizeof(reportBuffer);
-        }else if(rq->bRequest == USBRQ_HID_GET_IDLE){
+          }
+        else if(rq->bRequest == USBRQ_HID_GET_IDLE)
+          {
              usbMsgPtr = &idleRate;
              return 1;
-        }else if(rq->bRequest == USBRQ_HID_SET_IDLE){
+          }
+        else if(rq->bRequest == USBRQ_HID_SET_IDLE)
+          {
              idleRate = rq->wValue.bytes[1];
-        }
-   }else{
+          }
+     }
+   else
+     {
         /* no vendor specific requests implemented */
-   }
+     }
    return 0;   /* default for not implemented requests: return no data back to host */
 }
 
