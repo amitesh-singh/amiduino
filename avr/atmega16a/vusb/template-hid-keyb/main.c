@@ -40,7 +40,38 @@ const PROGMEM char usbHidReportDescriptor[USB_CFG_HID_REPORT_DESCRIPTOR_LENGTH] 
      0x81, 0x00,                    //   INPUT (Data,Ary,Abs)
      0xc0                           // END_COLLECTION
 };
+/* Reportbuffer format:
 
+	0  Modifier byte
+	1  reserved
+	2  keycode array (0)
+	3  keycode array (1)
+	4  keycode array (2)
+	5  keycode array (3)
+	6  keycode array (4)
+	7  keycode array (5)
+	
+	<< This is the standard usb-keyboard reportbuffer. It allows for 6 simultaneous keypresses to be detected (excl. modifier keys). In this application we only use 1, so the last 5 bytes in this buffer will always remain 0. >>
+	<< I decided not to optimize this in order to make it easy to add extra keys that can be pressed simultaneously>>
+	
+   Modifier byte: 8 bits, each individual bit represents one of the modifier keys.
+
+   	bit0  LEFT CTRL		(1<<0)
+	bit1  LEFT SHIFT	(1<<1)
+	bit2  LEFT ALT		(1<<2)
+	bit3  LEFT GUI		(1<<3)
+	bit4  RIGHT CTRL	(1<<4)
+	bit5  RIGHT SHIFT	(1<<5)
+	bit6  RIGHT ALT		(1<<6)
+	bit7  RIGHT GUI		(1<<7)
+
+	an example of a reportBuffer for a CTRL+ALT+Delete keypress:
+
+	{((1<<0)+(1<<2)),0,76,0,0,0,0,0}
+
+	the first byte holds both the LEFT CTRL and LEFT  modifier keys the 3rd byte holds the delete key (== decimal 76)
+
+*/
 typedef struct {
      uint8_t modifier;
      uint8_t reserved;

@@ -22,6 +22,7 @@ _start:
 
   sbi DDRB, 0    ; can use ldi r16, 0b00000001 ; out DDRB, r16 ; since we are 
                  ; only setting 1 byte, just use sbi instead.
+                 ; to clear the bit use cbi; e.g. cbi DDRB, 0
   clr r17
 
 loop:
