@@ -92,6 +92,7 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
          break;
          //TODO: make read code smaller, write everything in asm
          // macro for read function is disabled as the size was crossing > 2k
+         /*
       case USBASP_READFLASH:
          page_address = rq->wValue.word;
          bytes_remaining = rq->wLength.bytes[0];
@@ -99,6 +100,8 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
 
          len = USB_NO_MSG;
          break;
+         */
+
       case USBASP_WRITEFLASH:
          page_address = rq->wValue.word;
          page_size = rq->wIndex.bytes[0]; //128
@@ -128,6 +131,7 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
    return len; // should not get here
 }
 
+/*
 uchar usbFunctionRead(uchar *data, uchar len)
 {
   uchar i = 0;
@@ -143,6 +147,7 @@ uchar usbFunctionRead(uchar *data, uchar len)
 
   return i;
 }
+*/
 
 uchar usbFunctionWrite(uchar *data, uchar len)
 {
@@ -181,7 +186,7 @@ int main(void)
    while(--i)
      {             /* fake USB disconnect for > 250 ms */
         //wdt_reset();
-        _delay_ms(1);
+        _delay_ms(2);
      }
    usbDeviceConnect();
    sei();
