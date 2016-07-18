@@ -33,8 +33,8 @@ void leave_bootloader()
 {
    //wdt_disable();
    //better than boot_rww_enable()
-   //boot_rww_enable_safe(); //enable the rww region and wait for job to be finished
-   boot_rww_enable(); //enable the rww region
+   boot_rww_enable_safe(); //enable the rww region and wait for job to be finished
+   //boot_rww_enable(); //enable the rww region
    GICR  = (1 << IVCE); // enable change of interrupt vectors
    GICR = (0 << IVSEL); // move interrupts to application flash section
 // asm("jmp 0x0000"); -- this should also work
@@ -196,12 +196,13 @@ int main(void)
         usbPoll();
         if (isbootloader_exit)
           {
-             _delay_ms(10);
              break;
           }
 
      }
    usbDeviceDisconnect();
+   //give a delay for 100ms is required
+   _delay_ms(100);
    leave_bootloader();
 
    return 0;
