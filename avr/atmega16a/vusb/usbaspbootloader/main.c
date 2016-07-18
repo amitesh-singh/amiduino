@@ -41,15 +41,14 @@ void leave_bootloader()
    jump_to_app();
 }
 
-unsigned int page_address;
-uchar page_size;
-uchar page_offset;
-uchar replyBuf[4];
+static unsigned int page_address;
+static uchar page_offset;
+static uchar isLastPage = 0;
+static uchar replyBuf[4];
 
-uchar isbootloader_exit = 0;
+static uchar isbootloader_exit = 0;
 
-int bytes_remaining;
-uchar is_last_page;
+static int bytes_remaining;
 //This is where custom message is handled from HOST
 usbMsgLen_t usbFunctionSetup(uchar data[8])
 {
@@ -104,7 +103,8 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
 
       case USBASP_WRITEFLASH:
          page_address = rq->wValue.word;
-         page_size = rq->wIndex.bytes[0]; //128
+         isLastPage = rq->wIndex.bytes[1] & 0x02;
+         bytes_remaining =  rq->wLength.bytes[0];
          page_offset = 0;
 
          eeprom_busy_wait();
@@ -151,7 +151,14 @@ uchar usbFunctionRead(uchar *data, uchar len)
 
 uchar usbFunctionWrite(uchar *data, uchar len)
 {
-   uchar i= 0;
+   uchar i= 0, isLast;
+   if (len > bytes_remaining)
+     {
+        len = bytes_remaining;
+     }
+   bytes_remaining -= len;
+   isLast = bytes_remaining == 0;
+
 
    for (; i < len; i+=2)
      {
@@ -159,7 +166,7 @@ uchar usbFunctionWrite(uchar *data, uchar len)
         boot_page_fill(page_address + page_offset, data[i] | data[i + 1] << 8);
         sei();
         page_offset += 2;
-        if (page_offset >= page_size)
+        if (page_offset >= SPM_PAGESIZE || (isLast && i >= len && isLastPage))
           {
              cli();
              boot_page_write(page_address);
