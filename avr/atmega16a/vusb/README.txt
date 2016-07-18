@@ -186,3 +186,48 @@ keyboard notes picked from VUSBmorse
 	the first byte holds both the LEFT CTRL and LEFT  modifier keys the 3rd byte holds the delete key (== decimal 76)
 
 */
+
+
+usbasp bootloader write flash debug message with avrdude
+----------------------------------------------------------
+
+avrdude: reading input file "main.hex"
+avrdude: input file main.hex auto detected as Intel Hex
+avrdude: writing flash (1970 bytes):
+
+Writing |                                                    | 0% 0.00savrdude: usbasp_program_paged_write("f
+lash", 0x0, 128)
+Writing | ###                                                | 6% 0.01savrdude: usbasp_program_paged_write("f
+lash", 0x80, 128)
+Writing | ######                                             | 12% 0.02savrdude: usbasp_program_paged_write("
+flash", 0x100, 128)
+Writing | #########                                          | 18% 0.04savrdude: usbasp_program_paged_write("
+flash", 0x180, 128)
+Writing | #############                                      | 25% 0.05savrdude: usbasp_program_paged_write("
+flash", 0x200, 128)
+Writing | ################                                   | 31% 0.06savrdude: usbasp_program_paged_write("
+flash", 0x280, 128)
+Writing | ###################                                | 37% 0.07savrdude: usbasp_program_paged_write("
+flash", 0x300, 128)
+Writing | ######################                             | 43% 0.09savrdude: usbasp_program_paged_write("
+flash", 0x380, 128)
+Writing | #########################                          | 50% 0.10savrdude: usbasp_program_paged_write("
+flash", 0x400, 128)
+Writing | ############################                       | 56% 0.11savrdude: usbasp_program_paged_write("
+flash", 0x480, 128)
+Writing | ###############################                    | 62% 0.12savrdude: usbasp_program_paged_write("
+flash", 0x500, 128)
+Writing | ##################################                 | 68% 0.14savrdude: usbasp_program_paged_write("
+flash", 0x580, 128)
+Writing | ######################################             | 75% 0.15savrdude: usbasp_program_paged_write("
+flash", 0x600, 128)
+Writing | #########################################          | 81% 0.16savrdude: usbasp_program_paged_write("
+flash", 0x680, 128)
+Writing | ############################################       | 87% 0.17savrdude: usbasp_program_paged_write("
+flash", 0x700, 128)
+Writing | ###############################################    | 93% 0.19savrdude: usbasp_program_paged_write("
+flash", 0x780, 128)
+Writing | ################################################## | 100% 0.20s
+
+avrdude: 1970 bytes of flash written
+
