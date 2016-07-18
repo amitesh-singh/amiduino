@@ -4,14 +4,14 @@
    INT0 - PD2
    connect D+ (without any caps, 100 pf(104) was creating issues) to INT0 (PD2)
    connect D- (without any caps, 100 pf (104) was creating issues) to PD4
-   Author: Amitesh Singh <singh.amitesh at gmail.com>
    how to use:
    avrdude -c usbasp-clone -p atmega16 
    avrdude -c usbasp-clone -p atmega16 -U flash:w:somebinary.hex
+   Author: Amitesh Singh <singh.amitesh at gmail.com> Copyright 2016
 */
 
 #include <avr/io.h>
-//#include <avr/wdt.h>
+#include <avr/wdt.h>
 #include <avr/interrupt.h>  /* for sei() */
 #include <util/delay.h>     /* for _delay_ms() */
 
@@ -31,7 +31,7 @@ void (*jump_to_app)(void) = 0x0000;
 
 void leave_bootloader()
 {
-   //wdt_disable();
+   wdt_disable();
    //better than boot_rww_enable()
    boot_rww_enable_safe(); //enable the rww region and wait for job to be finished
    //boot_rww_enable(); //enable the rww region
@@ -43,7 +43,7 @@ void leave_bootloader()
 
 static unsigned int page_address;
 static uchar page_offset;
-static uchar isLastPage = 0;
+//static uchar isLastPage = 0;
 static uchar replyBuf[4];
 
 static uchar isbootloader_exit = 0;
@@ -102,16 +102,25 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
          */
 
       case USBASP_WRITEFLASH:
+         // USBAP_FUNC_WRITEFLASH: byte1, byte2, byte3, byte4
+         // byte1, byte2 => page address
+         // byte3 - bytes to be sent
+         // byte4 - always 0x01
+         // isLastPage = in my debug, avrdude always sent 0x01
+         // so i don't think its needed
          page_address = rq->wValue.word;
-         isLastPage = rq->wIndex.bytes[1] & 0x02;
-         bytes_remaining =  rq->wLength.bytes[0];
+         //isLastPage = rq->wIndex.bytes[1] & 0x02;
+         bytes_remaining =  rq->wIndex.bytes[0];
          page_offset = 0;
 
+         /*
+         //this is not required since we are already overwriting page data
          eeprom_busy_wait();
          cli();
          boot_page_erase(page_address);
          sei();
          boot_spm_busy_wait(); //wait until page is erased
+         */
          len = USB_NO_MSG;
 
          break;
@@ -153,12 +162,9 @@ uchar usbFunctionWrite(uchar *data, uchar len)
 {
    uchar i= 0, isLast;
    if (len > bytes_remaining)
-     {
-        len = bytes_remaining;
-     }
+     len = bytes_remaining;
    bytes_remaining -= len;
    isLast = bytes_remaining == 0;
-
 
    for (; i < len; i+=2)
      {
@@ -166,7 +172,7 @@ uchar usbFunctionWrite(uchar *data, uchar len)
         boot_page_fill(page_address + page_offset, data[i] | data[i + 1] << 8);
         sei();
         page_offset += 2;
-        if (page_offset >= SPM_PAGESIZE || (isLast && i >= len && isLastPage))
+        if (page_offset >= SPM_PAGESIZE || (isLast && i >= len /*&& isLastPage*/))
           {
              cli();
              boot_page_write(page_address);
@@ -187,19 +193,19 @@ int main(void)
    GICR = (1 << IVCE);  /* enable change of interrupt vectors */
    GICR = (1 << IVSEL); /* move interrupts to boot flash section */
 
-   //wdt_enable(WDTO_1S);
+   wdt_enable(WDTO_1S);
    usbInit();
    usbDeviceDisconnect();  /* enforce re-enumeration, do this while interrupts are disabled! */
    while(--i)
      {             /* fake USB disconnect for > 250 ms */
-        //wdt_reset();
+        wdt_reset();
         _delay_ms(2);
      }
    usbDeviceConnect();
    sei();
    while(1)
      {                /* main event loop */
-        //wdt_reset();
+        wdt_reset();
         usbPoll();
         if (isbootloader_exit)
           {
