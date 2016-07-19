@@ -31,8 +31,8 @@ void shift_init(uint8_t lpin, uint8_t dpin, uint8_t cpin)
 
 //RULE: for reading parallel-in and serial out - hc165n shift register
 //
-// make latch pin to go LOW
-// make latch pin to go HIGH
+// make latch pin to go high
+// make latch pin to go low
 // read each bit of data to data pin based on bitOrder
 //     after each bit read, Pulse clock pin 
 //
@@ -41,11 +41,13 @@ void shift_in(uint8_t lpin, uint8_t dpin, uint8_t cpin, enum BitOrder bitorder, 
 {
    uint8_t i = 0;
 
-   S_PORT &= ~(1 << lpin);
    S_PORT |= (1 << lpin);
+   S_PORT &= ~(1 << lpin);
    uint8_t current_byte = 0;
    for (; i < 8; ++i)
      {
+        //set clock pin high
+        S_PORT |= (1 << cpin);
         if (bitorder == LSB)
           {
              current_byte |= (S_PIN & (1 << dpin)) << i;
@@ -54,10 +56,8 @@ void shift_in(uint8_t lpin, uint8_t dpin, uint8_t cpin, enum BitOrder bitorder, 
           {
              current_byte |= (S_PIN & (1 << dpin)) << (7 - i);
           }
-
-        //pulse clock pin
+        //set clock pin low
         S_PORT &= ~(1 <<cpin);
-        S_PORT |= (1 << cpin);
      }
 
    *val = current_byte;
