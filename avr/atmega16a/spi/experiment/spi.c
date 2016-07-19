@@ -15,12 +15,12 @@ void shift_init(uint8_t lpin, uint8_t dpin, uint8_t cpin)
    S_DDR |= (1 << lpin) | (1 << dpin) | (1 << cpin);
 }
 
-void spi_init()
+void spi_init_master()
 {
    SPCR = (1<<SPE) | (1<<MSTR); //Start SPI as Master
 }
 
-void spi_end()
+void spi_end_master()
 {
    SPCR = 0;
 }
@@ -30,7 +30,8 @@ uint8_t spi_send(uint8_t data)
    SPDR = data; //shift in some data
    while (!(SPSR & (1 << SPIF))); // wait for SPI process to finish
 
-   return SPDR;
+   // this returns the data read at MISO
+   return SPDR; // recieved data
 }
 
 int main()
@@ -38,10 +39,10 @@ int main()
            // SS         MOSI     // SCK
    int lpin = PB4, dpin = PB5, cpin = PB7;
    shift_init(lpin, dpin, cpin);
-   spi_init();
 
    while (1)
      {
+        spi_init_master();
         //lower the lpin
         S_PORT &= ~(1 << lpin);
         int8_t led_blink = spi_send(5);
@@ -56,6 +57,7 @@ int main()
              PORTB &= ~(1 << PB0);
              _delay_ms(250);
           }
+        spi_end_master();
         _delay_ms(10000); // delay for 10 seconds
      }
 

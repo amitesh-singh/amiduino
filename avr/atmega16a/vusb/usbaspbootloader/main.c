@@ -113,14 +113,12 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
          bytes_remaining =  rq->wIndex.bytes[0];
          page_offset = 0;
 
-         /*
          //this is not required since we are already overwriting page data
          eeprom_busy_wait();
          cli();
          boot_page_erase(page_address);
          sei();
          boot_spm_busy_wait(); //wait until page is erased
-         */
          len = USB_NO_MSG;
 
          break;
