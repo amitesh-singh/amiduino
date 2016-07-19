@@ -44,10 +44,14 @@ int main()
      {
         spi_init_master();
         //lower the lpin
-        S_PORT &= ~(1 << lpin);
+         //this might not required for one to one connection i.e. one slave
+        // and one master
+        // as SS' is already grounded so we don't need to know worry
+        // but this is very important to in case of multiple slave
+    //    S_PORT &= ~(1 << lpin);
         int8_t led_blink = spi_send(5);
-        S_PORT |= (1 << lpin); //high the pin
-        S_PORT &= ~(1 << lpin); // lower the pin
+    //    S_PORT |= (1 << lpin); //high the pin
+     //   S_PORT &= ~(1 << lpin); // lower the pin
 
         //5 times blink
         for (; led_blink > 0; --led_blink)
@@ -60,8 +64,6 @@ int main()
         spi_end_master();
         _delay_ms(10000); // delay for 10 seconds
      }
-
-   spi_end();
 
    return 0;
 }
