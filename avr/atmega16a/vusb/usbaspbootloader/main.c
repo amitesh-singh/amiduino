@@ -213,9 +213,11 @@ int main(void)
           }
 
      }
+
+   wdt_disable();
    usbDeviceDisconnect();
    //give a delay for 100ms is required
-   _delay_ms(100);
+   _delay_ms(400);
    leave_bootloader();
 
    return 0;
