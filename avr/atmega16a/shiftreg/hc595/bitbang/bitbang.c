@@ -57,8 +57,8 @@ void shift_out(uint8_t lpin, uint8_t dpin, uint8_t cpin, enum BitOrder bitorder,
           }
 
         //pulse clock pin
-        S_PORT &= ~(1 <<cpin);
         S_PORT |= (1 << cpin);
+        S_PORT &= ~(1 <<cpin);
      }
 
    S_PORT |= (1 << lpin);
