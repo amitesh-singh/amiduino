@@ -43,8 +43,8 @@ int main()
 
    while (1)
      {
-        S_PORT &= ~(1 << lpin);
         S_PORT |= (1 << lpin);
+        S_PORT &= ~(1 << lpin);
         ret = spi_send(1);
         _delay_ms(200);
      }
