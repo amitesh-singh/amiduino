@@ -12,14 +12,14 @@ main:
 
 loop:
    PB0ISPRESSED:
-      sbis PORTB, 1 << PB0
+      sbic PORTB, 1 << PB0
       rjmp PB0ISPRESSED
 
       ; LED jalaao
       sbi PORTB, 1 << PB1
 
    PBOISRELEASED:
-      sbic PORTB, 1 << PB0
+      sbis PORTB, 1 << PB0
       rjmp PBOISRELEASED
 
    cbi PORTB, 1 << PB1
