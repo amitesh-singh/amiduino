@@ -20,14 +20,13 @@ loop_256times:
    nop     ; 1
 	nop     ; 1
 	inc r16   ; 1
-	cpi r16, 0   ; 1
-	brne loop_256times  ; if loop then 2, else 1
+	brne loop_256times  ; if r16 is not equal to zero, jmp to loop_256times. if loop then 2, else 1
 
 rjmp main
 
 ; maths
-;   [1 +  1 + 1 + 1 + 2] * 255 + [1 +  1 + 1 + 1 + 1] * 1 = 
-;   6 * 255 + 5 = 1535 cycles = by this loop
-; time taken by the loop for 1 Mhz speed MCU = 1535 * 10 to power 6 = 1.5 ms
+;   [1 + 1 + 1 + 2] * 255 + [1 + 1 + 1 + 1] * 1 = 
+;   5 * 255 + 4 = 1279 cycles = by this loop
+; time taken by the loop for 1 Mhz speed MCU = 1279 * 10 to power 6 ~ 1.3 ms
 ;
 ;
