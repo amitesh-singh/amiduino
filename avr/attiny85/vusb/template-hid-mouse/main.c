@@ -156,7 +156,11 @@ int __attribute__((noreturn)) main(void)
         DBG1(0x02, 0, 0);   /* debug output: main loop iterates */
         wdt_reset();
         usbPoll();
-        _delay_ms(100);
+        /*
+           Maximum delay between calls is somewhat less than 50ms (USB timeout for
+         accepting a Setup message). Otherwise the device will not be recognized.
+         */
+        //_delay_ms(100);
         if(usbInterruptIsReady())
           /* called after every poll of the interrupt endpoint */
           {
