@@ -90,3 +90,8 @@ https://github.com/fabiobaltieri/avr-micro-usb/tree/master/firmware-sensor
 https://fabiobaltieri.com/2011/10/19/fun-with-attiny-and-v-usb/
 
 http://pid.codes/
+
+bootloader via sound 
+----------------------
+
+http://www.mikrocontroller.net/articles/SOUNDRX
