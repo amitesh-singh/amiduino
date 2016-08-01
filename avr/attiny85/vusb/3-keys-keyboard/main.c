@@ -144,7 +144,7 @@ int main()
              _delay_ms(30);
              if(!(PINB & (1 << PB0)))
                {
-                  is_button_pressed = 2;
+                  is_button_pressed = 3;
                }
              else
                is_button_pressed = 0;
@@ -156,8 +156,7 @@ int main()
         // note: this can be only called in main loop. not in timer or some interrupt
 
         if(is_button_pressed)
-          { // button pressed (PB4 at ground voltage)
-             // also check if some time has elapsed since last button press
+          {
              if(state == STATE_WAIT)
                {
                   state = STATE_SEND_KEY;
@@ -169,13 +168,12 @@ int main()
         if(usbInterruptIsReady() && state != STATE_WAIT)
           {
              if (button_type_pressed == 1)
-               {
-                  key_value = 'x';
-               }
+               key_value = 'x';
              else if (button_type_pressed == 2)
-               {
-                  key_value = 'y';
-               }
+               key_value = 'y';
+             else if (button_type_pressed == 3)
+               key_value = 'z';
+
              switch(state)
                {
                 case STATE_SEND_KEY:
