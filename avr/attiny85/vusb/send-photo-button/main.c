@@ -94,24 +94,25 @@ buildReport(uchar send_key)
 
 int main()
 {
-   uchar i, button_release_counter = 0, state = STATE_WAIT;
+   uchar i, state = STATE_WAIT;
 
-   DDRB &= ~(1 << PB4);
-   PORTB |= (1 << PB4); // PB4 is input with internal pullup resistor activated
+   PORTB |= (1 << PB4) | (1 << PB3) | (1 << PB0);
 
-   wdt_enable(WDTO_1S); // enable 1s watchdog timer
+   wdt_enable(WDTO_1S);
 
    usbInit();
 
-   usbDeviceDisconnect(); // enforce re-enumeration
+   usbDeviceDisconnect();
    for(i = 0; i<250; i++)
      { // wait 500 ms
-        wdt_reset(); // keep the watchdog happy
+        wdt_reset();
         _delay_ms(2);
      }
    usbDeviceConnect();
 
    sei();
+   int8_t is_button_pressed = 0, button_type_pressed = 0;
+   int8_t key_value = 0;
 
    while(1)
      {
@@ -119,24 +120,66 @@ int main()
         usbPoll();
 
         if(!(PINB & (1 << PB4)))
+          {
+             _delay_ms(30);
+             if(!(PINB & (1 << PB4)))
+               {
+                  is_button_pressed = 1;
+               }
+             else
+               is_button_pressed = 0;
+          }
+        else if (!(PINB & (1 << PB3)))
+          {
+             _delay_ms(30);
+             if(!(PINB & (1 << PB3)))
+               {
+                  is_button_pressed = 2;
+               }
+             else
+               is_button_pressed = 0;
+          }
+        else if (!(PINB & (1 << PB0)))
+          {
+             _delay_ms(30);
+             if(!(PINB & (1 << PB0)))
+               {
+                  is_button_pressed = 2;
+               }
+             else
+               is_button_pressed = 0;
+          }
+        else
+          is_button_pressed = 0;
+
+        usbPoll(); // usbPoll() should be called within 50ms in the main loop.
+        // note: this can be only called in main loop. not in timer or some interrupt
+
+        if(is_button_pressed)
           { // button pressed (PB4 at ground voltage)
              // also check if some time has elapsed since last button press
-             if(state == STATE_WAIT && button_release_counter >= 255)
-               state = STATE_SEND_KEY;
-
-             button_release_counter = 0; // now button needs to be released a while until retrigger
+             if(state == STATE_WAIT)
+               {
+                  state = STATE_SEND_KEY;
+                  button_type_pressed = is_button_pressed;
+               }
           }
-
-        if(button_release_counter < 255)
-          button_release_counter++; // increase release counter
 
         // characters are sent when messageState == STATE_SEND and after receiving
         if(usbInterruptIsReady() && state != STATE_WAIT)
           {
+             if (button_type_pressed == 1)
+               {
+                  key_value = 'x';
+               }
+             else if (button_type_pressed == 2)
+               {
+                  key_value = 'y';
+               }
              switch(state)
                {
                 case STATE_SEND_KEY:
-                   buildReport('x');
+                   buildReport(key_value);
                    state = STATE_RELEASE_KEY; // release next
                    break;
                 case STATE_RELEASE_KEY:
