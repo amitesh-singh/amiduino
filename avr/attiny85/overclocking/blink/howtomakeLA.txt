@@ -1,0 +1,19 @@
+12:13:08 AM) carabia: It's a good rule of thumb, yes.
+(12:16:00 AM) carabia: to make one yourself you get the added benefit of choosing the protocol to communicate with the computer, but then again I have no experience with any of the fpga languages
+(12:16:29 AM) Lambda_Aurigae: how hard to make?  not very.  how hard to make right?  slightly moreso.
+(12:16:48 AM) Lambda_Aurigae: that logic pirate just clocks data into the serial srams then reads it back out.
+(12:17:08 AM) Lambda_Aurigae: they have a top speed of 20MHz rated but can be overclocked to 40MHz without problem.
+(12:17:52 AM) Lambda_Aurigae: you could interleave them and say use 5 of them at 20MHz and do 100MHz easily.  Just need some glue circuitry and something to generate the higher speed clock pulses.
+(12:18:36 AM) Lambda_Aurigae: could use an fpga to do the data interleave and clock
+(12:18:47 AM) Lambda_Aurigae: I would do it with discreet logic myself but I'm kind of an old school hacker.
+(12:19:42 AM) Lambda_Aurigae: at that point, however, it might be better to use parallel sram or dram even.
+(12:20:27 AM) carabia: "might" as in "definitely"
+(12:20:34 AM) _ami_: noted down, thanks
+12:20:48 AM) Lambda_Aurigae: if you can find some high speed sram, those are easier to work with.
+(12:20:50 AM) carabia: cause you wouldn't have to fuck around with having discrete logic to do magic with the low speed serial rams
+(12:21:12 AM) Lambda_Aurigae: but dram can go waaay up in speed...you just need a dram controller to do refresh and all.
+12:24:29 AM) Lambda_Aurigae: hmm.
+(12:24:43 AM) Lambda_Aurigae: 72MS/s is 72 Mega Samples per second, yes?
+(12:24:51 AM) carabia: indeed it is.
+(12:24:58 AM) Lambda_Aurigae: http://www.seeedstudio.com/depot/dso-quad-4-channel-digital-storage-oscilloscope-p-736.html?cPath=174
+(12:25:14 AM) Lambda_Aurigae: 169 USD for a quad channel oscope...2 analog and 2 digital channels.
