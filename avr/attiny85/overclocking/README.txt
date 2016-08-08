@@ -16,3 +16,7 @@ how to overclock attiny85
    100ms delay - 0.1002 s shown on Saleae LA (24 MHZ sample rate)
    1 s delay - 1.002 s shown on LA
 
+5. Fuse settings for attiny85.
+-U lfuse:w:0xe0:m -U hfuse:w:0xdc:m -U efuse:w:0xff:m 
+I enabled Brown out detection at 4.3 V. did not try it with brownout though
+at 30 MHZ
