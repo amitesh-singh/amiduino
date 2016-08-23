@@ -10,6 +10,8 @@ awesome simulators
 ------------------
 https://123d.circuits.io
 
+http://lushprojects.com/circuitjs/
+
 Links:
 ------
 
