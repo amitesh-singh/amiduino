@@ -64,20 +64,6 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
    return 0; // should not get here
 }
 
-USB_PUBLIC uchar usbFunctionWrite(uchar *data, uchar len)
-{
-   uchar i;
-
-   for (i = 0; i <len && dataRecieved < dataLength; ++i, ++dataRecieved)
-   {
-      replyBuf[dataRecieved] = data[i];
-   }
-
-   return (dataRecieved == dataLength); //return 1 if we recieved all data else return 0
-}
-
-
-
 
 int __attribute__((noreturn)) main(void)
 {
