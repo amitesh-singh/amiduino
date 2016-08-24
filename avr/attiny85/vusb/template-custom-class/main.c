@@ -47,7 +47,6 @@ usbMsgLen_t usbFunctionSetup(uchar data[8])
          replyBuf[7] = rq->wValue.bytes[0];
          replyBuf[8] = rq->wValue.bytes[1];
          replyBuf[9] = rq->wIndex.bytes[0];
-         replyBuf[10] = rq->wIndex.bytes[1];
 
          return 0;
          //If we want to send more data to device, then use the below technique
