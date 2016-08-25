@@ -118,7 +118,7 @@ int main()
    uchar i, button_release_counter = 0, state = STATE_WAIT;
 
    DDRB = 1 << PB0; // PB0 as output
-   PORTB = 1 << PB1; // PB1 is input with internal pullup resistor activated
+   PORTB = 1 << PB4; // PB1 is input with internal pullup resistor activated
 
    for(i=0; i < sizeof(keyboard_report); i++) // clear report initially
      ((uchar *)&keyboard_report)[i] = 0;
@@ -144,8 +144,8 @@ int main()
         wdt_reset(); // keep the watchdog happy
         usbPoll();
 
-        if(!(PINB & (1<<PB1)))
-          { // button pressed (PB1 at ground voltage)
+        if(!(PINB & (1<<PB4)))
+          { // button pressed (PB4 at ground voltage)
              // also check if some time has elapsed since last button press
              if(state == STATE_WAIT && button_release_counter == 255)
                state = STATE_SEND_KEY;
