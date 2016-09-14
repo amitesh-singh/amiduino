@@ -20,6 +20,9 @@ enum BitOrder
 void shift_init(uint8_t lpin, uint8_t dpin, uint8_t cpin)
 {
    S_DDR |= (1 << lpin) | (1 << dpin) | (1 << cpin);
+
+   S_PORT |= (1 << lpin); //make latch pin high as we are not going to read anything yet.
+   // before reading make it low and after reading make it high
 }
 
 //RULE:
@@ -30,11 +33,14 @@ void shift_init(uint8_t lpin, uint8_t dpin, uint8_t cpin)
 // make latch pin to go HIGH
 //
 //supporting only 8 bit right now
+// Refer spi wiki page. - very nice explaination about SPI
+// this is for cpol = 0 and cpha = 0
 void shift_out(uint8_t lpin, uint8_t dpin, uint8_t cpin, enum BitOrder bitorder, uint8_t val)
 {
    uint8_t i = 0;
 
    S_PORT = 0x00;
+   //set latch pin LOW
    S_PORT &= ~(1 << lpin);
    for (; i < 8; ++i)
      {
@@ -61,8 +67,8 @@ void shift_out(uint8_t lpin, uint8_t dpin, uint8_t cpin, enum BitOrder bitorder,
         S_PORT &= ~(1 <<cpin);
      }
 
+   //Set latch pin HIGH
    S_PORT |= (1 << lpin);
-   S_PORT &= ~(1 << lpin);
 }
 
 int main()
