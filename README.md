@@ -93,7 +93,17 @@ https://fabiobaltieri.com/2011/10/19/fun-with-attiny-and-v-usb/
 
 http://pid.codes/
 
+projects ideas
+---------------
+
+http://www.rototron.info/projects/
+
+
 bootloader via sound 
 ----------------------
 
 http://www.mikrocontroller.net/articles/SOUNDRX
+
+PCB
+----
+https://easyeda.com
