@@ -1,6 +1,13 @@
-// D+ --> PD2
-// D- --> PD4
-//
+/*
+   Atmega16A
+   ----------
+   INT0 - PD2
+   connect D+ (without any caps, 100 pf(104) was creating issues) to INT0 (PD2)
+   connect D- (without any caps, 100 pf (104) was creating issues) to PD0
+   connect a LED with resistor on PB1 to Ground
+
+*/
+
 #include <avr/io.h>
 #include <avr/wdt.h>
 #include <avr/interrupt.h>  /* for sei() */
