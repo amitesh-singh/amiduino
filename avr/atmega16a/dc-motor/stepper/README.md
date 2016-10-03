@@ -6,6 +6,9 @@
 - Half step mode is recommended (8 steps control)
 - Weight 30g
 - Wiring to the ULN2003 controller A(blue), B(pink), C(yellow), D(Orange), E(Red, mid-point)
+- Pull in Torque: >34.3 mN.m(120Hz)
+- Detent Torque: >34.3 mN.
+
 
 I have a BYJ48 Stepper Motor and a ULN2003 driver board module.  
 You must power this device externally not from MCU circuit.  
@@ -65,3 +68,10 @@ opposite of above sequence.
 
 #### Clockwise
 `1100  0110  0011  1001`  Repeat ~~1100 0110 0011 1001~~
+
+## Torque test
+
+`Torque = Force * Distance`  
+Say for 30g weight and if i gotta pull it up via this motor using 10 cm shaft, i need to have `30g * 10 cm = 300 g-cm ` - According to some youtube video, this motor has passed the test. conditions were 30g weight and delay 3 ms
+Spec says 343 g-cm or `34.3 mN.m`  
+Torque = 30/1000.0 kg * 9.8 (or ~10) * 10/100 m = 0.0288 N.m = 0.03 N.m = 30 mN.m
