@@ -46,6 +46,12 @@ int main()
 
              sleep_enable();
              power_all_disable();
+             //The below APIs are not available on atmega16a, but available
+             // on m328p or other new MCUs
+             //power_spi_disable();
+             //power_timer0_disable();
+             //power_timer2_disable();
+             //power_twi_disable();
 
              //now enter into sleep mode
              sleep_mode();
