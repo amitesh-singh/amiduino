@@ -46,3 +46,8 @@ GPIO_2 - 2
 ### GPIO pins
 
 1. The maximum source current of GPIO is about 12mA.
+
+### how to use gpio pins
+
+http://www.forward.com.au/pfod/ESP8266/GPIOpins/ESP8266_01_pin_magic.html
+
