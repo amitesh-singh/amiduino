@@ -51,3 +51,5 @@ GPIO_2 - 2
 
 http://www.forward.com.au/pfod/ESP8266/GPIOpins/ESP8266_01_pin_magic.html
 
+### ESP SDK tutorial
+1. http://smallbits.marshall-tribe.net/blog/
