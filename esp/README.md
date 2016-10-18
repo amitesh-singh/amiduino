@@ -51,5 +51,20 @@ GPIO_2 - 2
 
 http://www.forward.com.au/pfod/ESP8266/GPIOpins/ESP8266_01_pin_magic.html
 
+### how to code without arduino ide which is actually pretty nice.
+
+`cd ~  
+ git clone https://github.com/plerup/makeEspArduino.git  
+ cd makeEspArduino  
+
+ add this line in .bashrc  
+ alias espmake="make -f ~/makeEspArduino/makeEspArduino.mk"
+
+ Now go to any esp code folder and issue espmake  
+ To upload the code, use espmake upload.
+ 
+ `
+
+
 ### ESP SDK tutorial
 1. http://smallbits.marshall-tribe.net/blog/
