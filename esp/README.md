@@ -22,6 +22,11 @@ GPIO_2 - 2
 
 ### ESP 12E
 
+#### Power settings
+
+ In my experiments, putting 220 uF capacitor on power rail actually stablizes the noisy power.
+ Also put a 104 (100 nF/0.1 uF) accross Vcc and GND stablizes the esp.
+
 #### GPIO pins numbering
 
  TODOs  
