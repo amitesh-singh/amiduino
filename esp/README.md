@@ -73,3 +73,4 @@ http://www.forward.com.au/pfod/ESP8266/GPIOpins/ESP8266_01_pin_magic.html
 
 ### ESP SDK tutorial
 1. http://smallbits.marshall-tribe.net/blog/
+2. http://www.instructables.com/id/How-to-Write-ESP8266-Firmware-From-Scratch-using-E/?ALLSTEPS
