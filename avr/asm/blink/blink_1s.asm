@@ -20,7 +20,7 @@ _start:
   ldi r16, HIGH(RAMEND)
   out sph,  r16
 
-  sbi DDRB, 0    ; can use ldi r16, 0b00000001 ; out DDRB, r16 ; since we are 
+  sbi DDRB, 0    ; can use ldi r16, 0b00000001 ; out DDRB, r16 ; since we are
                  ; only setting 1 byte, just use sbi instead.
                  ; to clear the bit use cbi; e.g. cbi DDRB, 0
   clr r17
@@ -28,7 +28,9 @@ _start:
 loop:
   sbi PORTB, 0
   rcall _delay_1s
-  out PORTB, r17
+  ; out PORTB, r17 , better to use cbi PORTB, 0 instead
+  cbi PORTB, 0
+
   rcall _delay_1s
   rjmp loop
 ;ret ; remove this also since we are not gonna reach here. its waste of 2 bytes for us.
@@ -45,7 +47,7 @@ _delay_1s:
   nop         ; 1 clk
 	dec r20 ; 1 clk
 	brne delay_3; 2 clk if jmp  and 1 clk if continue
-   
+
    dec r19 ;1 clk
    brne delay_2 ; 2 clk
 
