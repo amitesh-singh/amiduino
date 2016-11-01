@@ -1,0 +1,21 @@
+menu "Example Configuration"
+
+config BLINK_GPIO
+    int "Blink GPIO number"
+	range 0 34
+	default 5
+	help
+		GPIO number (IOxx) to blink on and off.
+
+		Some GPIOs are used for other purposes (flash connections, etc.) and cannot be used to blink.
+
+		GPIOs 35-39 are input-only so cannot be used as outputs.
+config BLINK_GPIO2
+    int " Blink GPIO number 2"
+   range 0 34
+   default 17
+   help
+      GPIO number for reading sensor data.
+      This shows how to blink 2 leds at same time.
+
+endmenu
