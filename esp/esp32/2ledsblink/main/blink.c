@@ -18,7 +18,7 @@
    or you can edit the following line and set a number here.
 */
 #define BLINK_GPIO CONFIG_BLINK_GPIO
-#define READ_GPIO CONFIG_BLINK2_GPIO
+#define BLINK_GPIO2 CONFIG_BLINK_GPIO2
 
 void blink_gpio5_task(void *pvParameter)
 {
@@ -53,18 +53,18 @@ void blink_gpio17_task(void *pvParameter)
 	printf("BLINK GPIO17 TASK\n");
 	fflush(stdout);
 
-	gpio_pad_select_gpio(READ_GPIO);
+	gpio_pad_select_gpio(BLINK_GPIO2);
 	    /* Set the GPIO as a push/pull output */
-	 gpio_set_direction(READ_GPIO, GPIO_MODE_OUTPUT);
+	gpio_set_direction(BLINK_GPIO2, GPIO_MODE_OUTPUT);
 	while (1)
 	{
-		 gpio_set_level(READ_GPIO, 0);
+		 gpio_set_level(BLINK_GPIO2, 0);
 		 printf("LED 17 is off\n");
-		 vTaskDelay(1000 / portTICK_RATE_MS);
+		 vTaskDelay(100 / portTICK_RATE_MS);
 		 /* Blink on (output high) */
-		 gpio_set_level(READ_GPIO, 1);
+		 gpio_set_level(BLINK_GPIO2, 1);
 		 printf("LED 17 is on\n");
-		 vTaskDelay(1000 / portTICK_RATE_MS);
+		 vTaskDelay(100 / portTICK_RATE_MS);
 		 fflush(stdout);
 	}
 }
