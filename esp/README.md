@@ -46,7 +46,7 @@ GPIO_2 - 2
 
  It has a ADC port (use `A0` in programming, `analogRead(A0)`).
  It can only read between 0 to 1V so you would need to use voltage divider for this.
- 200 ohm and 100 ohm would be fine.
+ 100k ohm and 47k ohm would be fine. (200 ohm and 100 ohm were not good enough because of larger current)
 
 ### GPIO pins
 
