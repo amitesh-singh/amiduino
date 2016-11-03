@@ -1,0 +1,49 @@
+22:14:59 **** Build of configuration Debug for project BlinkyCpp ****
+make all 
+Building file: ../Blink.cpp
+Invoking: AVR C++ Compiler
+avr-g++ -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -funsigned-char -funsigned-bitfields -fno-exceptions -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"Blink.d" -MT"Blink.o" -c -o "Blink.o" "../Blink.cpp"
+In file included from ../Blink.h:11:0,
+                 from ../Blink.cpp:8:
+/usr/lib/avr/include/util/delay.h:95:3: warning: #warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed" [-Wcpp]
+ # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+   ^
+Finished building: ../Blink.cpp
+ 
+Building file: ../main.cpp
+Invoking: AVR C++ Compiler
+avr-g++ -Wall -g2 -gstabs -O0 -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -funsigned-char -funsigned-bitfields -fno-exceptions -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.o" -c -o "main.o" "../main.cpp"
+In file included from ../Blink.h:11:0,
+                 from ../main.cpp:8:
+/usr/lib/avr/include/util/delay.h:95:3: warning: #warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed" [-Wcpp]
+ # warning "Compiler optimizations disabled; functions from <util/delay.h> won't work as designed"
+   ^
+Finished building: ../main.cpp
+ 
+Building target: BlinkyCpp.elf
+Invoking: AVR C++ Linker
+avr-g++ -Wl,-Map,BlinkyCpp.map,--cref -mrelax -Wl,--gc-sections -mmcu=atmega16 -o "BlinkyCpp.elf"  ./Blink.o ./main.o   
+Finished building target: BlinkyCpp.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S BlinkyCpp.elf  >"BlinkyCpp.lss"
+Finished building: BlinkyCpp.lss
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega16 BlinkyCpp.elf
+AVR Memory Usage
+----------------
+Device: atmega16
+
+Program:    1218 bytes (7.4% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+
+22:14:59 Build Finished (took 123ms)
+
