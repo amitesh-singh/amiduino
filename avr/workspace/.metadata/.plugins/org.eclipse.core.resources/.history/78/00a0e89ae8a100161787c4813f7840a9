@@ -1,0 +1,17 @@
+/*
+ * ST7735.h
+ *
+ *  Created on: Nov 3, 2016
+ *      Author: ami
+ */
+
+#ifndef ST7735_H_
+#define ST7735_H_
+
+class ST7735 {
+public:
+	ST7735();
+	virtual ~ST7735();
+};
+
+#endif /* ST7735_H_ */

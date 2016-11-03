@@ -1,0 +1,55 @@
+/*
+ * ST7735.cpp
+ *
+ *  Created on: Nov 3, 2016
+ *      Author: ami
+ */
+
+#include "ST7735.h"
+
+//can it be configurable?
+
+#define DDR  DDRB
+#define PORT PORTB
+
+#define CS_LOW   PORT &= ~(1 << _cs)
+#define CS_HIGH  PORT |= (1 << _cs)
+
+#define DC_LOW   PORT &= ~(1 << _dc)
+#define DC_HIGH  PORT |= (1 << _dc)
+
+#define RST_LOW  PORT &= ~(1 << _rst)
+#define RST_HIGH PORT |=  (1 << _rst)
+
+
+
+ST7735::ST7735(uint8_t cs, uint8_t rst, uint8_t dc, bool landscape): _cs(cs),
+													_rst(rst), _dc(dc),
+													_isLandscape(landscape)
+{
+}
+
+ST7735::~ST7735()
+{
+	// TODO Auto-generated destructor stub
+}
+
+void ST7735::_spiInit()
+{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

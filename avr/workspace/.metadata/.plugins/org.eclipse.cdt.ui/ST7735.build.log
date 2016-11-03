@@ -1,0 +1,35 @@
+23:26:16 **** Incremental Build of configuration Release for project ST7735 ****
+make all 
+Building file: ../ST7735.cpp
+Invoking: AVR C++ Compiler
+avr-g++ -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -funsigned-char -funsigned-bitfields -fno-exceptions -mmcu=atmega16 -DF_CPU=16000000UL -MMD -MP -MF"ST7735.d" -MT"ST7735.o" -c -o "ST7735.o" "../ST7735.cpp"
+Finished building: ../ST7735.cpp
+ 
+Building target: libST7735.a
+Invoking: AVR Archiver
+avr-ar -r  "libST7735.a"  ./ST7735.o  
+avr-ar: creating libST7735.a
+Finished building target: libST7735.a
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S libST7735.a  >"libST7735.lss"
+Finished building: libST7735.lss
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega16 libST7735.a
+AVR Memory Usage
+----------------
+Device: atmega16
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+
+23:26:16 Build Finished (took 148ms)
+

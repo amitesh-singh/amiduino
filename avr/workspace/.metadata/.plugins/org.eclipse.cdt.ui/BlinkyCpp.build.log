@@ -1,6 +1,47 @@
-22:19:53 **** Build of configuration Release for project BlinkyCpp ****
-make flash 
-make: *** No rule to make target 'flash'.  Stop.
+22:40:08 **** Incremental Build of configuration Release for project BlinkyCpp ****
+make all 
+Building file: ../Blink.cpp
+Invoking: AVR C++ Compiler
+avr-g++ -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -funsigned-char -funsigned-bitfields -fno-exceptions -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"Blink.d" -MT"Blink.o" -c -o "Blink.o" "../Blink.cpp"
+Finished building: ../Blink.cpp
+ 
+Building file: ../main.cpp
+Invoking: AVR C++ Compiler
+avr-g++ -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -funsigned-char -funsigned-bitfields -fno-exceptions -mmcu=atmega16 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.o" -c -o "main.o" "../main.cpp"
+Finished building: ../main.cpp
+ 
+Building target: BlinkyCpp.elf
+Invoking: AVR C++ Linker
+avr-g++ -Wl,-Map,BlinkyCpp.map,--cref -mrelax -Wl,--gc-sections -mmcu=atmega16 -o "BlinkyCpp.elf"  ./Blink.o ./main.o   
+Finished building target: BlinkyCpp.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S BlinkyCpp.elf  >"BlinkyCpp.lss"
+Finished building: BlinkyCpp.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex BlinkyCpp.elf  "BlinkyCpp.hex"
+Finished building: BlinkyCpp.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex BlinkyCpp.elf  "BlinkyCpp.eep"
+Finished building: BlinkyCpp.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega16 BlinkyCpp.elf
+AVR Memory Usage
+----------------
+Device: atmega16
 
-22:19:53 Build Finished (took 98ms)
+Program:     176 bytes (1.1% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+
+22:40:08 Build Finished (took 348ms)
 

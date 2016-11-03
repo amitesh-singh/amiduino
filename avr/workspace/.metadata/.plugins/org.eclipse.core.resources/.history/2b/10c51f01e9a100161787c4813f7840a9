@@ -1,0 +1,18 @@
+/*
+ * ST7735.cpp
+ *
+ *  Created on: Nov 3, 2016
+ *      Author: ami
+ */
+
+#include "ST7735.h"
+
+ST7735::ST7735() {
+	// TODO Auto-generated constructor stub
+
+}
+
+ST7735::~ST7735() {
+	// TODO Auto-generated destructor stub
+}
+

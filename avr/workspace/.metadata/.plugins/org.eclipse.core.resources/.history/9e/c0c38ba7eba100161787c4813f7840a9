@@ -1,0 +1,106 @@
+/*
+ * ST7735.cpp
+ *
+ *  Created on: Nov 3, 2016
+ *      Author: ami
+ */
+
+#include "ST7735.h"
+#include <avr/io.h>
+//can it be configurable?
+
+#define DDR  DDRB
+#define PORT PORTB
+
+#define CS_LOW   PORT &= ~(1 << _cs)
+#define CS_HIGH  PORT |= (1 << _cs)
+
+#define DC_LOW   PORT &= ~(1 << _dc)
+#define DC_HIGH  PORT |= (1 << _dc)
+
+#define RST_LOW  PORT &= ~(1 << _rst)
+#define RST_HIGH PORT |=  (1 << _rst)
+
+
+
+ST7735::ST7735(uint8_t cs, uint8_t rst, uint8_t dc, bool landscape): _cs(cs),
+													_rst(rst), _dc(dc),
+													_isLandscape(landscape)
+{
+}
+
+ST7735::~ST7735()
+{
+	// TODO Auto-generated destructor stub
+}
+
+void ST7735::_spiInit()
+{
+	SPCR = (1 << SPE) | (1 << MSTR);
+	//TODO: Add code to double the speed?
+
+	// This is hardcoded for mega16
+	DDRB |= (1 << PB7) | (1 << PB5);
+}
+
+void ST7735::_spiEnd()
+{
+	SPCR = 0;
+}
+
+uint8_t ST7735::_spiSend(uint8_t data)
+{
+	SPDR = data; //shift in some data
+	while (!(SPSR & (1 << SPIF))); // wait for SPI process to finish
+
+	return SPDR;
+}
+
+
+void ST7735::_writeCmd(uint8_t cmd)
+{
+	DC_LOW;
+	CS_LOW;
+	_spiSend(command);
+	DC_HIGH;
+}
+
+void ST7735::_writeData(uint8_t data)
+{
+	_spiSend(data); //is it inline?
+}
+
+void ST7735::_writeWord(uint16_t word)
+{
+	_spiSend(word >> 8); // MSB
+	_spiSend(word & 0xFF); // LSB
+}
+
+void ST7735::_setAddrWindow(uint8_t x0, uint8_t y0,
+			                uint8_t x1, uint8_t y1)
+{
+	_writeCmd(ST7735_CASET);
+	_writeWord(x0);
+	_writeWord(x1);
+
+	_writeCmd(ST7735_RASET);
+	_writeWord(y0);
+	_writeWord(y1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,224 @@
+/*
+ * ST7735.cpp
+ *
+ *  Created on: Nov 3, 2016
+ *      Author: ami
+ */
+
+#include "ST7735.h"
+#include <avr/io.h>
+
+#include <util/delay.h>
+//can it be configurable?
+
+#define DDR  DDRB
+#define PORT PORTB
+
+#define CS_LOW   PORT &= ~(1 << _cs)
+#define CS_HIGH  PORT |= (1 << _cs)
+
+#define DC_LOW   PORT &= ~(1 << _dc)
+#define DC_HIGH  PORT |= (1 << _dc)
+
+#define RST_LOW  PORT &= ~(1 << _rst)
+#define RST_HIGH PORT |=  (1 << _rst)
+
+
+
+ST7735::ST7735(uint8_t cs, uint8_t rst, uint8_t dc, bool landscape): _cs(cs),
+													_rst(rst), _dc(dc),
+													_isLandscape(landscape)
+{
+}
+
+ST7735::~ST7735()
+{
+	// TODO Auto-generated destructor stub
+}
+
+void ST7735::_spiInit()
+{
+	SPCR = (1 << SPE) | (1 << MSTR);
+	//TODO: Add code to double the speed?
+
+	// This is hardcoded for mega16
+	DDRB |= (1 << PB7) | (1 << PB5);
+}
+
+void ST7735::_spiEnd()
+{
+	SPCR = 0;
+}
+
+uint8_t ST7735::_spiSend(uint8_t data)
+{
+	SPDR = data; //shift in some data
+	while (!(SPSR & (1 << SPIF))); // wait for SPI process to finish
+
+	return SPDR;
+}
+
+
+void ST7735::__writeCmd(uint8_t cmd)
+{
+	DC_LOW;
+	CS_LOW;
+	_spiSend(command);
+	DC_HIGH;
+}
+
+void ST7735::__writeData(uint8_t data)
+{
+	_spiSend(data); //is it inline?
+}
+
+void ST7735::_writeWord(uint16_t word)
+{
+	_spiSend(word >> 8); // MSB
+	_spiSend(word & 0xFF); // LSB
+}
+
+void ST7735::_setAddrWindow(uint8_t x0, uint8_t y0,
+			                uint8_t x1, uint8_t y1)
+{
+	__writeCmd(ST7735_CASET);
+	_writeWord(x0);
+	_writeWord(x1);
+
+	__writeCmd(ST7735_RASET);
+	_writeWord(y0);
+	_writeWord(y1);
+}
+
+void ST7735::_initDisplay()
+{
+    _writeCmd(ST7735_SWRESET); // software reset
+    _delay_ms(150);
+    CS_HIGH;
+
+    _writeCmd(ST7735_SLPOUT);  // out of sleep mode
+   CS_HIGH;
+   _delay_ms(120);
+
+   _writeCmd(ST7735_COLMOD);  // set color mode
+   _writeData(0x05);          // 16-bit color
+
+   _writeCmd(ST7735_FRMCTR1); // frame rate control
+   _writeData(0x00);          // fastest refresh
+   _writeData(0x06);          // 6 lines front porch
+   _writeData(0x03);          // 3 lines backporch
+
+   _writeCmd(ST7735_MADCTL);  // memory access control (directions)
+   //_writeData(0xC8);          // row address/col address, bottom to top refresh
+   //    MY, MX, MV, ML,      RGB, MH, -, -
+   //C8 = 1,  1,  0,  0,        1,  0, 0, 0
+   //_writeData( _BV(3));
+   //    1   0    1   0         1   0  0  0
+
+
+#ifdef LANDSCAPE
+   _writeData( _BV(7)| _BV(5) | _BV(3));
+#else
+   _writeData( _BV(3));
+#endif
+
+
+   _writeCmd(ST7735_DISSET5); // display settings #5
+   _writeData(0x15);          // 1 clock cycle nonoverlap, 2 cycle gate rise, 3 cycle oscil. equalize
+   _writeData(0x02);          // fix on VTL
+
+   /*
+      _writeCmd(ST7735_INVCTR);  // display inversion control
+      _writeData(0x0);           // line inversion
+      ST7735_CS_HI;
+    */
+
+
+   _writeCmd(ST7735_PWCTR1);  // power control
+   _writeData(0x02);          // GVDD = 4.7V
+   _writeData(0x70);          // 1.0uA
+
+   _writeCmd(ST7735_PWCTR2);  // power control
+   _writeData(0x05);          // VGH = 14.7V, VGL = -7.35V
+   _writeCmd(ST7735_PWCTR3);  // power control
+   _writeData(0x01);          // Opamp current small
+   _writeData(0x02);          // Boost frequency
+
+   _writeCmd(ST7735_VMCTR1);  // power control
+   _writeData(0x3C);          // VCOMH = 4V
+   _writeData(0x38);          // VCOML = -1.1V
+
+   _writeCmd(ST7735_PWCTR6);  // power control
+   _writeData(0x11);
+   _writeData(0x15);
+
+   _writeCmd(ST7735_GMCTRP1);
+   _writeData(0x09);
+   _writeData(0x16);
+   _writeData(0x09);
+   _writeData(0x20);
+   _writeData(0x21);
+   _writeData(0x1B);
+   _writeData(0x13);
+   _writeData(0x19);
+   _writeData(0x17);
+   _writeData(0x15);
+   _writeData(0x1E);
+   _writeData(0x2B);
+   _writeData(0x04);
+   _writeData(0x05);
+   _writeData(0x02);
+   _writeData(0x0E);
+   _writeCmd(ST7735_GMCTRN1);
+   _writeData(0x0B);
+   _writeData(0x14);
+   _writeData(0x08);
+   _writeData(0x1E);
+   _writeData(0x22);
+   _writeData(0x1D);
+   _writeData(0x18);
+   _writeData(0x1E);
+   _writeData(0x1B);
+   _writeData(0x1A);
+   _writeData(0x24);
+   _writeData(0x2B);
+   _writeData(0x06);
+   _writeData(0x06);
+   _writeData(0x02);
+   _writeData(0x0F);
+   /*
+      _writeCmd(ST7735_CASET);   // column addr set
+      _writeData(0x00);
+      _writeData(0x00);          // XSTART = 2
+      _writeData(0x00);
+      _writeData(0x81);          // XEND = 129
+
+      _writeCmd(ST7735_RASET);   // row addr set
+      _writeData(0x00);
+      _writeData(0x00);          // XSTART = 1
+      _writeData(0x00);
+      _writeData(0x81);          // XEND = 160
+    */
+   _writeCmd(ST7735_NORON);   // normal display on
+   CS_HIGH;
+   _delay_ms(120);
+
+   _writeCmd(ST7735_DISPON);
+   CS_HIGH;
+   _delay_ms(120);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
