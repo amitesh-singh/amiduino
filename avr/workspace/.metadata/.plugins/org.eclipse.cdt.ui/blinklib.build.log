@@ -1,0 +1,35 @@
+22:26:05 **** Incremental Build of configuration Release for project blinklib ****
+make all 
+Building file: ../blink.cpp
+Invoking: AVR C++ Compiler
+avr-g++ -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -funsigned-char -funsigned-bitfields -fno-exceptions -mmcu=atmega16 -DF_CPU=16000000UL -MMD -MP -MF"blink.d" -MT"blink.o" -c -o "blink.o" "../blink.cpp"
+Finished building: ../blink.cpp
+ 
+Building target: libblinklib.a
+Invoking: AVR Archiver
+avr-ar -r  "libblinklib.a"  ./blink.o  
+avr-ar: creating libblinklib.a
+Finished building target: libblinklib.a
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S libblinklib.a  >"libblinklib.lss"
+Finished building: libblinklib.lss
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega16 libblinklib.a
+AVR Memory Usage
+----------------
+Device: atmega16
+
+Program:       0 bytes (0.0% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+
+22:26:05 Build Finished (took 140ms)
+

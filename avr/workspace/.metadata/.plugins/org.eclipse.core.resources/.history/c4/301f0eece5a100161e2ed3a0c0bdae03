@@ -1,0 +1,17 @@
+/*
+ * blink.h
+ *
+ *  Created on: Nov 3, 2016
+ *      Author: ami
+ */
+
+#ifndef BLINK_H_
+#define BLINK_H_
+
+class blink {
+public:
+	blink();
+	virtual ~blink();
+};
+
+#endif /* BLINK_H_ */

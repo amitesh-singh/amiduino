@@ -1,0 +1,18 @@
+/*
+ * blink.cpp
+ *
+ *  Created on: Nov 3, 2016
+ *      Author: ami
+ */
+
+#include "blink.h"
+
+blink::blink() {
+	// TODO Auto-generated constructor stub
+
+}
+
+blink::~blink() {
+	// TODO Auto-generated destructor stub
+}
+

@@ -1,0 +1,42 @@
+22:30:20 **** Build of configuration Release for project blinkapp ****
+make all 
+Building file: ../main.cpp
+Invoking: AVR C++ Compiler
+avr-g++ -I"/home/ami/repos/amiduino/avr/workspace/blinklib" -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -funsigned-char -funsigned-bitfields -fno-exceptions -mmcu=atmega16 -DF_CPU=16000000UL -MMD -MP -MF"main.d" -MT"main.o" -c -o "main.o" "../main.cpp"
+Finished building: ../main.cpp
+ 
+Building target: blinkapp.elf
+Invoking: AVR C++ Linker
+avr-g++ -Wl,-Map,blinkapp.map,--cref -mrelax -Wl,--gc-sections -L"/home/ami/repos/amiduino/avr/workspace/blinklib/Release" -mmcu=atmega16 -o "blinkapp.elf"  ./main.o   -lblinklib
+Finished building target: blinkapp.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S blinkapp.elf  >"blinkapp.lss"
+Finished building: blinkapp.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex blinkapp.elf  "blinkapp.hex"
+Finished building: blinkapp.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex blinkapp.elf  "blinkapp.eep"
+Finished building: blinkapp.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega16 blinkapp.elf
+AVR Memory Usage
+----------------
+Device: atmega16
+
+Program:     176 bytes (1.1% Full)
+(.text + .data + .bootloader)
+
+Data:          0 bytes (0.0% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+
+22:30:20 Build Finished (took 77ms)
+
