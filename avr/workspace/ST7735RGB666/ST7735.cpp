@@ -30,7 +30,7 @@ ST7735::ST7735(uint8_t cs, uint8_t rst, uint8_t dc, bool landscape): _cs(cs),
    _rst(rst), _dc(dc),
    _isLandscape(landscape)
 {
-   _colormode = 0b101;
+   _colormode = 0b110; // color666 mode
 }
 
 ST7735::~ST7735()
@@ -90,6 +90,15 @@ void ST7735::_writeWord(uint16_t word)
    _spiSend(word & 0xFF); // LSB
 }
 
+void ST7735::_write3Byte(const uint8_t *data)
+{
+	uint8_t i = 0;
+	for (; i < 3 ; ++i)
+	{
+		_spiSend(pgm_read_byte(data + i));
+	}
+}
+
 void ST7735::_setAddrWindow(uint8_t x0, uint8_t y0,
                             uint8_t x1, uint8_t y1)
 {
@@ -131,18 +140,18 @@ void ST7735::init()
    _initDisplay();
 }
 
-void ST7735::drawPixel(uint8_t x, uint8_t y, uint16_t color)
+void ST7735::drawPixel(uint8_t x, uint8_t y, const uint8_t *color)
 {
    _setAddrWindow(x, y, x + 1, y + 1);
    _writeCmd(ST7735_RAMWR);
-   _writeWord(color);
+   _write3Byte(color);
 
    _writeCmd(ST7735_NOP);
    CS_HIGH;
 }
 
 void ST7735::fillRec(uint8_t x, uint8_t y, uint8_t w,
-                     uint8_t h, uint16_t color)
+                     uint8_t h, const uint8_t *color)
 {
    unsigned int i = 0;
 
@@ -151,20 +160,20 @@ void ST7735::fillRec(uint8_t x, uint8_t y, uint8_t w,
 
    for (; i < (w * h); ++i)
      {
-        _writeWord(color);
+	   _write3Byte(color);
      }
 
    _writeCmd(ST7735_NOP);
    CS_HIGH;
 }
 
-void ST7735::fillScreen(uint16_t color)
+void ST7735::fillScreen(const uint8_t *color)
 {
    fillRec(0, 0, getWidth(), getHeight(), color);
 }
 
 void ST7735::drawHLine(uint8_t x0, uint8_t y,
-                       uint8_t x1, uint16_t color)
+                       uint8_t x1, const uint8_t *color)
 {
    uint8_t pixels = 0;
 
@@ -173,7 +182,7 @@ void ST7735::drawHLine(uint8_t x0, uint8_t y,
 
    for (; pixels < (x1 - x0); ++pixels)
      {
-        _writeWord(color);
+	   _write3Byte(color);
      }
 
    _writeCmd(ST7735_NOP);
@@ -181,7 +190,7 @@ void ST7735::drawHLine(uint8_t x0, uint8_t y,
 }
 
 void ST7735::drawVLine(uint8_t x, uint8_t y0, uint8_t y1,
-                       uint16_t color)
+		const uint8_t *color)
 {
    uint8_t pixels = 0;
 
@@ -189,7 +198,7 @@ void ST7735::drawVLine(uint8_t x, uint8_t y0, uint8_t y1,
    _writeCmd(ST7735_RAMWR);  // write to RAM
    for (; pixels < y1 - y0 ; pixels++)
      {
-        _writeWord(color);
+	   _write3Byte(color);
      }
 
    _writeCmd(ST7735_NOP);
@@ -198,7 +207,7 @@ void ST7735::drawVLine(uint8_t x, uint8_t y0, uint8_t y1,
 }
 
 void ST7735::drawLine(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,
-                      uint16_t color)
+		const uint8_t *color)
 {
    //TODO: there are bugs, fix it after visiting trignometry.
    uint16_t pixels;
@@ -221,7 +230,7 @@ void ST7735::drawLine(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,
 }
 
 void ST7735::drawRect(uint8_t posX, uint8_t posY, uint8_t width,
-                      uint8_t height, uint8_t color)
+                      uint8_t height, const uint8_t *color)
 {
    drawHLine(posX, posY, posX + width - 1, color);
    drawHLine(posX, posY + height - 1, posX + width, color);
@@ -231,7 +240,7 @@ void ST7735::drawRect(uint8_t posX, uint8_t posY, uint8_t width,
 }
 
 void ST7735::drawCircle(uint8_t posX, uint8_t posY, uint8_t r,
-                        uint16_t color)
+		const uint8_t *color)
 {
    int x = -r, y = 0, err = 2-2*r, e2;
    do
@@ -254,7 +263,7 @@ void ST7735::drawCircle(uint8_t posX, uint8_t posY, uint8_t r,
 }
 
 void ST7735::fillCircle(uint8_t posX, uint8_t posY, uint8_t r,
-                        uint16_t color)
+		const uint8_t *color)
 {
    int x = -r, y = 0, err = 2-2*r, e2;
    do
@@ -275,7 +284,7 @@ void ST7735::fillCircle(uint8_t posX, uint8_t posY, uint8_t r,
 }
 
 uint8_t ST7735::drawChar(uint8_t charToWrite, uint8_t poX,
-                         uint8_t poY, uint8_t size, unsigned int fgcolor)
+                         uint8_t poY, uint8_t size, const uint8_t *fgcolor)
 {
    int i;
    charToWrite -= 32;
@@ -297,7 +306,7 @@ uint8_t ST7735::drawChar(uint8_t charToWrite, uint8_t poX,
                {
                   if(size==1)
                     {
-                       drawPixel(poX+i*size, poY+f*size,fgcolor);
+                       drawPixel(poX+i*size, poY+f*size, fgcolor);
                     }
                   else
                     {
@@ -313,7 +322,7 @@ uint8_t ST7735::drawChar(uint8_t charToWrite, uint8_t poX,
 
 void ST7735::drawString(const char *string,
                         unsigned char poX, unsigned char poY,
-                        unsigned char size,unsigned int fgcolor)
+                        unsigned char size, const uint8_t *fgcolor)
 {
    unsigned char c,w;
 
@@ -329,7 +338,7 @@ void ST7735::drawString(const char *string,
 }
 
 void   ST7735::drawXBitmap(uint8_t x, uint8_t y, const uint8_t *bitmap,
-                           uint16_t w, uint16_t h, uint16_t color)
+                           uint16_t w, uint16_t h, const uint8_t *color)
 {
    uint16_t i, j, byteWidth = (w + 7) / 8;
    uint8_t byte;
@@ -347,7 +356,7 @@ void   ST7735::drawXBitmap(uint8_t x, uint8_t y, const uint8_t *bitmap,
 }
 
 void ST7735::drawBitmap(uint8_t x, uint8_t y, const uint8_t *bitmap,
-                        uint16_t w, uint16_t h, uint16_t color)
+                        uint16_t w, uint16_t h, const uint8_t *color)
 {
    uint16_t i, j, byteWidth = (w + 7) / 8;
    uint8_t byte;
@@ -379,7 +388,7 @@ void ST7735::_initDisplay()
    // 011 --> 12 bits/pixel
    // 101 --> 16 bits/pixel
    // 110 --> 18 bits/pixel
-   _writeData(_colormode);          // 16-bit color
+   _writeData(_colormode);          // 18-bit color
 
    _writeCmd(ST7735_FRMCTR1); // frame rate control
    _writeData(0x00);          // fastest refresh
