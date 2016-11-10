@@ -3,6 +3,7 @@
  *
  *  Created on: Nov 3, 2016
  *      Author: ami
+ *      License: GPL
  */
 
 #include "ST7735.h"
@@ -49,7 +50,7 @@ void ST7735::_delay_1ms(uint32_t ms)
 
 void ST7735::_spiInit()
 {
-	// SPE - enable SPI, MSTR  - act as a master spi device.
+   // SPE - enable SPI, MSTR  - act as a master spi device.
    SPCR = (1 << SPE) | (1 << MSTR);
    // f_osc/2 speed = 8 MHz
    SPSR |= (1 << SPI2X);
@@ -92,11 +93,11 @@ void ST7735::_writeWord(uint16_t word)
 
 void ST7735::_write3Byte(const uint8_t *data)
 {
-	uint8_t i = 0;
-	for (; i < 3 ; ++i)
-	{
-		_spiSend(pgm_read_byte(data + i));
-	}
+   uint8_t i = 0;
+   for (; i < 3 ; ++i)
+     {
+        _spiSend(pgm_read_byte(&data[i]));
+     }
 }
 
 void ST7735::_setAddrWindow(uint8_t x0, uint8_t y0,
@@ -160,7 +161,7 @@ void ST7735::fillRec(uint8_t x, uint8_t y, uint8_t w,
 
    for (; i < (w * h); ++i)
      {
-	   _write3Byte(color);
+        _write3Byte(color);
      }
 
    _writeCmd(ST7735_NOP);
@@ -182,7 +183,7 @@ void ST7735::drawHLine(uint8_t x0, uint8_t y,
 
    for (; pixels < (x1 - x0); ++pixels)
      {
-	   _write3Byte(color);
+        _write3Byte(color);
      }
 
    _writeCmd(ST7735_NOP);
@@ -190,7 +191,7 @@ void ST7735::drawHLine(uint8_t x0, uint8_t y,
 }
 
 void ST7735::drawVLine(uint8_t x, uint8_t y0, uint8_t y1,
-		const uint8_t *color)
+                       const uint8_t *color)
 {
    uint8_t pixels = 0;
 
@@ -198,7 +199,7 @@ void ST7735::drawVLine(uint8_t x, uint8_t y0, uint8_t y1,
    _writeCmd(ST7735_RAMWR);  // write to RAM
    for (; pixels < y1 - y0 ; pixels++)
      {
-	   _write3Byte(color);
+        _write3Byte(color);
      }
 
    _writeCmd(ST7735_NOP);
@@ -207,7 +208,7 @@ void ST7735::drawVLine(uint8_t x, uint8_t y0, uint8_t y1,
 }
 
 void ST7735::drawLine(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,
-		const uint8_t *color)
+                      const uint8_t *color)
 {
    //TODO: there are bugs, fix it after visiting trignometry.
    uint16_t pixels;
@@ -240,7 +241,7 @@ void ST7735::drawRect(uint8_t posX, uint8_t posY, uint8_t width,
 }
 
 void ST7735::drawCircle(uint8_t posX, uint8_t posY, uint8_t r,
-		const uint8_t *color)
+                        const uint8_t *color)
 {
    int x = -r, y = 0, err = 2-2*r, e2;
    do
@@ -263,7 +264,7 @@ void ST7735::drawCircle(uint8_t posX, uint8_t posY, uint8_t r,
 }
 
 void ST7735::fillCircle(uint8_t posX, uint8_t posY, uint8_t r,
-		const uint8_t *color)
+                        const uint8_t *color)
 {
    int x = -r, y = 0, err = 2-2*r, e2;
    do
@@ -401,7 +402,7 @@ void ST7735::_initDisplay()
    //C8 = 1,  1,  0,  0,        1,  0, 0, 0
    //_writeData( _BV(3));
    //    1   0    1   0         1   0  0  0
-
+0
 
    if (_isLandscape)
      _writeData( _BV(7)| _BV(5) | _BV(3));

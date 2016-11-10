@@ -9,27 +9,19 @@
 #define COLORS_H_
 #include <avr/pgmspace.h>
 
-// #define BLACK                       ST7735_COLOR(0x00, 0x00, 0x00)
-// #define WHITE                       ST7735_COLOR(0xFF, 0xFF, 0xFF)
-// #define RED                         ST7735_COLOR(0xFF, 0x00, 0x00)
-// #define GREEN                       ST7735_COLOR(0x00, 0xFF, 0x00)
-// #define BLUE                        ST7735_COLOR(0x00, 0x00, 0xFF)
-// #define YELLOW                      ST7735_COLOR(0xFF, 0xFF, 0x00)
-// #define MAGENTA                     ST7735_COLOR(0xFF, 0x00, 0xFF)
-// #define CYAN                        ST7735_COLOR(0x00, 0xFF, 0xFF)
-// #define GRAY                        ST7735_COLOR(0x80, 0x80, 0x40)
-// #define SILVER                      ST7735_COLOR(0xA0, 0xA0, 0x80)
-// #define GOLD                        ST7735_COLOR(0xA0, 0xA0, 0x40)
-
-										  //r    g      b
+//TODO: Add more colors
+										  //b    //g   //r
 static const uint8_t PROGMEM BLACK[] =   {0x00, 0x00, 0x00};
-static const uint8_t PROGMEM RED[] =     {0xFF, 0x00, 0x00};
+static const uint8_t PROGMEM RED[] =     {0x00, 0x00, 0xFF};
 static const uint8_t PROGMEM GREEN[] =   {0x00, 0xFF, 0x00};
-static const uint8_t PROGMEM BLUE[] =    {0x00, 0x00, 0xFF};
-static const uint8_t PROGMEM YELLOW[] =  {0xFF, 0xFF, 0x00};
+static const uint8_t PROGMEM BLUE[] =    {0xFF, 0x00, 0x00};
+static const uint8_t PROGMEM YELLOW[] =  {0xFF, 0xFF, 0xFF};
 static const uint8_t PROGMEM MAGNETA[] = {0xFF, 0x00, 0xFF};
-static const uint8_t PROGMEM CYAN[] =    {0x00, 0xFF, 0xFF};
-static const uint8_t PROGMEM GRAY[] =    {0x80, 0x80, 0x40};
+static const uint8_t PROGMEM CYAN[] =    {0xFF, 0xFF, 0x00};
+static const uint8_t PROGMEM GRAY[] =    {0x40, 0x80, 0x80};
+static const uint8_t PROGMEM GOLD_YELLOW[] = {0, 223, 255};
+static const uint8_t PROGMEM GOLD_METAL[] = {55, 175, 212};
+
 
 
 #endif /* COLORS_H_ */

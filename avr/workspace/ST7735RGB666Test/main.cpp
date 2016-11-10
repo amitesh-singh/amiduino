@@ -27,21 +27,22 @@ int main()
 {
 	st7735.init();
 	st7735.fillScreen(BLACK);
-//	st7735.drawPixel(10, 10, RED);
-//	st7735.fillRec(45, 45, 40, 30, BLUE);
+	st7735.drawPixel(10, 10, RED);
+    st7735.fillRec(45, 45, 40, 30, GRAY);
 //
-//	st7735.drawLine(0, 0, 20, 100, GREEN);
-//	st7735.drawString("Ami\nGoogle", 60, 50, 1, RED);
+	st7735.drawLine(0, 0, 20, 100, GREEN);
+	st7735.drawString("Ami\nGoogle", 60, 50, 1, RED);
 //
-//	st7735.drawXBitmap(67, 34, Mostly_Cloudy_bits, Mostly_Cloudy_width, Mostly_Cloudy_height,
-//			GOLD);
+	st7735.drawXBitmap(67, 34, Mostly_Cloudy_bits, Mostly_Cloudy_width, Mostly_Cloudy_height,
+			GOLD_YELLOW);
 
-	st7735.drawHLine(0, 50, 128, BLUE);
-	st7735.drawHLine(0, 100, 128, BLUE);
-	st7735.drawVLine(42, 0, 160, BLUE);
-	st7735.drawVLine(85, 0, 160, BLUE);
+//	st7735.drawHLine(0, 50, 128, BLUE);
+//	st7735.drawHLine(0, 100, 128, BLUE);
+//	st7735.drawVLine(42, 0, 160, BLUE);
+//	st7735.drawVLine(85, 0, 160, BLUE);
 
-	st7735.drawCircle(50, 34, 20, RED);
+	st7735.fillCircle(50, 34, 20, GOLD_METAL);
+
 
 	while (1)
 	{

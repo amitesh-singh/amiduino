@@ -8,26 +8,6 @@
 #ifndef ST7735_H_
 #define ST7735_H_
 
-//using RGB565
-//#define ST7735_COLOR(red, green, blue)   ((unsigned int)( (( blue >> 3 ) << 11 ) | (( green >> 2 ) << 5  ) |  ( red  >> 3 )))
-// using RGB666
-//#define ST7735_COLOR(red, green, blue)      (uint32_t)((red << 16) | (green << 8) | (blue))
-
-//TODO: Add more colors..
-//some default colors
-// #define BLACK                       ST7735_COLOR(0x00, 0x00, 0x00)
-// #define WHITE                       ST7735_COLOR(0xFF, 0xFF, 0xFF)
-// #define RED                         ST7735_COLOR(0xFF, 0x00, 0x00)
-// #define GREEN                       ST7735_COLOR(0x00, 0xFF, 0x00)
-// #define BLUE                        ST7735_COLOR(0x00, 0x00, 0xFF)
-// #define YELLOW                      ST7735_COLOR(0xFF, 0xFF, 0x00)
-// #define MAGENTA                     ST7735_COLOR(0xFF, 0x00, 0xFF)
-// #define CYAN                        ST7735_COLOR(0x00, 0xFF, 0xFF)
-// #define GRAY                        ST7735_COLOR(0x80, 0x80, 0x40)
-// #define SILVER                      ST7735_COLOR(0xA0, 0xA0, 0x80)
-// #define GOLD                        ST7735_COLOR(0xA0, 0xA0, 0x40)
-
-
 // LCD controller commands
 
 #define ST7735_NOP         (0x0)
