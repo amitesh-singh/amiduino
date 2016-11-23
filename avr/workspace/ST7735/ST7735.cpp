@@ -100,6 +100,8 @@ void ST7735::_setAddrWindow(uint8_t x0, uint8_t y0,
    _writeCmd(ST7735_RASET);
    _writeWord(y0);
    _writeWord(y1);
+
+   _writeCmd(ST7735_RAMWR);
 }
 
 void ST7735::init()
@@ -134,7 +136,6 @@ void ST7735::init()
 void ST7735::drawPixel(uint8_t x, uint8_t y, uint16_t color)
 {
    _setAddrWindow(x, y, x + 1, y + 1);
-   _writeCmd(ST7735_RAMWR);
    _writeWord(color);
 
    _writeCmd(ST7735_NOP);
@@ -147,7 +148,6 @@ void ST7735::fillRec(uint8_t x, uint8_t y, uint8_t w,
    unsigned int i = 0;
 
    _setAddrWindow(x, y, x + w - 1, y + h -1);
-   _writeCmd(ST7735_RAMWR);
 
    for (; i < (w * h); ++i)
      {
@@ -169,7 +169,6 @@ void ST7735::drawHLine(uint8_t x0, uint8_t y,
    uint8_t pixels = 0;
 
    _setAddrWindow(x0, y, getWidth(), y);
-   _writeCmd(ST7735_RAMWR);
 
    for (; pixels < (x1 - x0); ++pixels)
      {
@@ -186,7 +185,6 @@ void ST7735::drawVLine(uint8_t x, uint8_t y0, uint8_t y1,
    uint8_t pixels = 0;
 
    _setAddrWindow(x, y0, x, getHeight());
-   _writeCmd(ST7735_RAMWR);  // write to RAM
    for (; pixels < y1 - y0 ; pixels++)
      {
         _writeWord(color);
@@ -221,7 +219,7 @@ void ST7735::drawLine(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1,
 }
 
 void ST7735::drawRect(uint8_t posX, uint8_t posY, uint8_t width,
-                      uint8_t height, uint8_t color)
+                      uint8_t height, uint16_t color)
 {
    drawHLine(posX, posY, posX + width - 1, color);
    drawHLine(posX, posY + height - 1, posX + width, color);
