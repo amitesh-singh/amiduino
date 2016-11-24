@@ -81,7 +81,10 @@ void ST7735::_writeCmd(uint8_t cmd)
 
 void ST7735::_writeData(uint8_t data)
 {
+   DC_HIGH;
+   CS_LOW;
    _spiSend(data); //is it inline?
+   DC_LOW;
 }
 
 void ST7735::_writeWord(uint16_t word)
