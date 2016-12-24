@@ -47,8 +47,13 @@ void setup()
 
 void loop()
 {
-   //This works well.
-   irsend.sendSAMSUNG(POWER, 32); //this is on/off test
+   //tested and it seems to work well. ;)
+   // send 3 times.
+   for (uint8_t i = 0; i < 3; ++i)
+     {
+        irsend.sendSAMSUNG(POWER, 32); //this is on/off test
+        delay(5); //delay for 5 ms
+     }
    Serial.println("sent ir to switch off tv");
    delay(10000);
 }
