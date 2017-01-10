@@ -1,0 +1,2 @@
+- http://w8bh.net/avr/serial.pdf
+- http://w8bh.net/avr/AvrDS1307.pdf
