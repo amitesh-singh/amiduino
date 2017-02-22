@@ -1,0 +1,272 @@
+
+===== Doc =====
+
+Install GCC
+
+apt-get install gcc-arm-none-eabi
+
+
+Install libopencm3
+
+mkdir -p ~/src/libopencm3
+cd ~/src/libopencm3
+wget https://github.com/libopencm3/libopencm3/archive/master.zip
+unzip master.zip
+D=`date +%Y-%m-%d`
+mv master.zip libopencm3-$D.zip
+mv libopencm3-master libopencm3-$D
+rm -f libopencm3
+ln -s libopencm3-$D libopencm3
+cd libopencm3-$D
+make
+
+
+Install stlink
+
+mkdir -p ~/src/stlink
+cd ~/src/stlink
+wget https://github.com/texane/stlink/archive/master.zip
+unzip master.zip
+D=`date +%Y-%m-%d`
+mv master.zip stlink-$D.zip
+mv stlink-master stlink-$D
+cd stlink-$D
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=$HOME/installed -DSTLINK_MODPROBED_DIR=$HOME/installed/stlink/modprobe -DSTLINK_UDEV_RULES_DIR=$HOME/installed/stlink/udev ..
+make
+make install
+
+
+Install OpenOCD
+apt-get install openocd
+
+
+Plug in the stlink programmer with the development board connected.
+
+$ st-info --probe
+Found 1 stlink programmers
+ serial: 353f6b063054373437131343
+openocd: "\x35\x3f\x6b\x06\x30\x54\x37\x34\x37\x13\x13\x43"
+  flash: 65536 (pagesize: 1024)
+   sram: 20480
+ chipid: 0x0410
+  descr: F1 Medium-density device
+
+On my debain it just worked without any problems. If this does not work you might need to fiddle with those modprobe and udev files.
+
+
+Untar the program, run make.
+
+Erase the STM32:
+
+st-flash erase
+
+Program the software:
+
+st-flash write hello.bin 0x08000000
+
+Watch the grren LED blink with around 0.7Hz.
+
+
+
+
+===== Links =====
+
+stlink
+https://github.com/texane/stlink
+
+libopencm3
+http://libopencm3.org/
+
+openocd
+http://openocd.org/
+
+STM32F103C8T6 development board:
+https://www.aliexpress.com/item/-/32287392615.html
+
+stlink programmer:
+https://www.aliexpress.com/item/-/32343514985.html
+
+
+===== Development Board =====
+
+STM32F103C8T6 ARM STM32 Minimum System Development Board
+https://www.aliexpress.com/item/-/32287392615.html
+
+Model: STM32F103C8T6.
+Core: ARM 32 Cortex-M3 CPU.
+Debug mode: SWD.
+72MHz work frequency.
+64K flash memory, 20K SRAM.
+2.0-3.6V power, I/O.
+Reset(POR/PDR).
+4-16MHz crystal.
+On-board Mini USB interface, you can give the board power supply and USB communication.
+Size:5.3cm x 2.2cm.
+
+Flash:      64kB
+Ram:        20kB
+Timer:      4, 1 advanced
+SPI:        2
+I2C:        2
+USART:      3
+USB:        1
+CAN:        1
+GPIO:       37
+ADC:        2, 10 channel, 12 bit
+CPU Freq:   72MHz
+VCC:        2.0 - 3.6V
+Package:    LQFP48, UFQFPN48
+Temp:       -40 .. 84 C
+
+
+  GND DCLK DIO 3.3
+VBAT             3.3
+PC13             GND
+PC14             5V
+PC15             PB9
+PA0              PB8
+PA1              PB7
+PA2              PB6
+PA3              PB5
+PA4              PB4
+PA5              PB3
+PA6              PA15
+PA7              PA12
+PB0              PA11
+PB1              PA10
+PB10             PA9
+PB11             PA8
+RESET?           PB15
+3.3              PB14
+GND              PB13
+GND              PB12
+
+B2 -- NRST -- R10k -> ?
+A13 -- DIO
+A14 -- DCLK
+
+STM32F103xx LQFP48 Pins:
+ 1  VBAT
+ 2  PC13
+ 3  PC14
+ 4  PC15
+ 5  PD0 OSC_IN
+ 6  PD1 OSC_OUT
+ 7  NRST
+ 8  VSSA
+ 9  VDDA
+10  PA0
+11  PA1
+12  PA2
+13  PA3
+14  PA4
+15  PA5
+16  PA6
+17  PA7
+18  PB0
+19  PB1
+20  PB2
+21  PB10
+22  PB11
+23  VSS
+24  VDD
+25  PB12
+26  PB13
+27  PB14
+28  PB15
+29  PA8
+30  PA9
+31  PA10
+32  PA11
+33  PA12
+34  PA13
+35  VSS
+36  VDD
+37  PA14
+38  PA15
+39  PB3
+40  PB4
+41  PB5
+42  PB6
+43  PB7
+44  BOOT0
+45  PB8
+46  PB9
+47  VSS
+48  VDD
+
+
+
+
+
+===== Varia AKA Bloody Rubbish :) =====
+
+
+from STM32F103VHB6_RevZ_Demo1
+arm-none-eabi-gcc -mcpu=cortex-m3 -mthumb -Wall -g -O0 -I . -I lib/inc   -c -o main.o main.c
+arm-none-eabi-gcc -Wl,--gc-sections,-Map=main.elf.map,-cref,-u,Reset_Handler -I . -I lib/inc -L lib -T stm32.ld main.o stm32f10x_it.o lib/libstm32.a --output main.elf
+arm-none-eabi-objcopy -O binary main.elf main.bin
+
+
+
+32F103C8T6  ARM Cortex-M3
+
+arm-none-eabi-gcc -c -o hello.o hello.c
+arm-none-eabi-gcc -march=armv7-m -mcpu=cortex-m3 -mthumb -c -o hello.o hello.c 
+
+
+https://launchpad.net/gcc-arm-embedded
+http://libopencm3.org/wiki/Main_Page
+https://github.com/libopencm3/libopencm3/archive/master.zip
+
+
+stlink https://github.com/texane/stlink
+openocd - Open on-chip JTAG debug solution for ARM and MIPS systems
+
+
+
+mcpu=cortex-m0 march=armv6s-m
+mcpu=cortex-m0plus march=armv6s-m
+mcpu=cortex-m1 march=armv6s-m
+march=armv6-m march=armv6s-m
+mcpu=cortex-m3 march=armv7-m
+mcpu=cortex-m4 march=armv7e-m
+march=armv7-r march=armv7
+march=armv7-a march=armv7
+mcpu=cortex-r4 march=armv7
+mcpu=cortex-r4f march=armv7
+mcpu=cortex-r5 march=armv7
+mcpu=cortex-r7 march=armv7
+mcpu=cortex-a5 march=armv7
+mcpu=cortex-a7 march=armv7
+mcpu=cortex-a8 march=armv7
+mcpu=cortex-a9 march=armv7
+mcpu=cortex-a15 march=armv7
+mfpu=vfpv3 mfpu=vfpv3-d16
+mfpu=vfpv3-fp16 mfpu=vfpv3-d16
+mfpu=vfpv3-d16-fp16 mfpu=vfpv3-d16
+mfpu=vfpv3xd mfpu=vfpv3-d16
+mfpu=vfpv3xd-fp16 mfpu=vfpv3-d16
+mfpu=vfpv4 mfpu=vfpv3-d16
+mfpu=vfpv4-d16 mfpu=vfpv3-d16
+mfpu=neon mfpu=vfpv3-d16
+mfpu=neon-fp16 mfpu=vfpv3-d16
+mfpu=neon-vfpv4 mfpu=vfpv3-d16
+mthumb mthumb
+marm marm
+march=armv6s-m march=armv6s-m
+march=armv7-m march=armv7-m
+march=armv7e-m march=armv7e-m
+march=armv7 march=armv7
+mcpu=cortex-m7 mcpu=cortex-m7
+mfloat-abi=softfp mfloat-abi=softfp
+mfloat-abi=hard mfloat-abi=hard
+mfpu=fpv4-sp-d16 mfpu=fpv4-sp-d16
+mfpu=vfpv3-d16 mfpu=vfpv3-d16
+mfpu=fpv5-sp-d16 mfpu=fpv5-sp-d16
+mfpu=fpv5-d16 mfpu=fpv5-d16
+mbig-endian mbig-endian
+
+
