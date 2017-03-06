@@ -19,3 +19,6 @@ openocd: "\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x31"
 rcc_peripheral_clcok_enable(RCC_GPIOA);  
 rcc_peripheral_clcok_enable(RCC_GPIOC);  
 - timers : http://www.kaltpost.de/?page_id=412
+- STM32 arduino - http://www.wifi4things.com/stm32f103c8t6-blue-pill-board-with-arduino-ide-on-linux/
+ use stlink as programmer instead.
+ 
