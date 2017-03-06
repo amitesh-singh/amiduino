@@ -13,3 +13,9 @@ openocd: "\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x30\x31"
  chipid: 0x0410  
   descr: F1 Medium-density device  
 
+### libopencm3 APIs guide
+- Each GPIO has its own clock signal. and this is defined in 
+<libopencm3/stm32/rcc.h>. The Port A and Port C are activated by
+rcc_peripheral_clcok_enable(RCC_GPIOA);  
+rcc_peripheral_clcok_enable(RCC_GPIOC);  
+- timers : http://www.kaltpost.de/?page_id=412
