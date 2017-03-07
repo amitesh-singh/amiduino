@@ -25,6 +25,10 @@ int main( void )
    // Enable GPIOC clock
    rcc_periph_clock_enable( RCC_GPIOC );
    //Set GPIO13 (inbuild led connected) to 'output push-pull'
+   //Manually:
+   // GPIOC_CRH = (GPIO_CNF_OUTPUT_PUSHPULL << (((12 - 8) * 4) + 3));
+	 // GPIOC_CRH |= (GPIO_MODE_OUTPUT_2_MHZ << ((12 - 8) * 4));
+	 /* Using API functions: */
    gpio_set_mode( GPIOC, GPIO_MODE_OUTPUT_2_MHZ,
                   GPIO_CNF_OUTPUT_PUSHPULL, GPIO13 );
 
