@@ -60,7 +60,9 @@ int main( void )
    int x = 10;
    //set STM32 to 72 MHz
    rcc_clock_setup_in_hse_8mhz_out_72mhz();
-
+   rcc_periph_clock_enable( RCC_GPIOC );
+   gpio_set_mode( GPIOC, GPIO_MODE_OUTPUT_2_MHZ,
+                  GPIO_CNF_OUTPUT_PUSHPULL, GPIO13 );
    uart_setup();
 
    printf("setting it up\r\n");
@@ -70,5 +72,8 @@ int main( void )
    printf("x value is: %d\r\n", x);
    while( 1 )
      {
+        gpio_toggle( GPIOC, GPIO13 );
+        printf("toggling led 13/GPIO13");
+        my_delay_1();
      }
 }

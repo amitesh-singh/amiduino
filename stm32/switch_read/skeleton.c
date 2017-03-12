@@ -32,7 +32,7 @@ int main( void )
    gpio_set(GPIOC, GPIO14);
 
    // enable pulldown
-   // gpio_set(GPIOC, GPI14);
+   // gpio_clear(GPIOC, GPI14);
 
    while( 1 )
      {
