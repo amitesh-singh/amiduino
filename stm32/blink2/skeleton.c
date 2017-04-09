@@ -1,5 +1,5 @@
 #include <libopencm3/cm3/common.h>
-#include <libopencm3/stm32/f1/rcc.h>
+#include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/gpio.h>
 
 static void my_delay_1( void )
@@ -25,12 +25,7 @@ int main( void )
 
    while( 1 )
      {
-        //the below code is similar to what following code does!
-        // gpio_toggle(GPIOC, GPIO13);
-        // my_delay_1();
-        gpio_set(GPIOC, GPIO13);
-        my_delay_1();
-        gpio_clear(GPIOC, GPIO13);
+        gpio_toggle(GPIOC, GPIO13);
         my_delay_1();
      }
 }
