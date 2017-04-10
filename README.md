@@ -107,3 +107,8 @@ http://www.mikrocontroller.net/articles/SOUNDRX
 PCB
 ----
 https://easyeda.com
+
+HID
+----
+- https://docs.mbed.com/docs/ble-hid/en/latest/api/md_doc_HID.html
+
