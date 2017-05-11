@@ -1,3 +1,7 @@
 ## Add hindi support
 
 - install pacman -S ttf-indic-otf
+
+## install new kernel
+- sudo grub-mkconfig -o /boot/grub/grub.cfg
+
