@@ -2,6 +2,7 @@
 #include <util/delay.h>
 
 #include <avr/interrupt.h>
+#include <avr/power.h>
 
 #define LED_PORT PB3
 
@@ -34,6 +35,8 @@ ISR(TIM0_OVF_vect)
 
 int main(void)
 {
+    clock_prescale_set(clock_div_4);
+
     DDRB |= (1 << LED_PORT);
 
     init_timer0();
