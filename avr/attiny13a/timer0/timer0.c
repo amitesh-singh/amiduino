@@ -9,6 +9,7 @@
 static void
 init_timer0()
 {
+    //Note: attiny13a has only one timer i.e. timer0 8 bit.
     // Compare Output Mode, non-PWM Mode
     cli();
     TCCR0B |= (1 << CS02) | (1 << CS00); // f_cpu/1024
