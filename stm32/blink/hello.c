@@ -1,8 +1,3 @@
-/*
-
-
- */
-
 #include <libopencm3/cm3/common.h>
 #include <libopencm3/stm32/f1/rcc.h>
 #include <libopencm3/stm32/gpio.h>
@@ -27,8 +22,8 @@ int main( void )
    //Set GPIO13 (inbuild led connected) to 'output push-pull'
    //Manually:
    // GPIOC_CRH = (GPIO_CNF_OUTPUT_PUSHPULL << (((12 - 8) * 4) + 3));
-	 // GPIOC_CRH |= (GPIO_MODE_OUTPUT_2_MHZ << ((12 - 8) * 4));
-	 /* Using API functions: */
+   // GPIOC_CRH |= (GPIO_MODE_OUTPUT_2_MHZ << ((12 - 8) * 4));
+   /* Using API functions: */
    gpio_set_mode( GPIOC, GPIO_MODE_OUTPUT_2_MHZ,
                   GPIO_CNF_OUTPUT_PUSHPULL, GPIO13 );
 
