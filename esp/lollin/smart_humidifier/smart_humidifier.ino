@@ -72,6 +72,7 @@ static void handleSubmit()
      {
         userHumidValue = newHumidVal.toInt();
         server.send(200, "text/html", newHumidVal);
+        processHumidityController();
      }
    else
      server.send(200, "text/html", "Wrong humidity value");
