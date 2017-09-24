@@ -158,7 +158,8 @@ void setup(void)
    Serial.print("IP address: ");
    Serial.println(WiFi.localIP());
 
-   if (MDNS.begin("esp8266"))
+   //can access via humid.local
+   if (MDNS.begin("humid"))
      {
         Serial.println("MDNS responder started");
      }
