@@ -1,5 +1,6 @@
 #include <SimpleDHT.h>
-int pinDHT11 = 2;
+//works at D4/D0 well.
+int pinDHT11 = D0;
 SimpleDHT11 dht11;
 
 void setup()
