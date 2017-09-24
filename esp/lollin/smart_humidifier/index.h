@@ -1,6 +1,6 @@
 const char mainPage[] PROGMEM = "<html> \
 <head> \
-<meta http-equiv='refresh' content='3'> \
+<meta http-equiv='refresh' content='60'> \
 <title>Smart Humidifier by Ami</title> \
 <style> \
 div.card { \
@@ -47,8 +47,8 @@ Set Humid Value (10-60): \
 <input type='submit' value='Set Humid'> <br> <br> \
 </form> \
 Current Threshold humidity: <b>@@userhval@@</b> <br> \
-Fan: <b> @@fan@@ </b> <br> \
-Heater: <b> @@heater@@ </b> <br> \
+Fan: <font color='@@color@@'> <b> @@fan@@ </b> </font> <br> \
+Heater: <font color='@@color@@'> <b> @@heater@@ </b> </font> <br> \
 </center> \
 </body> \
 </html>";

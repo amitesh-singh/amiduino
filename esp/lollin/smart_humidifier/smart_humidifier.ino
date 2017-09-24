@@ -63,8 +63,7 @@ static void processHumidityController()
      }
 }
 
-static void
-handleSubmit()
+static void handleSubmit()
 {
    String newHumidVal = server.arg("userHumidValue");
    Serial.println("Set the humid value to:");
@@ -78,8 +77,7 @@ handleSubmit()
      server.send(200, "text/html", "Wrong humidity value");
 }
 
-static void
-handleRoot()
+static void handleRoot()
 {
    String s = mainPage;
 
@@ -91,6 +89,11 @@ handleRoot()
    s.replace("@@humidity@@", String(humidValue));
    s.replace("@@roomTemp@@", String(roomTemp));
    s.replace("@@userhval@@", String(userHumidValue));
+   if (fanOn || heaterOn)
+     s.replace("@@color@@", "red");
+   else
+     s.replace("@@color@@", "black");
+
    if (fanOn)
      s.replace("@@fan@@", "ON");
    else
@@ -103,8 +106,7 @@ handleRoot()
    server.send(200, "text/html", s);
 }
 
-void
-handleNotFound()
+static void handleNotFound()
 {
    digitalWrite(led, 1);
    String message = "File Not Found\n\n";
@@ -124,8 +126,7 @@ handleNotFound()
 
 static volatile bool _forceReadDHT = false;
 
-static void
-_timer1_cb()
+static void _timer1_cb()
 {
    //Reading sensor value in timer1 - not able to read data.. don;t know why
    //_readDH11();
@@ -190,8 +191,7 @@ void loop(void)
      }
 }
 
-static void
-_readDHT11()
+static void _readDHT11()
 {
    digitalWrite(led, !digitalRead(led));
 
