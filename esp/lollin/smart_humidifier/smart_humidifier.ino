@@ -23,6 +23,8 @@
 #include <ESP8266mDNS.h>
 #include <SimpleDHT.h>
 
+#include <EEPROM.h>
+
 #include "index.h"
 #include "config.h"
 
@@ -75,11 +77,15 @@ static void processHumidityController()
 static void handleSubmit()
 {
    String newHumidVal = server.arg("userHumidValue");
+
    Serial.println("Set the humid value to:");
    Serial.print(newHumidVal);
-   if (newHumidVal.toInt() < 80 || newHumidVal.toInt() > 10)
+
+   if ((newHumidVal.toInt() != userHumidValue)
+       && (newHumidVal.toInt() < 80 || newHumidVal.toInt() > 10))
      {
         userHumidValue = newHumidVal.toInt();
+        EEPROM.write(0, userHumidValue);
         server.send(200, "text/html", newHumidVal);
         processHumidityController();
      }
@@ -147,9 +153,16 @@ void setup(void)
    pinMode(pinFan, OUTPUT);
    pinMode(pinHeater, OUTPUT);
 
+   Serial.begin(115200);
    digitalWrite(led, 0);
 
-   Serial.begin(115200);
+   // Read eeprom value at address 0 from EEPROM
+   userHumidValue = EEPROM.read(0);
+   if (userHumidValue == 0xFF)
+     {
+        userHumidValue = 35;
+        Serial.print("Failed to read EEPROM - first time setup?");
+     }
    WiFi.begin(ssid, password);
    Serial.println("");
 
