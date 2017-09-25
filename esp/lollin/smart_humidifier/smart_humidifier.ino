@@ -24,16 +24,9 @@
 #include <SimpleDHT.h>
 
 #include "index.h"
+#include "config.h"
 
 static void _readDHT11();
-
-static const char ssid[] = "POOJA";
-static const char password[] = "60276711";
-
-static const uint8_t led = D4;
-static const uint8_t pinDHT11 = D0;
-static const uint8_t pinFan = D1;
-static const uint8_t pinHeater = D2;
 
 static uint8_t userHumidValue = 35;
 static uint8_t humidValue =  0;
@@ -41,9 +34,9 @@ static uint8_t roomTemp = 0;
 static bool heaterOn = false;
 static bool fanOn = false;
 
-
 static SimpleDHT11 dht11;
 static ESP8266WebServer server(80);
+static volatile bool _forceReadDHT = false;
 
 static void processHumidityController()
 {
@@ -140,8 +133,6 @@ static void handleNotFound()
    server.send(404, "text/plain", message);
    digitalWrite(led, 0);
 }
-
-static volatile bool _forceReadDHT = false;
 
 static void _timer1_cb()
 {
