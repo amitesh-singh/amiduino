@@ -4,6 +4,8 @@
 void setup()
 {
   pinMode(LOLLIN_LED, OUTPUT);
+  digitalWrite(LOLLIN_LED, 0);
+
 }
 
 void loop()

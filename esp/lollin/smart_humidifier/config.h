@@ -13,5 +13,5 @@ static const uint8_t pinDHT11 = D0;
 static const uint8_t pinFan = D1;
 static const uint8_t pinHeater = D2;
 
-
+//current consumption: esp12e(170mA) + Fan(170mA) + ultrasonic fogger(24V, 600mA)
 #endif
