@@ -44,31 +44,31 @@ static void processHumidityController()
 {
    if (humidValue < userHumidValue)
      {
-        if (!digitalRead(pinFan))
+        if (digitalRead(pinFan))
           {
              Serial.println("Started FAN");
-             digitalWrite(pinFan, HIGH);
+             digitalWrite(pinFan, LOW);
              fanOn = true;
           }
-        if (!digitalRead(pinHeater))
+        if (digitalRead(pinHeater))
           {
              Serial.println("Started heater:");
-             digitalWrite(pinHeater, HIGH);
+             digitalWrite(pinHeater, LOW);
              heaterOn = true;
           }
      }
    else
      {
-        if (digitalRead(pinFan))
+        if (!digitalRead(pinFan))
           {
              Serial.println("Stopped FAN");
-             digitalWrite(pinFan, LOW);
+             digitalWrite(pinFan, HIGH);
              fanOn = false;
           }
-        if (digitalRead(pinHeater))
+        if (!digitalRead(pinHeater))
           {
              Serial.println("Stopped HEATER");
-             digitalWrite(pinHeater, LOW);
+             digitalWrite(pinHeater, HIGH);
              heaterOn = false;
           }
      }
@@ -152,6 +152,9 @@ void setup(void)
    pinMode(led, OUTPUT);
    pinMode(pinFan, OUTPUT);
    pinMode(pinHeater, OUTPUT);
+
+   digitalWrite(pinFan, HIGH); //high is OFF here
+   digitalWrite(pinHeater, HIGH); //high is OFF
 
    Serial.begin(115200);
    digitalWrite(led, 0);
