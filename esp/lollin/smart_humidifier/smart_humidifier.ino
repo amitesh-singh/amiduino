@@ -86,6 +86,7 @@ static void handleSubmit()
      {
         userHumidValue = newHumidVal.toInt();
         EEPROM.write(0, userHumidValue);
+        EEPROM.commit();
         server.send(200, "text/html", newHumidVal);
         processHumidityController();
      }
@@ -157,6 +158,8 @@ void setup(void)
    digitalWrite(pinHeater, HIGH); //high is OFF
 
    Serial.begin(115200);
+   //start the eeprom
+   EEPROM.begin(512);
    digitalWrite(led, 0);
 
    // Read eeprom value at address 0 from EEPROM
@@ -166,6 +169,11 @@ void setup(void)
         userHumidValue = 35;
         Serial.print("Failed to read EEPROM - first time setup?");
      }
+   
+  //fix reconnect issue.
+   WiFi.mode(WIFI_OFF);
+   WiFi.mode(WIFI_STA);
+   WiFi.setOutputPower(0);  
    WiFi.begin(ssid, password);
    Serial.println("");
 
