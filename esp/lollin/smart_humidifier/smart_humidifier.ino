@@ -169,11 +169,11 @@ void setup(void)
         userHumidValue = 35;
         Serial.print("Failed to read EEPROM - first time setup?");
      }
-   
+
   //fix reconnect issue.
    WiFi.mode(WIFI_OFF);
    WiFi.mode(WIFI_STA);
-   WiFi.setOutputPower(0);  
+   WiFi.setOutputPower(0);
    WiFi.begin(ssid, password);
    Serial.println("");
 
