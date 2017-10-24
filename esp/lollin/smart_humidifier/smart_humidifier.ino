@@ -226,11 +226,12 @@ void loop(void)
 
 static void _readDHT11()
 {
+   int err = SimpleDHTErrSuccess;
+
    digitalWrite(led, !digitalRead(led));
 
    humidValue = 0;
    roomTemp = 0;
-   int err = SimpleDHTErrSuccess;
    if ((err = dht11.read(pinDHT11, &roomTemp, &humidValue, NULL))
        != SimpleDHTErrSuccess)
      {
