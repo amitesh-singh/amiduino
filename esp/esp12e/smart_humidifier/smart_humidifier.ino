@@ -158,14 +158,14 @@ static void _timer1_cb()
    }
 }
 
-static void _blinkLed(uint8_t n)
+static void _blinkLed(uint8_t n, uint16_t ms = 500)
 {
   uint8_t i = 0;
 
   for (; i < 2 * n; ++i)
   {
     digitalWrite(led, !digitalRead(led)); //toggle
-    delay(500);
+    delay(ms);
   }
 }
 
@@ -181,7 +181,7 @@ void setup(void)
    digitalWrite(led, HIGH); // led is OFF
   
    //on starting up, toggle for 4 times
-   _blinkLed(4);
+   _blinkLed(4, 100);
    Serial.begin(115200);
    
    //start the eeprom
@@ -206,7 +206,7 @@ void setup(void)
    // Wait for connection
    while (WiFi.status() != WL_CONNECTED)
      {
-        _blinkLed(1);
+        _blinkLed(1, 200);
         //delay(500);
         Serial.print(F("."));
      }
@@ -261,7 +261,8 @@ static void _readDHT22()
 {
    int err = SimpleDHTErrSuccess;
 
-   digitalWrite(led, !digitalRead(led));
+   //digitalWrite(led, !digitalRead(led));
+   _blinkLed(2, 150);
 
    humidValue = 0;
    roomTemp = 0;
