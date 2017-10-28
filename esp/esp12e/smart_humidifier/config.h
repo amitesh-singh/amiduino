@@ -7,6 +7,8 @@ static const char ssid[] = "POOJA";
 //Add your wifi password here
 static const char password[] = "60276711";
 
+//200s - change it to 200 in final code XXX:
+static const uint8_t timeoutToReadDHT = 10;
 #define MYESP12E_BOARD
 
 #ifdef LOLLIN_BOARD
