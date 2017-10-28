@@ -1,29 +1,36 @@
 
-//// THIS DID NOT WORK           /// Don;t know why :/
+#include <Arduino.h>
 
-// This example blinks the LED (GPIO_13) in every 1 second
-static const unsigned long CPU_MHZ = 80000000; //80Mhz -> 80*10^6 = 1 second
-volatile uint8_t toggle;
+#define led 2
+
+static const unsigned long CPU_MHZ = 80e6; //80Mhz -> 80*10^6 = 1 second
 
 void inline timer1_ISR(void)
 {
-   toggle = (toggle == 1) ? 0: 1;
-   digitalWrite(13, toggle);
-
-   // if you want timer1 to be called just once, don't call timer1_write the below stuff
-   // Set-up the next interrupt cycle
-   timer1_write(ESP.getCycleCount() + CPU_MHZ);
+   digitalWrite(led, !digitalRead(led));
+   Serial.println("Blinks.");
 }
 
-void setup()   {
-   pinMode(13, OUTPUT);
-   noInterrupts();
-   timer1_isr_init();
+void setup() 
+{
+   Serial.begin(115200);
+
+   pinMode(led, OUTPUT);
+   digitalWrite(led, HIGH);
+   
+   //noInterrupts();
+
+   //disable timer1 before configuring
+   timer1_disable();
    timer1_attachInterrupt(timer1_ISR);
+   timer1_isr_init();
+   //No need to add ESP.getCycleCount() this results into weird results
+   timer1_write(/*ESP.getCycleCount() +*/ CPU_MHZ/16);
+   
+   timer1_enable(TIM_DIV16, TIM_EDGE, TIM_LOOP); //other values are TIM_SINGLE
 
-   timer1_write(ESP.getCycleCount() + CPU_MHZ);
-
-   interrupts();
+   // enable interrupts
+   //interrupts();
 }
 
 void loop()
