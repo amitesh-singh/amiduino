@@ -3,8 +3,22 @@
 #### Connection for flashing via arduino ide
 
 This is for the DIY board i made for esp12e chip.
-
 The inbuilt led is at port 2
+
+#### Pin Mapping
+
+GPIO5  - 5  
+GPIO4 - 4   
+GPIO0 - 0
+GPIO2 - 2
+GPIO15 - 15
+GPIO12 - 12
+GPIO13 - 13
+GPIO14 - 14
+GPIO16 - 16
+ADC - i don't know
+
+
 
 1. connect FTD-232
 2.
