@@ -2,6 +2,10 @@
 
 #### Connection for flashing via arduino ide
 
+This is for the DIY board i made for esp12e chip.
+
+The inbuilt led is at port 2
+
 1. connect FTD-232
 2.
    CH_PD - 3.3v  
