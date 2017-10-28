@@ -11,14 +11,14 @@ static const char password[] = "60276711";
 
 #ifdef LOLLIN_BOARD
 // Pin Config
-static const uint8_t led = D4;
+static const uint8_t led = D4; //inbuilt led pin
 static const uint8_t pinDHT11 = D0;
 static const uint8_t pinFan = D1;
 static const uint8_t pinHeater = D2;
 #endif
 
 #ifdef MYESP12E_BOARD
-static const uint8_t led = 4;
+static const uint8_t led = 2; //inbuilt led pin
 static const uint8_t pinDHT11 = 12;
 static const uint8_t pinFan = 14;
 static const uint8_t pinHeater = 16;

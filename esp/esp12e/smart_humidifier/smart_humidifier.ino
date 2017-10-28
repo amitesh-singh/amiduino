@@ -36,7 +36,9 @@ static uint8_t roomTemp = 0;
 static bool heaterOn = false;
 static bool fanOn = false;
 
-static SimpleDHT11 dht11;
+//static SimpleDHT11 dht11;
+static SimpleDHT22 dht22;
+
 static ESP8266WebServer server(80);
 static volatile bool _forceReadDHT = false;
 
@@ -148,6 +150,17 @@ static void _timer1_cb()
    _forceReadDHT = true;
 }
 
+static void _blinkLed(uint8_t n)
+{
+  uint8_t i = 0;
+
+  for (; i < 2 * n; ++i)
+  {
+    digitalWrite(led, !digitalRead(led)); //toggle
+    delay(500);
+  }
+}
+
 void setup(void)
 {
    pinMode(led, OUTPUT);
@@ -156,6 +169,11 @@ void setup(void)
 
    digitalWrite(pinFan, HIGH); //high is OFF here
    digitalWrite(pinHeater, HIGH); //high is OFF
+   
+   digitalWrite(led, HIGH); // led is OFF
+   
+   //on starting up, toggle for 4 times
+   _blinkLed(4);
 
    Serial.begin(115200);
    //start the eeprom
@@ -188,7 +206,7 @@ void setup(void)
    Serial.println(ssid);
    Serial.print("IP address: ");
    Serial.println(WiFi.localIP());
-
+   _blinkLed(4); //blink 4 times on wifi connected
    //can access via humid.local
    if (MDNS.begin("humid"))
      {
@@ -202,7 +220,7 @@ void setup(void)
    server.begin();
    Serial.println("HTTP server started");
 
-   _readDHT11();
+   _readDHT22();
 
    //start timer1
    timer1_disable();
@@ -218,13 +236,13 @@ void loop(void)
    server.handleClient();
    if (_forceReadDHT)
      {
-        _readDHT11();
+        _readDHT22();
         processHumidityController();
         _forceReadDHT = false;
      }
 }
 
-static void _readDHT11()
+static void _readDHT22()
 {
    int err = SimpleDHTErrSuccess;
 
@@ -232,10 +250,10 @@ static void _readDHT11()
 
    humidValue = 0;
    roomTemp = 0;
-   if ((err = dht11.read(pinDHT11, &roomTemp, &humidValue, NULL))
+   if ((err = dht22.read(pinDHT11, &roomTemp, &humidValue, NULL))
        != SimpleDHTErrSuccess)
      {
-        Serial.print("Read DHT11 failed, err="); Serial.println(err);
+        Serial.print("Read DHT22 failed, err="); Serial.println(err);
         delay(1000);
         return;
      }
