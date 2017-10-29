@@ -40,39 +40,37 @@ static bool fanOn = false;
 static SimpleDHT22 dht22;
 
 static ESP8266WebServer server(80);
-static uint8_t _clockTick = 0;
-
 static volatile bool _forceReadDHT = false;
 
 static void processHumidityController()
 {
    if (humidValue < userHumidValue)
      {
-        if (!digitalRead(pinFan))
+        if (digitalRead(pinFan))
           {
              Serial.println("Started FAN");
-             digitalWrite(pinFan, HIGH);
+             digitalWrite(pinFan, LOW);
              fanOn = true;
           }
-        if (!digitalRead(pinHeater))
+        if (digitalRead(pinHeater))
           {
              Serial.println("Started heater:");
-             digitalWrite(pinHeater, HIGH);
+             digitalWrite(pinHeater, LOW);
              heaterOn = true;
           }
      }
    else
      {
-        if (digitalRead(pinFan))
+        if (!digitalRead(pinFan))
           {
              Serial.println("Stopped FAN");
-             digitalWrite(pinFan, LOW);
+             digitalWrite(pinFan, HIGH);
              fanOn = false;
           }
-        if (digitalRead(pinHeater))
+        if (!digitalRead(pinHeater))
           {
              Serial.println("Stopped HEATER");
-             digitalWrite(pinHeater, LOW);
+             digitalWrite(pinHeater, HIGH);
              heaterOn = false;
           }
      }
@@ -149,13 +147,7 @@ static void _timer1_cb()
 {
    //Reading sensor value in timer1 - not able to read data.. don;t know why
    //_readDH11();
-   //Serial.println("timer1 isr");
-   ++_clockTick;
-   if (_clockTick >= timeoutToReadDHT)
-   {
-      _forceReadDHT = true;
-      _clockTick = 0;
-   }
+   _forceReadDHT = true;
 }
 
 static void _blinkLed(uint8_t n)
@@ -175,15 +167,15 @@ void setup(void)
    pinMode(pinFan, OUTPUT);
    pinMode(pinHeater, OUTPUT);
 
-   digitalWrite(pinFan, LOW); //high is OFF here
-   digitalWrite(pinHeater, LOW); //high is OFF
+   digitalWrite(pinFan, HIGH); //high is OFF here
+   digitalWrite(pinHeater, HIGH); //high is OFF
    
    digitalWrite(led, HIGH); // led is OFF
-  
+   
    //on starting up, toggle for 4 times
    _blinkLed(4);
+
    Serial.begin(115200);
-   
    //start the eeprom
    EEPROM.begin(512);
    digitalWrite(led, 0);
@@ -193,7 +185,7 @@ void setup(void)
    if (userHumidValue == 0xFF)
      {
         userHumidValue = 35;
-        Serial.print(F("Failed to read EEPROM - first time setup?"));
+        Serial.print("Failed to read EEPROM - first time setup?");
      }
 
   //fix reconnect issue.
@@ -206,20 +198,19 @@ void setup(void)
    // Wait for connection
    while (WiFi.status() != WL_CONNECTED)
      {
-        _blinkLed(1);
-        //delay(500);
-        Serial.print(F("."));
+        delay(500);
+        Serial.print(".");
      }
    Serial.println("");
-   Serial.print(F("Connected to "));
+   Serial.print("Connected to ");
    Serial.println(ssid);
-   Serial.print(F("IP address: "));
+   Serial.print("IP address: ");
    Serial.println(WiFi.localIP());
-   _blinkLed(5); //blink 5 times on wifi connected
+   _blinkLed(4); //blink 4 times on wifi connected
    //can access via humid.local
    if (MDNS.begin("humid"))
      {
-        Serial.println(F("MDNS responder started: http://humid.local"));
+        Serial.println("MDNS responder started");
      }
 
    server.on("/", handleRoot);
@@ -227,23 +218,17 @@ void setup(void)
    server.onNotFound(handleNotFound);
 
    server.begin();
-   Serial.println(F("HTTP server started"));
+   Serial.println("HTTP server started");
 
    _readDHT22();
 
-   //noInterrupts();
    //start timer1
    timer1_disable();
    timer1_attachInterrupt(_timer1_cb);
    timer1_isr_init();
 
-   //1s clock
-   unsigned long timeout = (clockCyclesPerMicrosecond() * 1000000/ 16);
-   //TODO: make timer super slow TIM_DIV256 to run slower 
-   timer1_enable(TIM_DIV16, TIM_EDGE, TIM_LOOP);
-   timer1_write(timeout);   
-
-   //Serial.println(String(clockCyclesPerMicrosecond()));
+   timer1_enable(TIM_DIV265, TIM_EDGE, TIM_LOOP);
+   timer1_write(ESP.getCycleCount() + 160e6);
 }
 
 void loop(void)
@@ -268,13 +253,13 @@ static void _readDHT22()
    if ((err = dht22.read(pinDHT11, &roomTemp, &humidValue, NULL))
        != SimpleDHTErrSuccess)
      {
-        Serial.print(F("Read DHT22 failed, err=")); Serial.println(err);
+        Serial.print("Read DHT22 failed, err="); Serial.println(err);
         delay(1000);
         return;
      }
 
-   Serial.print(F("Humidity: "));
+   Serial.print("Humidity: ");
    Serial.print(String(humidValue));
-   Serial.print(F("  Temperature: "));
+   Serial.print("  Temperature: ");
    Serial.println(String(roomTemp));
 }
