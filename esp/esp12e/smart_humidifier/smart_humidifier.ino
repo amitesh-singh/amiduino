@@ -176,13 +176,13 @@ static void _blinkLed(uint8_t n)
 
 void setup(void)
 {
-   pinMode(led, OUTPUT);
    pinMode(pinFan, OUTPUT);
+   digitalWrite(pinFan, LOW); //LOW is OFF here
+   
    pinMode(pinHeater, OUTPUT);
-
-   digitalWrite(pinFan, LOW); //high is OFF here
    digitalWrite(pinHeater, LOW); //high is OFF
    
+   pinMode(led, OUTPUT);   
    digitalWrite(led, HIGH); // led is OFF
    
    //on starting up, toggle for 4 times
