@@ -40,6 +40,7 @@ static bool fanOn = false;
 
 static ESP8266WebServer server(80);
 static volatile bool _forceReadDHT = false;
+static uint8_t _clockTick = 0;
 
 static void processHumidityController()
 {
@@ -47,13 +48,17 @@ static void processHumidityController()
      {
         if (!digitalRead(pinFan))
           {
+            #ifdef DEBUG
              Serial.println("Started FAN");
+            #endif
              digitalWrite(pinFan, HIGH);
              fanOn = true;
           }
         if (!digitalRead(pinHeater))
           {
+            #ifdef DEBUG
              Serial.println("Started heater:");
+            #endif
              digitalWrite(pinHeater, HIGH);
              heaterOn = true;
           }
@@ -62,13 +67,17 @@ static void processHumidityController()
      {
         if (digitalRead(pinFan))
           {
+            #ifdef DEBUG
              Serial.println("Stopped FAN");
+            #endif
              digitalWrite(pinFan, LOW);
              fanOn = false;
           }
         if (digitalRead(pinHeater))
           {
+            #ifdef DEBUG
              Serial.println("Stopped HEATER");
+            #endif
              digitalWrite(pinHeater, LOW);
              heaterOn = false;
           }
@@ -146,7 +155,12 @@ static void _timer1_cb()
 {
    //Reading sensor value in timer1 - not able to read data.. don;t know why
    //_readDH11();
-   _forceReadDHT = true;
+   ++_clockTick;
+   if (_clockTick > 10)
+   {
+      _clockTick = 0;
+      _forceReadDHT = true;
+   }
 }
 
 static void _blinkLed(uint8_t n)
@@ -227,7 +241,8 @@ void setup(void)
    timer1_isr_init();
 
    timer1_enable(TIM_DIV265, TIM_EDGE, TIM_LOOP);
-   timer1_write(ESP.getCycleCount() + 160e6);
+   //timer1_write(ESP.getCycleCount() + 160e6);
+   timer1_write( (80 * 10e6)/ 256); //10s timeout
 }
 
 void loop(void)
@@ -258,10 +273,11 @@ static void _readDHT22()
         delay(1000);
         return;
      }
-
+#ifdef DEBUG
    Serial.print("Humidity: ");
    Serial.print(humidValue);
    Serial.print("  Temperature: ");
    Serial.print(roomTemp);
    Serial.println("");
+#endif
 }

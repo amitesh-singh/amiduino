@@ -9,6 +9,9 @@ static const char password[] = "60276711";
 
 #define MYESP12E_BOARD
 
+//comment it in final code
+#define DEBUG 
+
 #ifdef LOLLIN_BOARD
 // Pin Config
 static const uint8_t led = D4; //inbuilt led pin
