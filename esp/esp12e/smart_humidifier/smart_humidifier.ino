@@ -37,7 +37,6 @@ static bool heaterOn = false;
 static bool fanOn = false;
 
 //static SimpleDHT11 dht11;
-static SimpleDHT22 dht22;
 
 static ESP8266WebServer server(80);
 static volatile bool _forceReadDHT = false;
@@ -46,31 +45,31 @@ static void processHumidityController()
 {
    if (humidValue < userHumidValue)
      {
-        if (digitalRead(pinFan))
+        if (!digitalRead(pinFan))
           {
              Serial.println("Started FAN");
-             digitalWrite(pinFan, LOW);
+             digitalWrite(pinFan, HIGH);
              fanOn = true;
           }
-        if (digitalRead(pinHeater))
+        if (!digitalRead(pinHeater))
           {
              Serial.println("Started heater:");
-             digitalWrite(pinHeater, LOW);
+             digitalWrite(pinHeater, HIGH);
              heaterOn = true;
           }
      }
    else
      {
-        if (!digitalRead(pinFan))
+        if (digitalRead(pinFan))
           {
              Serial.println("Stopped FAN");
-             digitalWrite(pinFan, HIGH);
+             digitalWrite(pinFan, LOW);
              fanOn = false;
           }
-        if (!digitalRead(pinHeater))
+        if (digitalRead(pinHeater))
           {
              Serial.println("Stopped HEATER");
-             digitalWrite(pinHeater, HIGH);
+             digitalWrite(pinHeater, LOW);
              heaterOn = false;
           }
      }
@@ -80,8 +79,8 @@ static void handleSubmit()
 {
    String newHumidVal = server.arg("userHumidValue");
 
-   Serial.println("Set the humid value to:");
-   Serial.print(newHumidVal);
+  // Serial.println("Set the humid value to:");
+  // Serial.print(newHumidVal);
 
    if ((newHumidVal.toInt() != userHumidValue)
        && (newHumidVal.toInt() < 80 || newHumidVal.toInt() > 10))
@@ -167,8 +166,8 @@ void setup(void)
    pinMode(pinFan, OUTPUT);
    pinMode(pinHeater, OUTPUT);
 
-   digitalWrite(pinFan, HIGH); //high is OFF here
-   digitalWrite(pinHeater, HIGH); //high is OFF
+   digitalWrite(pinFan, LOW); //high is OFF here
+   digitalWrite(pinHeater, LOW); //high is OFF
    
    digitalWrite(led, HIGH); // led is OFF
    
@@ -244,6 +243,8 @@ void loop(void)
 
 static void _readDHT22()
 {
+   SimpleDHT22 dht22;
+  
    int err = SimpleDHTErrSuccess;
 
    digitalWrite(led, !digitalRead(led));
@@ -259,7 +260,8 @@ static void _readDHT22()
      }
 
    Serial.print("Humidity: ");
-   Serial.print(String(humidValue));
+   Serial.print(humidValue);
    Serial.print("  Temperature: ");
-   Serial.println(String(roomTemp));
+   Serial.print(roomTemp);
+   Serial.println("");
 }
