@@ -31,8 +31,7 @@ Efl build options
          --enable-elput --enable-ecore-buffer \
          --enable-xinput22 --enable-fb --disable-tslib \
          --enable-harfbuzz --enable-wayland --enable-drm \
-         --enable-systemd --enable-ibus --with-tests=regular \
-         --enable-i-really-know-what-i-am-doing-and-that-this-will-probably-break-things-and-i-will-fix-them-myself-and-send-patches-abb
+         --enable-systemd --enable-ibus --with-tests=regular
 
 Enligthtenment build options  
 mkdir build
