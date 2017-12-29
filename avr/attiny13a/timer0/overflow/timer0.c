@@ -6,18 +6,20 @@
 
 #define LED_PORT PB3
 
+//This shows how to to enable timer overflow interrupt
+//
 static void
 init_timer0()
 {
     //Note: attiny13a has only one timer i.e. timer0 8 bit.
-    // Compare Output Mode, non-PWM Mode
     cli();
+
     TCCR0B |= (1 << CS02) | (1 << CS00); // f_cpu/1024
-    TCCR0A |= (1 << COM0A1); // Clear OC0A on Compare Match  
+
+    //enable timer overflow interrupt
     TIMSK0 |= 1 << TOIE0;
 
-    TCNT0 = 0;
-    OCR0A = 250;
+    //enable global interrupt
     sei();
 }
 
@@ -29,6 +31,7 @@ stop_timer()
     sei();
 }
 
+//ISR would be called when TCNT reaches 255.
 ISR(TIM0_OVF_vect)
 {
     PORTB ^= (1 << LED_PORT);
@@ -36,20 +39,18 @@ ISR(TIM0_OVF_vect)
 
 int main(void)
 {
-    clock_prescale_set(clock_div_4);
+    //clock_prescale_set(clock_div_4);
 
     DDRB |= (1 << LED_PORT);
 
     init_timer0();
+
     PORTB |= (1 << LED_PORT);
     _delay_ms(1000);
     PORTB &= ~(1 << LED_PORT);
     _delay_ms(1000);
 
-    while (1)
-    {
-
-    }
+    while (1) { }
 
     return 0;
 }
