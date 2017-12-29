@@ -55,14 +55,18 @@
 ISR(WDT_vect)
 {
    PORTB ^= _BV(LED_PIN);
+   //wdt_reset() might require if you call wdt_enable() or enable WDE bit
 }
 
 int main()
 {
    DDRB |= _BV(PB0);
 
-   //set the prescalar to 0.5s.
-   wdt_enable(WDTO_500MS); // or WDTCR |= _BV(WDP0) | _BV(WDP2);
+   //set the prescalar to 0.5s and enable WDE as well.
+   //wdt_enable(WDTO_500MS);
+
+   //set the prescalar to 0.5s only. WDE -> 0
+   WDTCR |= _BV(WDP0) | _BV(WDP2);
    //to enable 
 
    WDTCR |= _BV(WDTIE); //enable watchdog timer interrupt
