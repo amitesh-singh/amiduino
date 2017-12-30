@@ -4,7 +4,7 @@
 #include <avr/interrupt.h>
 #include <avr/power.h>
 
-#define LED_PORT PB3
+#define LED_PORT PB0
 
 //This shows how to to enable timer overflow interrupt
 //
