@@ -55,12 +55,12 @@ TARGET = $(lastword $(subst /, ,$(CURDIR)))
 #  and in LIBDIR.  If you have any other (sub-)directories with code,
 #  you can add them in to SOURCES below in the wildcard statement.
 SOURCES=$(wildcard *.c $(LIBDIR)/*.c *.S)
-OBJECTS=$(SOURCES:.c=.o)
+OBJECTS=$(SOURCES:.S=.o)
 HEADERS=$(SOURCES:.c=.h)
 
 ## Compilation options, type man avr-gcc if you're curious.
-CPPFLAGS = -DF_CPU=$(F_CPU) -DBAUD=$(BAUD) -I. -I$(LIBDIR)
-CFLAGS = -Os -g -std=gnu99 -Wall
+CPPFLAGS = -DF_CPU=$(F_CPU) -DBAUD=$(BAUD) -I. -I$(LIBDIR) -x assembler-with-cpp
+CFLAGS = -Os -g -std=gnu99 -Wall -x assembler-with-cpp
 ## Use short (8-bit) data types 
 CFLAGS += -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums 
 ## Splits up object files per function
