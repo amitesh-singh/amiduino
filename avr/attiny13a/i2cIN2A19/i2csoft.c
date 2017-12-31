@@ -11,36 +11,52 @@
 #define sda PB1
 #define scl PB0
 
-void sda_low()
+static void sda_low()
 {
    DDRB |= (1 << sda);
    PORTB &= ~(1 << sda);
 }
 
-void sda_high()
+static void sda_high()
 {
    DDRB &= ~(1 << sda);
 }
 
-void scl_low()
+static void scl_low()
 {
    DDRB |= (1 << scl);
    PORTB &= ~(1 << scl);
 }
 
-void scl_high()
+static void scl_high()
 {
    DDRB &= ~(1 << scl);
 }
 
-uint8_t sda_read()
+static uint8_t sda_read()
 {
    return bit_is_set(PINB, sda);
 }
 
-uint8_t scl_read()
+static uint8_t scl_read()
 {
    return bit_is_set(PINB, scl);
+}
+
+void i2c_begin()
+{
+   i2c_stop();
+}
+
+uint8_t i2c_start(uint8_t rawAddr)
+{
+   sda_low();
+   delayMicroseconds(10);
+
+   scl_low();
+   delayMicroseconds(10);
+
+   return i2c_writeByte(rawAddr);
 }
 
 void i2c_stop()
@@ -58,12 +74,7 @@ void i2c_stop()
    delayMicroseconds(10);
 }
 
-void i2c_init()
-{
-   i2c_stop();
-}
-
-uint8_t i2c_write(uint8_t data)
+uint8_t i2c_writeByte(uint8_t data)
 {
    for(uint8_t i = 8; i; --i)
      {
@@ -112,13 +123,32 @@ uint8_t i2c_write(uint8_t data)
    return ack;
 }
 
-uint8_t i2c_start(uint8_t rawAddr)
+//read one byte. If <last> is true, we send a NAK after having received 
+// the byte in order to terminate the read sequence. 
+uint8_t i2c_readByte(uint8_t last)
 {
-   sda_low();
-   delayMicroseconds(10);
+  uint8_t b = 0;
+  
+  sda_high();
+  for (uint8_t i = 0; i < 8; ++i)
+  {
+    b <<= 1;
+    delayMicroseconds(10);
+    scl_high();
+    if (sda_read()) b |= 1;
+    scl_low();
+  }
+  //send NAK
+  if (last) sda_high();
+  //send ACK
+  else sda_low();
 
-   scl_low();
-   delayMicroseconds(10);
+  scl_high();
+  delayMicroseconds(10/2);
+  scl_low();
+  delayMicroseconds(10/2);
+  sda_low();
 
-   return i2c_write(rawAddr);
+  return b;
 }
+
