@@ -4,6 +4,7 @@
 
 #include "uart.h"
 
+//CPU is running at 4.8MHZ and baud rate is 38400
 
 int main(void)
 {
@@ -14,7 +15,7 @@ int main(void)
 
    while (1)
      {
-       DDRB ^= _BV(PB0);
+        PORTB ^= _BV(PB0);
         _delay_ms(1000);
                
         uart_puts("Led blinks\r\n");

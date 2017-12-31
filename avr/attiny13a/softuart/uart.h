@@ -11,22 +11,22 @@
 //#define	UART_RX_ENABLED		(1) // Enable UART RX
 //#define	UART_TX_ENABLED		(1) // Enable UART TX
 
-#ifndef F_CPU
-# define        F_CPU           (1200000UL) // 1.2 MHz
-#endif  /* !F_CPU */
+//#ifndef F_CPU
+//# define        F_CPU           (1200000UL) // 1.2 MHz
+//#endif  /* !F_CPU */
 
-#if defined(UART_TX_ENABLED) && !defined(UART_TX)
+//#if defined(UART_TX_ENABLED) && !defined(UART_TX)
 # define        UART_TX         PB3 // Use PB3 as TX pin
-#endif  /* !UART_TX */
+//#endif  /* !UART_TX */
 
-#if defined(UART_RX_ENABLED) && !defined(UART_RX)
+//#if defined(UART_RX_ENABLED) && !defined(UART_RX)
 # define        UART_RX         PB4 // Use PB4 as RX pin
-#endif  /* !UART_RX */
+//#endif  /* !UART_RX */
 
-#if (defined(UART_TX_ENABLED) || defined(UART_RX_ENABLED)) && !defined(UART_BAUDRATE)
+//#if (defined(UART_TX_ENABLED) || defined(UART_RX_ENABLED)) && !defined(UART_BAUDRATE)
 //# define        UART_BAUDRATE   (19200)
-#define UART_BAUDRATE  9600
-#endif  /* !UART_BAUDRATE */
+//#define UART_BAUDRATE  9600
+//#endif  /* !UART_BAUDRATE */
 
 #define	TXDELAY         	(int)(((F_CPU/UART_BAUDRATE)-7 +1.5)/3)
 #define RXDELAY         	(int)(((F_CPU/UART_BAUDRATE)-5 +1.5)/3)
