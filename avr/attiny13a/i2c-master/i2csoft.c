@@ -111,38 +111,3 @@ uint8_t start(uint8_t rawAddr)
 
    return write(rawAddr);
 }
-
-void setup()
-{
-   i2c_init();
-   uint8_t ack = 1;
-
-   for (uint8_t i = 8; i < 128; ++i)
-     {
-        ack = start((i << 1) + 1);
-        stop();
-
-        if (ack == 0)
-          {
-             //LED at PB2 is on if there is any i2c slave
-             PORTB |= (1 << PB2);
-          }
-        delay(50);
-     }
-}
-
-int main(void)
-{
-   DDRB |= (1 << PB2);
-
-   //wait for 2 seconds
-   _delay_ms(2000);
-
-   setup();
-
-   while (1)
-     {
-     }
-
-   return 0;
-}
