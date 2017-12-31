@@ -5,7 +5,7 @@ avrdude = find_program('avrdude')
 size = find_program('avr-size')
 objcopy = find_program('avr-objcopy')
 
-mcu = 'attiny13a'
+mcu = 'attiny13'
 avrdudemcu = 't13'
 cpuspeed = '9600000'
 #cpuspeed = '4800000'
@@ -22,7 +22,7 @@ cargs =        ['-Os',
               '-ffunction-sections',
               '-fdata-sections',
                 '-DF_CPU=' + cpuspeed,
-#   '-DUART_RX_ENABLED',
+#'-DUART_RX_ENABLED',
                 '-DUART_TX_ENABLED',
                 '-DUART_BAUDRATE=115200',
                 '-mmcu=' + mcu,
@@ -32,10 +32,10 @@ linkargs =      ['-Wl,-Map,blink.map',
                  '-Wl,--relax',
                  '-ffunction-sections',
                 '-fdata-sections',
-                 '-mmcu=' + mcu,
+                 '-mmcu=attiny13a'
                 ]
 
-srcfiles = ['blink.c', 'uart.c']
+srcfiles = ['main.c', 'uart.c', 'i2csoft.c']
 
 exe = executable('blink', srcfiles,
            c_args: cargs,
