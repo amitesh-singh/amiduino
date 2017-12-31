@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
+#include "i2csoft.h"
 //Written by ami 2017
 //refer this: https://cdn.sparkfun.com/assets/6/4/7/1/e/51ae0000ce395f645d000000.png
 
@@ -42,7 +43,7 @@ uint8_t scl_read()
    return bit_is_set(PINB, scl);
 }
 
-void stop()
+void i2c_stop()
 {
    scl_low();
    delayMicroseconds(10);
@@ -59,10 +60,10 @@ void stop()
 
 void i2c_init()
 {
-   stop();
+   i2c_stop();
 }
 
-uint8_t write(uint8_t data)
+uint8_t i2c_write(uint8_t data)
 {
    for(uint8_t i = 8; i; --i)
      {
@@ -92,16 +93,19 @@ uint8_t write(uint8_t data)
 
    scl_high();
 
-   //wait scl to go low? - controlled by slave?
    //now this depends upon totally on i2c slave when it pulls down SCL line
+   // lets wait for i2c slave to pull down scl low and  then we read the sda
+  // while (scl_read())
+  // {
+     //note: if no i2c slave is connected, it would infinitely wait here.. so better to have a timeout here
+   //  __asm__ volatile ("nop");
+   //}
    delayMicroseconds(10);
-   //delay(10);
-   //scl_low();
 
    return sda_read();
 }
 
-uint8_t start(uint8_t rawAddr)
+uint8_t i2c_start(uint8_t rawAddr)
 {
    sda_low();
    delayMicroseconds(10);
@@ -109,5 +113,5 @@ uint8_t start(uint8_t rawAddr)
    scl_low();
    delayMicroseconds(10);
 
-   return write(rawAddr);
+   return i2c_write(rawAddr);
 }
