@@ -1,10 +1,12 @@
+#define __SFR_OFFSET 0
+   .nolist
 #include <avr/io.h>
+   .list
 
 //refer: http://msoe.us/taylor/tutorial/ce2810/candasm
 #define _SFR_ASM_COMPAT 1  /* Not sure when/if this is needed */
 //the following needed to subtract 0x20 from i/o address
 // code will not work if you don't set this.
-#define __SFR_OFFSET 0
 
 .org 0x0
 
