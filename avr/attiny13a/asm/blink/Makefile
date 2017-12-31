@@ -49,9 +49,9 @@ blink.o: Makefile blink.S
 
 clean:
 	rm -f *.o
-
-clobber: clean
 	rm -f *.elf *.hex sim.out .errs.t *.list 
+size:
+	avr-size --format=avr --mcu=$(DEVICE) main.elf
 
 disasm:	main.elf
 	avr-objdump -d main.elf
