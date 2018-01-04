@@ -1,6 +1,7 @@
 install avra
 ------------
 - sudo apt-get install avra
+- yaourt -S avra
 
 Most of programs are for atmega16
 
