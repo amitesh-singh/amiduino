@@ -10,3 +10,4 @@ cmake_install.cmake
 *.cof
 *.obj
 *.list
+builddir/
