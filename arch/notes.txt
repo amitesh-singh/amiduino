@@ -5,3 +5,16 @@
 ## install new kernel
 - sudo grub-mkconfig -o /boot/grub/grub.cfg
 
+## fix for R8188 wifi dongle driver
+
+r8188eu driver module has lots of issues. better use rtl8188eu
+disable rtl8188eu
+
+and add following file
+cat /etc/modprobe.d/nor8188eu.conf
+blacklist r8188eu
+modprobe rtl8188eu
+
+https://github.com/lwfinger/rtl8188eu
+
+
