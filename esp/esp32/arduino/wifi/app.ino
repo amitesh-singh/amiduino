@@ -1,8 +1,8 @@
 #include <WiFi.h>
 
 // WiFi network name and password:
-const char * networkName = "fdfdlsfl;shijeet";
-const char * networkPswd = "smsdmgds;";
+const char * networkName = ";ffj";
+const char * networkPswd = "gsdg";
 
 // Internet domain to request from:
 const char * hostDomain = "example.com";
@@ -18,7 +18,6 @@ void setup()
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   pinMode(LED_PIN, OUTPUT);
 
-  // Connect to the WiFi network (see function below loop)
   connectToWiFi(networkName, networkPswd);
 
   digitalWrite(LED_PIN, LOW); // LED off
@@ -42,10 +41,13 @@ void loop()
 void connectToWiFi(const char * ssid, const char * pwd)
 {
   int ledState = 0;
-
+  delay(5000);
   printLine();
   Serial.println("Connecting to WiFi network: " + String(ssid));
 
+  // Keep this line to make sure esp32 connects to wifi on disconnection.
+  WiFi.disconnect();
+  Serial.println("Disconnected to WIFI.");
   WiFi.begin(ssid, pwd);
 
   while (WiFi.status() != WL_CONNECTED) 
