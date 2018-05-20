@@ -1,5 +1,5 @@
 //Analog Input
-#define ANALOG_PIN_0 0
+#define ANALOG_PIN_0 32
 int analog_value = 0;
 
 void setup()
