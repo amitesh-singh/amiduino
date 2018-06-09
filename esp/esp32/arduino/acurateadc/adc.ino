@@ -1,3 +1,7 @@
+//                                ADC connection diagram  
+//    Voltage --------------- ^^^R^^^^^---- |----------- ESP32 ADC 
+//                                          |                                      
+//                                      0.1uF (104)---- GND
 // based on https://www.youtube.com/watch?v=RlKMJknsNpo
 
 #define ANALOG_PIN 32
@@ -5,7 +9,6 @@
 void setup()
  {
   Serial.begin(9600);
-
   delay(1000);
 }
 
