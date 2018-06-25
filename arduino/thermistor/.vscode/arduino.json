@@ -1,0 +1,4 @@
+{
+    "sketch": "thermistor10k.ino",
+    "board": "arduino:avr:uno"
+}
