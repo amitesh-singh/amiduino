@@ -24,6 +24,7 @@ void setup()
    delay(2000);
    Serial.println("Serial setup done.");
 
+   // esp works in 2 modes, STATION and Soft Access mode 
    WiFi.mode(WIFI_STA);
    Serial.println("ESP-now basic master example.");
    //print mac address of ESP master in station aka STA mode.
@@ -63,7 +64,8 @@ void setup()
                             Serial.printf("Success: %lu/%lu \r\n", ok, ok+fail);
                             }
                            );
-
+   // channel is from 0 to 14
+   // and at max, 20 nodes can be connected.
    int addStatus = esp_now_add_peer(remoteMac, ESP_NOW_ROLE_CONTROLLER, CHANNEL, NULL, 0);
 
    if (addStatus == 0)
