@@ -111,8 +111,10 @@ void loop()
     {
         //then deep sleep
         Serial.println("going to deep sleep...");
-        //for now testing with  ESP.restart
-        ESP.restart();
-        delay(100);
+        //
+        // sleep for 10s
+         ESP.deepSleep(10000000, WAKE_RF_DEFAULT);
+        //ESP.restart();
+        //delay(100);
     }
 }
