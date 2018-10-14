@@ -4,14 +4,17 @@
 //#define SLAVES_COUNT 3
 #define WIFI_CHANNEL 1
 
-static const uint8_t slaves_count = 3; 
+static const uint8_t slaves_count = 1; 
 
 espnow espmaster;
 
 uint8_t remoteMac[slaves_count][6] = { 
 { 0x18, 0xFE, 0x34, 0xE2, 0x16, 0x64},
+/*
 { 0x18, 0xFE, 0x34, 0xE2, 0x16, 0x64},
 { 0x18, 0xFE, 0x34, 0xE2, 0x16, 0x64},
+*/
+
 };
 
 struct __attribute__((__packed__)) waterinfo
