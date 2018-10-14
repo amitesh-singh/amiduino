@@ -1,6 +1,7 @@
 // Esp now example
 // mac for master is 18:FE:34:E1:AC:6A
 //slave mac address is 18:FE:34:E2:16:64
+// This does not work on esp8266, but works on esp32.
 
 #include <ESP8266WiFi.h>
 
@@ -46,6 +47,7 @@ void setup()
    esp_now_set_self_role(ESP_NOW_ROLE_COMBO);
    //esp now init done.
 
+   //This does not work on esp8266, although it seems to work on esp32
    esp_now_register_recv_cb([](u8 *macaddr, u8 *data, u8 len)
    {
      if (!esp_now_is_peer_exist(macaddr))
