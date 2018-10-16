@@ -1,14 +1,15 @@
 #include "espnowhelper.h"
 #define DEBUG
 
-//#define SLAVES_COUNT 3
 #define WIFI_CHANNEL 1
+//30s
+#define INTERVAL 30*1000
 
-static const uint8_t slaves_count = 1; 
+static const uint8_t slaves_count = 1;
 
-espnow espmaster;
+static espnow espmaster;
 
-uint8_t remoteMac[slaves_count][6] = { 
+static uint8_t remoteMac[slaves_count][6] = { 
 { 0x18, 0xFE, 0x34, 0xE2, 0x16, 0x64},
 /*
 { 0x18, 0xFE, 0x34, 0xE2, 0x16, 0x64},
@@ -31,19 +32,21 @@ struct __attribute__((__packed__)) ack
 
 static volatile ack acks[slaves_count];
 static volatile bool reply[slaves_count];
-volatile waterinfo wi[slaves_count];
+static volatile waterinfo wi[slaves_count];
+static volatile unsigned long timestamps[slaves_count];
 
 void setup()
 {
 #ifdef DEBUG
     Serial.begin(9600);
+    Serial.println("................................");
     Serial.println("Master Display device controller");
 #endif
 
     if (espmaster.init(WIFI_STA, ESP_NOW_ROLE_COMBO))
     {
     #ifdef DEBUG
-        Serial.println("Failed to init ESP-NOW");
+        Serial.println("Failed to init ESP-NOW. Restarting ESP8266");
     #endif
 
         ESP.restart();
@@ -58,6 +61,7 @@ void setup()
         espmaster.addPeer(remoteMac[i], ESP_NOW_ROLE_COMBO, WIFI_CHANNEL, nullptr, 0);
         reply[i] = false;
         acks[i].sensorid = i + 1;
+        timestamps[i] = millis();
     }
     espmaster.addRecvCb([](uint8_t *macaddr, uint8_t *data, uint8_t len)
     {
@@ -70,16 +74,19 @@ void setup()
         {
             reply[0] = true;
             memcpy((void *)&wi[0], w, sizeof(waterinfo));
+            timestamps[0] = millis();
         }
         else if (w->sensorid == 2)
         {
             reply[1] = true;
             memcpy((void *)&wi[1], w, sizeof(waterinfo));
+            timestamps[1] = millis();
         }
         else if (w->sensorid == 3)
         {
             reply[2] = true;
             memcpy((void *)&wi[2], w, sizeof(waterinfo));
+            timestamps[2] = millis();
         }
         else
         {
@@ -91,6 +98,7 @@ void setup()
     );
 }
 
+
 void loop()
 {
     for (u8 i = 0; i < slaves_count; ++i)
@@ -98,15 +106,23 @@ void loop()
         {
             espmaster.send(remoteMac[i], (u8 *)&acks[i], sizeof(ack));
             reply[i] = false;
-            delay(50);
+
+            delay(10);
+#ifdef DEBUG
+         //TODO: update the readings to serial or i2c/spi screen when you get the update        
+            Serial.print("sensor #"); Serial.print(wi[i].sensorid); Serial.print(": ");
+            Serial.println(wi[i].distance);
+            Serial.print("Percentage: ");
+            Serial.println(wi[i].percentage);
+#endif
         }
 
+        if (millis() - timestamps[i] >= INTERVAL)
+        {
 #ifdef DEBUG
-        Serial.print("sensor #"); Serial.print(wi[i].sensorid); Serial.print(": ");
-        Serial.println(wi[i].distance);
-        Serial.print("Percentage: ");
-        Serial.println(wi[i].percentage);
+            Serial.print("----->>>> sensor #"); Serial.print(wi[i].sensorid); Serial.println(" is offline.");
 #endif
+        }
     }
-    delay(1000);
+//    delay(1000);
 }

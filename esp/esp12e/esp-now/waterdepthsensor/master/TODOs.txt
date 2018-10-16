@@ -1,5 +1,5 @@
 - implement i2c or spi TFT code.
 - check if the sensor is online on every 1min or so?
    esp_now_is_peer_exists() can be used? - not sure if it checks whether the
-   peer is alive or not. need to test and verify
-- i think we don't need to do that. we should have a timestamp of packets arrival from slaves and compare this with current time in main loop
+   peer is alive or not. need to test and verify -- not needed.
+- i think we don't need to do that. we should have a timestamp of packets arrival from slaves and compare this with current time in main loop - implemented

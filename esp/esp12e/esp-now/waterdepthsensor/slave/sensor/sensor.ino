@@ -8,7 +8,7 @@
 #define TRIGGER 5  // (D1)
 #define ECHO  4  // D2
 //http://www.sintexplastics.com/wp-content/uploads/2017/04/ProductCatalogue2017.pdf
-// 100l - dia (inches): 43.3, height (inches): 48.2, dia menhole: 15.7 inches
+// 1000l - dia (inches): 43.3, height (inches): 48.2, dia menhole: 15.7 inches
 // 48.2 inches = 122.4 cm
 const static long fullDistance = 123; // in cm
 
