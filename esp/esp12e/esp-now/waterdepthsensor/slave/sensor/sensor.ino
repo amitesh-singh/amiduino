@@ -51,7 +51,6 @@ static uint8_t retransmit = 0;
 
 void setup()
 {
-
     #ifdef DEBUG
     Serial.begin(9600);
     #endif
@@ -66,15 +65,25 @@ void setup()
     digitalWrite(BUILTIN_LED, HIGH);
 #endif
 
+    Serial.println("\r\n");
+
     //init esp-now
     if (esp12e.init(WIFI_STA, ESP_NOW_ROLE_COMBO))
     {
         //failed to initialize espinit
+    #ifdef DEBUG
         Serial.println("Failed to initialize esp-now");
+    #endif
+
         ESP.restart();
         delay(1000);
     }
+    #ifdef DEBUG
+    else
+        Serial.println("Started ESP-NOW init.");
+    #endif
 
+    //Add peer
     esp12e.addPeer(remoteMac, ESP_NOW_ROLE_COMBO, WIFI_CHANNEL, nullptr, 0);
 
     esp12e.addSendCb([](uint8_t *macaddr, uint8_t status)
@@ -97,7 +106,9 @@ void setup()
     }
     );
 
+#ifdef DEBUG
     Serial.print("Mac Addr: "); Serial.println(WiFi.macAddress());
+#endif
 }
 
 void loop()
@@ -106,7 +117,7 @@ void loop()
 #ifdef DEBUG
     Serial.println("Centimeter: ");
     Serial.print(wi.distance);
-    Serial.print(": ");
+    Serial.print("; percentage: ");
     Serial.print(wi.percentage);
     Serial.println("");
 #endif
@@ -119,7 +130,9 @@ void loop()
     if (retry || retransmit >= 5)
     {
         //then deep sleep
+    #ifdef DEBUG
         Serial.println("going to deep sleep...");
+    #endif
         //
         // sleep for 10s
          ESP.deepSleep(10000000, WAKE_RF_DEFAULT);
