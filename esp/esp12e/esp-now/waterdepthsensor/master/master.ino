@@ -60,6 +60,9 @@ void setup()
     }
     espmaster.addRecvCb([](uint8_t *macaddr, uint8_t *data, uint8_t len)
     {
+#ifdef DEBUG
+         Serial.println("Recv_Cb");
+#endif
         //get the data
         waterinfo *w = (waterinfo *)data;
         if (w->sensorid == 1)
