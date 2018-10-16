@@ -66,7 +66,7 @@ void setup()
         Serial.println("Failed to initialize esp-now");
         ESP.restart();
         delay(1000);
-    }    
+    }
 
     esp12e.addPeer(remoteMac, ESP_NOW_ROLE_COMBO, WIFI_CHANNEL, nullptr, 0);
 
@@ -77,10 +77,10 @@ void setup()
     #endif
     }
     );
-    
+
     retry = false;
     retransmit = 0;
-    esp12e.addRecvCb([](u8 *mac_addr, u8 *data, u8 len) 
+    esp12e.addRecvCb([](u8 *mac_addr, u8 *data, u8 len)
     {
     #ifdef DEBUG
         Serial.println("recv cb");
@@ -102,8 +102,8 @@ void loop()
     Serial.println("");
 #endif
     //digitalWrite(BUILTIN_LED, !digitalRead(BUILTIN_LED));
-    
-    esp_now_send(NULL, (uint8_t *)&wi, sizeof(wi));
+
+    esp12e.send(NULL, (uint8_t *)&wi, sizeof(wi));
     ++retransmit;
 
     delay(100);

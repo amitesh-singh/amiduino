@@ -95,8 +95,9 @@ void loop()
     for (u8 i = 0; i < slaves_count; ++i)
     {   if (reply[i])
         {
-            esp_now_send(remoteMac[i], (u8 *)&acks[i], sizeof(ack));
+            espmaster.send(remoteMac[i], (u8 *)&acks[i], sizeof(ack));
             reply[i] = false;
+            delay(50);
         }
 
 #ifdef DEBUG
