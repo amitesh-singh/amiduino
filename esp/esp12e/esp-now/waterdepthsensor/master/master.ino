@@ -21,6 +21,7 @@ struct __attribute__((__packed__)) waterinfo
  {
      uint8_t sensorid;
      long distance;
+     uint8_t percentage;
  };
 
 struct __attribute__((__packed__)) ack
@@ -103,6 +104,8 @@ void loop()
 #ifdef DEBUG
         Serial.print("sensor #"); Serial.print(wi[i].sensorid); Serial.print(": ");
         Serial.println(wi[i].distance);
+        Serial.print("Percentage: ");
+        Serial.println(wi[i].percentage);
 #endif
     }
     delay(1000);

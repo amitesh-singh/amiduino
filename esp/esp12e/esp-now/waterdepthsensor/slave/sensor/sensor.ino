@@ -7,12 +7,18 @@
 // On Lollin board
 #define TRIGGER 5  // (D1)
 #define ECHO  4  // D2
+//http://www.sintexplastics.com/wp-content/uploads/2017/04/ProductCatalogue2017.pdf
+// 100l - dia (inches): 43.3, height (inches): 48.2, dia menhole: 15.7 inches
+// 48.2 inches = 122.4 cm
+const static long fullDistance = 123; // in cm
 
 struct __attribute__((__packed__)) waterinfo
 {
     uint8_t sensorid;
     long distance;
+    uint8_t percentage;
 };
+
 static waterinfo wi;
 
 //Code forCSR04 sonar sensor
@@ -33,6 +39,7 @@ void getDistance()
     duration = pulseIn(ECHO, HIGH);
 
     wi.distance = (duration/2)/29.1;
+    wi.percentage = (wi.distance*100)/fullDistance;
 }
 
 #define WIFI_CHANNEL 1
@@ -99,6 +106,8 @@ void loop()
 #ifdef DEBUG
     Serial.println("Centimeter: ");
     Serial.print(wi.distance);
+    Serial.print(": ");
+    Serial.print(wi.percentage);
     Serial.println("");
 #endif
     //digitalWrite(BUILTIN_LED, !digitalRead(BUILTIN_LED));
