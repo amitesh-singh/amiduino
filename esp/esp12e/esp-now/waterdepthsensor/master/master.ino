@@ -41,6 +41,8 @@ void setup()
     Serial.begin(9600);
     Serial.println("................................");
     Serial.println("Master Display device controller");
+    pinMode(BUILTIN_LED, OUTPUT);
+    digitalWrite(BUILTIN_LED, LOW);
 #endif
 
     if (espmaster.init(WIFI_STA, ESP_NOW_ROLE_COMBO))
@@ -67,6 +69,7 @@ void setup()
     {
 #ifdef DEBUG
          Serial.println("Recv_Cb");
+         digitalWrite(BUILTIN_LED, LOW);
 #endif
         //get the data
         waterinfo *w = (waterinfo *)data;
@@ -96,6 +99,10 @@ void setup()
         }
     }
     );
+
+    #ifdef DEBUG
+        digitalWrite(BUILTIN_LED, HIGH);
+    #endif
 }
 
 
@@ -114,6 +121,7 @@ void loop()
             Serial.println(wi[i].distance);
             Serial.print("Percentage: ");
             Serial.println(wi[i].percentage);
+            digitalWrite(BUILTIN_LED, HIGH);
 #endif
         }
 
