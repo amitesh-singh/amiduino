@@ -99,10 +99,6 @@ void setup()
         }
     }
     );
-
-    #ifdef DEBUG
-        digitalWrite(BUILTIN_LED, HIGH);
-    #endif
 }
 
 
