@@ -3,3 +3,6 @@
    esp_now_is_peer_exists() can be used? - not sure if it checks whether the
    peer is alive or not. need to test and verify -- not needed.
 - i think we don't need to do that. we should have a timestamp of packets arrival from slaves and compare this with current time in main loop - implemented
+
+- display on/off btn - maintain the state of display on and off in the code.
+  and switch off display after 30s.
