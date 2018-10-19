@@ -44,7 +44,10 @@ void getDistance()
 
 #define WIFI_CHANNEL 1
 static espnow esp12e;
-static uint8_t remoteMac[] = {0x18, 0xFE, 0x34, 0xE1, 0xAC, 0x6A};
+// below mac is of Lollin board - which does not have pins
+//static uint8_t remoteMac[] = {0x18, 0xFE, 0x34, 0xE1, 0xAC, 0x6A};
+//below mac is for my esp12e board
+static uint8_t remoteMac[] = {0x18, 0xFE, 0x34, 0xD3, 0x36, 0x76};
 
 static bool retry = false;
 static uint8_t retransmit = 0;
