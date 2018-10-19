@@ -18,14 +18,13 @@
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS,  TFT_DC, TFT_RST);
 
 
-void testdrawtext(char *text, uint16_t color)
+static void testdrawtext(char *text, uint16_t color)
 {
   tft.setCursor(0, 0);
   tft.setTextColor(color);
   tft.setTextWrap(true);
   tft.print(text);
 }
-
 
 #define WIFI_CHANNEL 1
 //30s
@@ -308,6 +307,10 @@ void loop()
             Serial.println("Timer started and TFT is on now.");
             #endif
 
+            testdrawtext("Connecting..", ST7735_WHITE);
+            tft.println("");
+            tft.print("Wait for a moment.");
+            
             lcdOn();
             timeout.detach();
             timeout.attach(TFT_SCREEN_TIMEOUT, _timeout_cb);
