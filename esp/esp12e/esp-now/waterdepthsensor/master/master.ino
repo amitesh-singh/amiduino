@@ -27,7 +27,7 @@ void testdrawtext(char *text, uint16_t color)
 #define WIFI_CHANNEL 1
 //30s
 #define INTERVAL 30*1000
-static const uint8_t buttonPin = 5; //D4?
+static const uint8_t buttonPin = 0; //D4?
 
 static const uint8_t slaves_count = 1;
 
@@ -253,12 +253,18 @@ void loop()
 
     if (!displayStatus)
     {
+        //software debounce
+        delay(100);
+        if (!digitalRead(buttonPin))
+        {
         //Switch On the display and show the reading.
-        #ifdef DEBUG
+            #ifdef DEBUG
 
-        Serial.println("Button is pressed.");
+            Serial.println("Button is pressed.");
         
-        #endif
+            #endif
+        }
+
     }    
 //    delay(1000);
 }
