@@ -1,5 +1,8 @@
+#include <Ticker.h>
+
 #include "espnowhelper.h"
 #define DEBUG
+
 
 #include <Adafruit_GFX.h>    // Core graphics library
 #include <Adafruit_ST7735.h> // Hardware-specific library
@@ -82,8 +85,42 @@ static void displayBanner()
     delay(10000);
 }
 
+static volatile bool displayOn = true;
+Ticker timeout;
+
+static void lcdInit()
+{
+    // We have ST7735 black tab TFT
+    tft.initR(INITR_BLACKTAB); 
+    tft.fillScreen(ST7735_BLACK);
+}
+
+static void lcdOn()
+{
+    displayOn = true;
+}
+
+static void lcdOff()
+{
+    tft.fillScreen(ST7735_BLACK);
+    displayOn = false;
+}
+
+#define TFT_SCREEN_TIMEOUT 60
+
+static void _timeout_cb()
+{
+    lcdOff();
+    timeout.detach();
+    #ifdef DEBUG
+    Serial.println("Timeout happened, TFT is off.");
+    #endif
+}
+
 void setup()
 {
+    timeout.attach(TFT_SCREEN_TIMEOUT, _timeout_cb);
+
 #ifdef DEBUG
     Serial.begin(9600);
     Serial.println("................................");
@@ -94,10 +131,8 @@ void setup()
     // Display on/off btn
     pinMode(buttonPin, INPUT_PULLUP);
 
-    // We have ST7735 black tab TFT
-    tft.initR(INITR_BLACKTAB); 
-    tft.fillScreen(ST7735_BLACK);
-    
+    lcdInit();
+
     displayBanner();
     tft.fillScreen(ST7735_BLACK);
 
@@ -184,6 +219,7 @@ const static u8 tankHeight = 123; //in cm
 
 static uint16_t tankColor = ST7735_RED;
 
+
 void loop()
 {
     for (u8 i = 0; i < slaves_count; ++i)
@@ -208,47 +244,53 @@ void loop()
             Serial.println(wi[i].percentage);
             digitalWrite(BUILTIN_LED, HIGH);
 #endif
+            if (displayOn)
+            {
+                tft.fillScreen(ST7735_BLACK);
+                
+                tft.drawRoundRect(5, 5, 50, 105, 5, ST7735_WHITE);
+                if (wi[i].percentage >= 0 && wi[i].percentage <= 25)
+                    tankColor = ST7735_RED;
+                else if (wi[i].percentage > 25 && wi[i].percentage <= 50)
+                    tankColor = ST7735_YELLOW;
+                else
+                    tankColor = ST7735_GREEN;
 
-            tft.fillScreen(ST7735_BLACK);
-            
-            tft.drawRoundRect(5, 5, 50, 105, 5, ST7735_WHITE);
-            if (wi[i].percentage >= 0 && wi[i].percentage <= 25)
-                tankColor = ST7735_RED;
-            else if (wi[i].percentage > 25 && wi[i].percentage <= 50)
-                tankColor = ST7735_YELLOW;
-            else
-                tankColor = ST7735_GREEN;
+                if (wi[i].percentage > 0)
+                    tft.fillRoundRect(5, 110 - wi[i].percentage, 50, wi[i].percentage, 1, tankColor);
+                //show the reading
+                tft.setTextSize(2);
+                tft.setTextColor(tankColor);
+                tft.setCursor(90, 60);
+                tft.printf("%d%%", wi[i].percentage);
+                tft.setTextSize(1);
+                tft.setCursor(60, 100);
+                tft.setTextColor(ST7735_WHITE);
 
-            if (wi[i].percentage > 0)
-                tft.fillRoundRect(5, 110 - wi[i].percentage, 50, wi[i].percentage, 1, tankColor);
-            //show the reading
-            tft.setTextSize(2);
-            tft.setTextColor(tankColor);
-            tft.setCursor(90, 60);
-            tft.printf("%d%%", wi[i].percentage);
-            tft.setTextSize(1);
-            tft.setCursor(60, 100);
-            tft.setTextColor(ST7735_WHITE);
-
-            tft.printf("Tank Level:%dcm", wi[i].distance);
-            tft.setCursor(0, 0);
+                tft.printf("Tank Level:%dcm", wi[i].distance);
+                tft.setCursor(0, 0);
+            }
         }
 
         if (millis() - timestamps[i] >= INTERVAL)
         {
-            tft.setTextSize(2);
-            tft.setCursor(0, 0);
-            tft.println("");
-            tft.setTextColor(ST7735_RED);
-            tft.println("     Sensor");
-            tft.println("     Offline");
-            tft.setTextColor(ST7735_WHITE);
-            tft.setTextSize(1);
+            if (displayOn)
+            {
+                tft.setTextSize(2);
+                tft.setCursor(0, 0);
+                tft.println("");
+                tft.setTextColor(ST7735_RED);
+                tft.println("     Sensor");
+                tft.println("     Offline");
+                tft.setTextColor(ST7735_WHITE);
+                tft.setTextSize(1);
+            }
 #ifdef DEBUG
             Serial.print("----->>>> sensor #"); Serial.print(wi[i].sensorid); Serial.println(" is offline.");
 #endif
         }
     }
+    
     displayStatus = digitalRead(buttonPin);
 
     if (!displayStatus)
@@ -261,8 +303,12 @@ void loop()
             #ifdef DEBUG
 
             Serial.println("Button is pressed.");
-        
+            Serial.println("Timer started and TFT is on now.");
             #endif
+
+            lcdOn();
+            timeout.detach();
+            timeout.attach(TFT_SCREEN_TIMEOUT, _timeout_cb);
         }
 
     }    
