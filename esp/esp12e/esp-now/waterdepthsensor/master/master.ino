@@ -4,6 +4,7 @@
 #define WIFI_CHANNEL 1
 //30s
 #define INTERVAL 30*1000
+static const uint8_t buttonPin = 5; //D4?
 
 static const uint8_t slaves_count = 1;
 
@@ -44,6 +45,8 @@ void setup()
     pinMode(BUILTIN_LED, OUTPUT);
     digitalWrite(BUILTIN_LED, LOW);
 #endif
+    // Display on/off btn
+    pinMode(buttonPin, INPUT_PULLUP);
 
     if (espmaster.init(WIFI_STA, ESP_NOW_ROLE_COMBO))
     {
@@ -101,6 +104,7 @@ void setup()
     );
 }
 
+static bool displayStatus = false;
 
 void loop()
 {
@@ -128,5 +132,16 @@ void loop()
 #endif
         }
     }
+    displayStatus = digitalRead(buttonPin);
+
+    if (!displayStatus)
+    {
+        //Switch On the display and show the reading.
+        #ifdef DEBUG
+
+        Serial.println("Button is pressed.");
+        
+        #endif
+    }    
 //    delay(1000);
 }
