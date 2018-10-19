@@ -1,6 +1,29 @@
 #include "espnowhelper.h"
 #define DEBUG
 
+#include <Adafruit_GFX.h>    // Core graphics library
+#include <Adafruit_ST7735.h> // Hardware-specific library
+#include <SPI.h>
+
+// For the breakout, you can use any 2 or 3 pins
+// These pins will also work for the 1.8" TFT shield
+#define TFT_CS     4
+#define TFT_RST    0  // you can also connect this to the Arduino reset
+                      // in which case, set this #define pin to 0!
+#define TFT_DC     5
+
+Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS,  TFT_DC, TFT_RST);
+
+
+void testdrawtext(char *text, uint16_t color)
+{
+  tft.setCursor(0, 0);
+  tft.setTextColor(color);
+  tft.setTextWrap(true);
+  tft.print(text);
+}
+
+
 #define WIFI_CHANNEL 1
 //30s
 #define INTERVAL 30*1000
@@ -36,6 +59,29 @@ static volatile bool reply[slaves_count];
 static volatile waterinfo wi[slaves_count];
 static volatile unsigned long timestamps[slaves_count];
 
+static void displayBanner()
+{
+    //TODO: setRotation(!) is the correct one.
+    // change it 
+    tft.setRotation(3);
+    tft.setTextSize(2);
+
+    tft.println("\n");
+    tft.setTextColor(ST7735_RED);
+    tft.println(" Water Depth");
+    tft.println("   Meter");
+    Serial.println("\n");
+    tft.setTextSize(1);
+    Serial.println("");
+    tft.setTextColor(ST7735_YELLOW);
+    tft.println("         Version 0.1");
+    tft.println("\n");
+    tft.setTextColor(ST7735_WHITE);
+    tft.println("  (C) Amitesh Singh 2018");
+
+    delay(10000);
+}
+
 void setup()
 {
 #ifdef DEBUG
@@ -47,6 +93,15 @@ void setup()
 #endif
     // Display on/off btn
     pinMode(buttonPin, INPUT_PULLUP);
+
+    // We have ST7735 black tab TFT
+    tft.initR(INITR_BLACKTAB); 
+    tft.fillScreen(ST7735_BLACK);
+    
+    displayBanner();
+    tft.fillScreen(ST7735_BLACK);
+
+    testdrawtext("ESP-NOW initializing..\n", ST7735_WHITE);
 
     if (espmaster.init(WIFI_STA, ESP_NOW_ROLE_COMBO))
     {
@@ -60,6 +115,13 @@ void setup()
     Serial.print("Mac Addr: "); Serial.println(WiFi.macAddress());
 #endif
 
+    tft.println("Mac Addr:");
+    tft.setTextColor(ST7735_GREEN);
+    tft.println(WiFi.macAddress());
+    delay(5000);
+    tft.setTextColor(ST7735_WHITE);
+    tft.println("Adding Peers");
+    tft.setTextColor(ST7735_GREEN);
     //Add all clients as peer
     for (uint8_t i = 0; i < slaves_count; ++i)
     {
@@ -67,7 +129,11 @@ void setup()
         reply[i] = false;
         acks[i].sensorid = i + 1;
         timestamps[i] = millis();
+        for (u8 j = 0; j < 6; ++j)
+            tft.printf("%X:", remoteMac[i][j]);
+        tft.println("");
     }
+
     espmaster.addRecvCb([](uint8_t *macaddr, uint8_t *data, uint8_t len)
     {
 #ifdef DEBUG
@@ -102,9 +168,21 @@ void setup()
         }
     }
     );
+    tft.setTextColor(ST7735_WHITE);
+    tft.println("ESP-NOW initialized.");
+    tft.println("");
+    tft.print("STARTING");
+    for (u8 i = 0; i < 10; ++i)
+        tft.print("."), delay(1000);
+    
+    tft.fillScreen(ST7735_BLACK);
+    tft.setCursor(0, 0);
 }
 
 static bool displayStatus = false;
+const static u8 tankHeight = 123; //in cm
+
+static uint16_t tankColor = ST7735_RED;
 
 void loop()
 {
@@ -115,6 +193,13 @@ void loop()
             reply[i] = false;
 
             delay(10);
+            if (wi[i].distance > tankHeight)
+                wi[i].distance = tankHeight;
+
+            wi[i].distance = tankHeight - wi[i].distance;
+            if (wi[i].percentage > 100)
+                wi[i].percentage = 100;
+            wi[i].percentage = 100 - wi[i].percentage;
 #ifdef DEBUG
          //TODO: update the readings to serial or i2c/spi screen when you get the update        
             Serial.print("sensor #"); Serial.print(wi[i].sensorid); Serial.print(": ");
@@ -123,10 +208,42 @@ void loop()
             Serial.println(wi[i].percentage);
             digitalWrite(BUILTIN_LED, HIGH);
 #endif
+
+            tft.fillScreen(ST7735_BLACK);
+            
+            tft.drawRoundRect(5, 5, 50, 105, 5, ST7735_WHITE);
+            if (wi[i].percentage >= 0 && wi[i].percentage <= 25)
+                tankColor = ST7735_RED;
+            else if (wi[i].percentage > 25 && wi[i].percentage <= 50)
+                tankColor = ST7735_YELLOW;
+            else
+                tankColor = ST7735_GREEN;
+
+            if (wi[i].percentage > 0)
+                tft.fillRoundRect(5, 110 - wi[i].percentage, 50, wi[i].percentage, 1, tankColor);
+            //show the reading
+            tft.setTextSize(2);
+            tft.setTextColor(tankColor);
+            tft.setCursor(90, 60);
+            tft.printf("%d%%", wi[i].percentage);
+            tft.setTextSize(1);
+            tft.setCursor(60, 100);
+            tft.setTextColor(ST7735_WHITE);
+
+            tft.printf("Tank Level:%dcm", wi[i].distance);
+            tft.setCursor(0, 0);
         }
 
         if (millis() - timestamps[i] >= INTERVAL)
         {
+            tft.setTextSize(2);
+            tft.setCursor(0, 0);
+            tft.println("");
+            tft.setTextColor(ST7735_RED);
+            tft.println("     Sensor");
+            tft.println("     Offline");
+            tft.setTextColor(ST7735_WHITE);
+            tft.setTextSize(1);
 #ifdef DEBUG
             Serial.print("----->>>> sensor #"); Serial.print(wi[i].sensorid); Serial.println(" is offline.");
 #endif
