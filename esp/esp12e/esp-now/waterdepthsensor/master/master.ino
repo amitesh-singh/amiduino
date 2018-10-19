@@ -140,6 +140,8 @@ void setup()
 
     if (espmaster.init(WIFI_STA, ESP_NOW_ROLE_COMBO))
     {
+        tft.setTextColor(ST7735_RED);
+        tft.println("Failed to init ESP-NOW. Restarting...");
     #ifdef DEBUG
         Serial.println("Failed to init ESP-NOW. Restarting ESP8266");
     #endif
@@ -290,7 +292,7 @@ void loop()
 #endif
         }
     }
-    
+
     displayStatus = digitalRead(buttonPin);
 
     if (!displayStatus)
