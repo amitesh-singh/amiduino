@@ -1,4 +1,4 @@
-- implement i2c or spi TFT code.
+- implement i2c or spi TFT code. used 1.8" st7735 instead. -- done
 - check if the sensor is online on every 1min or so?
    esp_now_is_peer_exists() can be used? - not sure if it checks whether the
    peer is alive or not. need to test and verify -- not needed.
@@ -6,3 +6,5 @@
 
 - display on/off btn - maintain the state of display on and off in the code.
   and switch off display after 30s.
+   - or add a PIR sensor instead?
+  - Use connection Wifi icon for showing connectivity?
