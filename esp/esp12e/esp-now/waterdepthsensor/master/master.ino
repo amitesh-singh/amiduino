@@ -1,22 +1,23 @@
 #include <Ticker.h>
-
 #include "espnowhelper.h"
-#define DEBUG
-
 
 #include <Adafruit_GFX.h>    // Core graphics library
 #include <Adafruit_ST7735.h> // Hardware-specific library
 #include <SPI.h>
 
-// For the breakout, you can use any 2 or 3 pins
-// These pins will also work for the 1.8" TFT shield
 #define TFT_CS     4
-#define TFT_RST    0  // you can also connect this to the Arduino reset
-                      // in which case, set this #define pin to 0!
+// Esp8266 RST is connected to TFT's RST
+#define TFT_RST    0
 #define TFT_DC     5
 
-Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS,  TFT_DC, TFT_RST);
+#define DEBUG
+#define TFT_SCREEN_TIMEOUT 60
 
+#define WIFI_CHANNEL 1
+//30s
+#define SLAVE_CONNECTION_TIMEOUT_LIMIT 30*1000
+
+Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS,  TFT_DC, TFT_RST);
 
 static void testdrawtext(char *text, uint16_t color)
 {
@@ -26,16 +27,13 @@ static void testdrawtext(char *text, uint16_t color)
   tft.print(text);
 }
 
-#define WIFI_CHANNEL 1
-//30s
-#define INTERVAL 30*1000
-static const uint8_t buttonPin = 0; //D4?
+static const uint8_t buttonPin = 0; // GPIO0
 
 static const uint8_t slaves_count = 1;
 
 static espnow espmaster;
 
-static uint8_t remoteMac[slaves_count][6] = { 
+static uint8_t remoteMac[slaves_count][6] = {
 { 0x18, 0xFE, 0x34, 0xE2, 0x16, 0x64},
 /*
 { 0x18, 0xFE, 0x34, 0xE2, 0x16, 0x64},
@@ -61,9 +59,16 @@ static volatile bool reply[slaves_count];
 static volatile waterinfo wi[slaves_count];
 static volatile unsigned long timestamps[slaves_count];
 
+static bool displayStatus = false;
+const static u8 tankHeight = 123; //in cm
+static uint16_t tankColor = ST7735_RED;
+
+static volatile bool displayOn = true;
+Ticker timeout;
+
 static void displayBanner()
 {
-    //TODO: setRotation(!) is the correct one.
+    //TODO: setRotation(1) is the correct one.
     // change it 
     tft.setRotation(3);
     tft.setTextSize(2);
@@ -81,16 +86,13 @@ static void displayBanner()
     tft.setTextColor(ST7735_WHITE);
     tft.println("  (C) Amitesh Singh 2018");
 
-    delay(10000);
+    delay(5000);
 }
-
-static volatile bool displayOn = true;
-Ticker timeout;
 
 static void lcdInit()
 {
     // We have ST7735 black tab TFT
-    tft.initR(INITR_BLACKTAB); 
+    tft.initR(INITR_BLACKTAB);
     tft.fillScreen(ST7735_BLACK);
 }
 
@@ -105,8 +107,6 @@ static void lcdOff()
     displayOn = false;
 }
 
-#define TFT_SCREEN_TIMEOUT 60
-
 static void _timeout_cb()
 {
     lcdOff();
@@ -118,7 +118,6 @@ static void _timeout_cb()
 
 void setup()
 {
-    timeout.attach(TFT_SCREEN_TIMEOUT, _timeout_cb);
 
 #ifdef DEBUG
     Serial.begin(9600);
@@ -209,17 +208,13 @@ void setup()
     tft.println("");
     tft.print("STARTING");
     for (u8 i = 0; i < 10; ++i)
-        tft.print("."), delay(1000);
-    
+        tft.print("."), delay(500);
+
     tft.fillScreen(ST7735_BLACK);
     tft.setCursor(0, 0);
+
+    timeout.attach(TFT_SCREEN_TIMEOUT, _timeout_cb);
 }
-
-static bool displayStatus = false;
-const static u8 tankHeight = 123; //in cm
-
-static uint16_t tankColor = ST7735_RED;
-
 
 void loop()
 {
@@ -248,7 +243,7 @@ void loop()
             if (displayOn)
             {
                 tft.fillScreen(ST7735_BLACK);
-                
+
                 tft.drawRoundRect(5, 5, 50, 105, 5, ST7735_WHITE);
                 if (wi[i].percentage >= 0 && wi[i].percentage <= 25)
                     tankColor = ST7735_RED;
@@ -273,7 +268,7 @@ void loop()
             }
         }
 
-        if (millis() - timestamps[i] >= INTERVAL)
+        if (millis() - timestamps[i] >= SLAVE_CONNECTION_TIMEOUT_LIMIT)
         {
             if (displayOn)
             {
@@ -310,12 +305,11 @@ void loop()
             testdrawtext("Connecting..", ST7735_WHITE);
             tft.println("");
             tft.print("Wait for a moment.");
-            
+
             lcdOn();
             timeout.detach();
             timeout.attach(TFT_SCREEN_TIMEOUT, _timeout_cb);
         }
 
-    }    
-//    delay(1000);
+    }
 }
