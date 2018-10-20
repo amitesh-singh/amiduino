@@ -32,7 +32,7 @@ static void testdrawtext(char *text, uint16_t color)
 
 
 static const uint8_t buttonPin = 0; // GPIO0
-
+static const uint8_t lcdPowerPin = 16; // GPIO16
 static const uint8_t slaves_count = 1;
 
 static espnow espmaster;
@@ -74,7 +74,6 @@ static void displayBanner()
 {
     //TODO: setRotation(1) is the correct one.
     // change it 
-    tft.setRotation(3);
     tft.setTextSize(2);
 
     tft.println("\n");
@@ -95,11 +94,19 @@ static void lcdInit()
 {
     // We have ST7735 black tab TFT
     tft.initR(INITR_BLACKTAB);
+    tft.setRotation(3);
     tft.fillScreen(ST7735_BLACK);
+    tft.setTextWrap(true);
 }
 
 static void lcdOn()
 {
+    digitalWrite(lcdPowerPin, HIGH);
+    
+    //not sure abt the delay yet.
+    delay(200);
+
+    lcdInit();
     displayOn = true;
 }
 
@@ -107,12 +114,14 @@ static void lcdOff()
 {
     tft.fillScreen(ST7735_BLACK);
     displayOn = false;
+    digitalWrite(lcdPowerPin, LOW);
 }
 
 static void _timeout_cb()
 {
     lcdOff();
     timeout.detach();
+
 #ifdef DEBUG
     Serial.println("Timeout happened, TFT is off.");
 #endif
@@ -126,11 +135,20 @@ void setup()
     Serial.println("................................");
     Serial.println("Master Display device controller");
 #endif
+    pinMode(lcdPowerPin, OUTPUT);
+    digitalWrite(lcdPowerPin, HIGH);
+
+#ifdef DEBUG
+    Serial.println("Started LCD..");
+#endif
+
     pinMode(BUILTIN_LED, OUTPUT);
     digitalWrite(BUILTIN_LED, LOW);
 
     // Display on/off btn
     pinMode(buttonPin, INPUT_PULLUP);
+    
+    delay(100);
 
     lcdInit();
 
@@ -315,13 +333,14 @@ void loop()
             Serial.println("Timer started and TFT is on now.");
             #endif
 
+            lcdOn();
+            timeout.detach();
+            timeout.attach(TFT_SCREEN_TIMEOUT, _timeout_cb);
+            
             testdrawtext("Connecting..", ST7735_WHITE);
             tft.println("");
             tft.print("Wait for a moment.");
 
-            lcdOn();
-            timeout.detach();
-            timeout.attach(TFT_SCREEN_TIMEOUT, _timeout_cb);
         }
 
     }
