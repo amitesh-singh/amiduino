@@ -5,6 +5,9 @@
 #include <Adafruit_ST7735.h> // Hardware-specific library
 #include <SPI.h>
 
+#include "wifi.h"
+#include "down.h"
+
 #define TFT_CS     4
 // Esp8266 RST is connected to TFT's RST
 #define TFT_RST    0
@@ -264,6 +267,10 @@ void loop()
                 tft.setTextColor(ST7735_WHITE);
 
                 tft.printf("Tank Level:%dcm", wi[i].distance);
+                
+                //draw WiFi icon
+            
+                tft.drawXBitmap(140, 2, net_wifi4_bits, net_wifi4_width, net_wifi4_height, ST7735_CYAN);
                 tft.setCursor(0, 0);
             }
         }
@@ -272,6 +279,8 @@ void loop()
         {
             if (displayOn)
             {
+                //tft.fillScreen(ST7735_YELLOW);
+
                 tft.setTextSize(2);
                 tft.setCursor(0, 0);
                 tft.println("");
@@ -280,6 +289,11 @@ void loop()
                 tft.println("     Offline");
                 tft.setTextColor(ST7735_WHITE);
                 tft.setTextSize(1);
+                //draw wifi icon
+                tft.drawXBitmap(140, 2, net_wifi4_bits, net_wifi4_width, net_wifi4_height, ST7735_CYAN);
+                //draw down
+                tft.drawXBitmap(140, 2, down_bits, down_width, down_height, ST7735_RED);
+                tft.drawLine(143, 4, 157, 18, ST7735_RED);
             }
 #ifdef DEBUG
             Serial.print("----->>>> sensor #"); Serial.print(wi[i].sensorid); Serial.println(" is offline.");

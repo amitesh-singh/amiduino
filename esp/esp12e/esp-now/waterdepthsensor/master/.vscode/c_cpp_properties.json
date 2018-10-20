@@ -5,7 +5,8 @@
             "includePath": [
                 "/home/ami/.arduino15/packages/esp8266/tools/**",
                 "/home/ami/.arduino15/packages/esp8266/hardware/esp8266/2.4.2/**",
-                "/home/ami/Arduino/libraries/**"
+                "/home/ami/Arduino/libraries/**",
+                "./"
             ],
             "forcedInclude": [],
             "intelliSenseMode": "gcc-x64"
