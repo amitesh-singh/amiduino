@@ -30,6 +30,7 @@ static void testdrawtext(char *text, uint16_t color)
   tft.print(text);
 }
 
+
 static const uint8_t buttonPin = 0; // GPIO0
 
 static const uint8_t slaves_count = 1;
@@ -126,9 +127,10 @@ void setup()
     Serial.begin(9600);
     Serial.println("................................");
     Serial.println("Master Display device controller");
+#endif
     pinMode(BUILTIN_LED, OUTPUT);
     digitalWrite(BUILTIN_LED, LOW);
-#endif
+
     // Display on/off btn
     pinMode(buttonPin, INPUT_PULLUP);
 
@@ -176,8 +178,8 @@ void setup()
     {
 #ifdef DEBUG
          Serial.println("Recv_Cb");
-         digitalWrite(BUILTIN_LED, LOW);
 #endif
+        digitalWrite(BUILTIN_LED, LOW);
         //get the data
         waterinfo *w = (waterinfo *)data;
         if (w->sensorid == 1)
@@ -241,8 +243,8 @@ void loop()
             Serial.println(wi[i].distance);
             Serial.print("Percentage: ");
             Serial.println(wi[i].percentage);
-            digitalWrite(BUILTIN_LED, HIGH);
 #endif
+            digitalWrite(BUILTIN_LED, HIGH);
             if (displayOn)
             {
                 tft.fillScreen(ST7735_BLACK);
