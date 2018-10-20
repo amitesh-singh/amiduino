@@ -81,12 +81,10 @@ static void displayBanner()
     tft.setTextColor(ST7735_RED);
     tft.println(" Water Depth");
     tft.println("   Meter");
-    Serial.println("\n");
     tft.setTextSize(1);
-    Serial.println("");
     tft.setTextColor(ST7735_YELLOW);
     tft.println("         Version 0.1");
-    tft.println("\n");
+    tft.println("");
     tft.setTextColor(ST7735_WHITE);
     tft.println("  (C) Amitesh Singh 2018");
 
@@ -115,9 +113,9 @@ static void _timeout_cb()
 {
     lcdOff();
     timeout.detach();
-    #ifdef DEBUG
+#ifdef DEBUG
     Serial.println("Timeout happened, TFT is off.");
-    #endif
+#endif
 }
 
 void setup()
@@ -269,9 +267,8 @@ void loop()
                 tft.setTextColor(ST7735_WHITE);
 
                 tft.printf("Tank Level:%dcm", wi[i].distance);
-                
+
                 //draw WiFi icon
-            
                 tft.drawXBitmap(140, 2, net_wifi4_bits, net_wifi4_width, net_wifi4_height, ST7735_CYAN);
                 tft.setCursor(0, 0);
             }
