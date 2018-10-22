@@ -7,4 +7,4 @@
 - display on/off btn - maintain the state of display on and off in the code.
   and switch off display after 30s.
    - or add a PIR sensor instead? - Added btn instead at GPIO0 - done
-  - Use connection Wifi icon for showing connectivity?
+  - Use connection Wifi icon for showing connectivity? - done
