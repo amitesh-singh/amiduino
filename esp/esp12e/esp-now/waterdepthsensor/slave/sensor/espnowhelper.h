@@ -14,6 +14,7 @@ class espnow
     int init(WiFiMode_t mode = WIFI_STA, esp_now_role role = ESP_NOW_ROLE_CONTROLLER)
     {
         WiFi.mode(mode);
+        WiFi.disconnect(); //this is needed to avoid conflict with Router.
         delay(1000);
 
         int ret = esp_now_init();

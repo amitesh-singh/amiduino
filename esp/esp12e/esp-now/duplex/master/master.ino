@@ -30,7 +30,7 @@ void setup()
   Serial.println();
 
   WiFi.mode(WIFI_STA); // Station mode for esp-now 
-  WiFi.disconnect();
+  WiFi.disconnect(); // This is needed to avoid conflict with Router.
 
   Serial.printf("This mac: %s, ", WiFi.macAddress().c_str()); 
   Serial.printf("target mac: %02x%02x%02x%02x%02x%02x", remoteMac[0], remoteMac[1], remoteMac[2], 
