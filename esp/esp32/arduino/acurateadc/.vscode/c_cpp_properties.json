@@ -3,13 +3,12 @@
         {
             "name": "Linux",
             "includePath": [
-                "/home/ami/.arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266"
+                "/home/ami/Arduino/hardware/espressif/esp32/cores/esp32"
             ],
             "browse": {
                 "limitSymbolsToIncludedHeaders": false,
                 "path": [
-                    "/home/ami/.arduino15/packages/esp8266/hardware/esp8266/2.3.0/cores/esp8266",
-                    "${workspaceRoot}"
+                    "/home/ami/Arduino/hardware/espressif/esp32/cores/esp32"
                 ]
             },
             "intelliSenseMode": "clang-x64"

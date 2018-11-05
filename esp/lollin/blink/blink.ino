@@ -1,4 +1,5 @@
 //This is LOLLIN board V3 i have, which has on board led at D4 (which is mapped to GPIO2)
+// Board - NodeMcu 1.0
 #define LOLLIN_LED D4
 
 void setup()

@@ -23,7 +23,9 @@ as well as Adafruit raw 1.8" TFT display
 #define __ESP8266_EX__
 
 #include <Adafruit_GFX.h>    // Core graphics library
-#include <Adafruit_ST7735_ESP.h> // Hardware-specific library
+//#include <Adafruit_ST7735_ESP.h> // Hardware-specific library
+#include <Adafruit_ST7735.h>
+
 #include <SPI.h>
 
 
@@ -38,12 +40,12 @@ as well as Adafruit raw 1.8" TFT display
 // (for UNO thats sclk = 13 and sid = 11) and pin 10 must be
 // an output. This is much faster - also required if you want
 // to use the microSD card (see the image drawing example)
-Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS,  TFT_DC, TFT_RST);
+//Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS,  TFT_DC, TFT_RST);
 
 // Option 2: use any pins but a little slower!
 #define TFT_SCLK 13   // set these to be whatever pins you like!
 #define TFT_MOSI 14   // set these to be whatever pins you like!
-//Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
+Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_MOSI, TFT_SCLK, TFT_RST);
 
 
 float p = 3.1415926;

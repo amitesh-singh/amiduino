@@ -26,7 +26,7 @@ void setup()
         Serial.print(".");
     }
 
-    Serial.println("WiFi connected.");
+    Serial.print("WiFi connected to "); Serial.println(WiFi.SSID());
     Serial.print("IP Address: "); Serial.println(WiFi.localIP());
 
     udp.begin(localUdpPort);
