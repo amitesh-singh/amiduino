@@ -31,14 +31,14 @@ const int TFT_CS = 5;
 //DIN <- MOSI 23
 //CLK <- SCK 18
 
-#define ssid1        "YOUR_WIFI_SSID"
-#define password1    "YOUR_PASSWORD"
+#define ssid1        "POOJA"
+#define password1    "poojasingh"
 //#define ssid2        ""
 //#define password2    ""
 
 //Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS,  TFT_DC, 0/*no reset*/);
 OV7670 *camera;
-
+OV7670 cam =  OV7670(OV7670::Mode::QQVGA_RGB565, SIOD, SIOC, VSYNC, HREF, XCLK, PCLK, D0, D1, D2, D3, D4, D5, D6, D7);
 WiFiMulti wifiMulti;
 WiFiServer server(80);
 
@@ -49,7 +49,7 @@ void serve()
   WiFiClient client = server.available();
   if (client) 
   {
-    //Serial.println("New Client.");
+    Serial.println("New Client.");
     String currentLine = "";
     while (client.connected()) 
     {
@@ -90,10 +90,11 @@ void serve()
             //improve the webclient write
             client.write(bmpHeader, BMP::headerSize);
             client.write(camera->frame, camera->xres * camera->yres * 2);
-            //for(int i = 0; i < BMP::headerSize; i++)
-            //   client.write(bmpHeader[i]);
-            //for(int i = 0; i < camera->xres * camera->yres * 2; i++)
-            //   client.write(camera->frame[i]);
+           /* for(int i = 0; i < BMP::headerSize; i++)
+               client.write(bmpHeader[i]);
+            for(int i = 0; i < camera->xres * camera->yres * 2; i++)
+               client.write(camera->frame[i]);
+          */
         }
       }
     }
@@ -117,12 +118,16 @@ void setup()
       Serial.println(WiFi.localIP());
   }
   
-  camera = new OV7670(OV7670::Mode::QQVGA_RGB565, SIOD, SIOC, VSYNC, HREF, XCLK, PCLK, D0, D1, D2, D3, D4, D5, D6, D7);
-  BMP::construct16BitHeader(bmpHeader, camera->xres, camera->yres);
+  //this was the culprit - 
+  //camera = new OV7670(OV7670::Mode::QQVGA_RGB565, SIOD, SIOC, VSYNC, HREF, XCLK, PCLK, D0, D1, D2, D3, D4, D5, D6, D7);
+  camera = &cam;
   
+  BMP::construct16BitHeader(bmpHeader, camera->xres, camera->yres);
+  //Serial.println("bmp setup done");
   //tft.initR(INITR_BLACKTAB);
   //tft.fillScreen(0);
   server.begin();
+  //Serial.println("set up done");
 }
 
 void displayY8(unsigned char * frame, int xres, int yres)
@@ -157,5 +162,5 @@ void loop()
 {
   camera->oneFrame();
   serve();
-  displayRGB565(camera->frame, camera->xres, camera->yres);
+  //displayRGB565(camera->frame, camera->xres, camera->yres);
 }
