@@ -1,8 +1,11 @@
 [submodule "avr/arduino-nano-cmake/sketches/libraries/Arduino-IRremote"]
 	path = avr/arduino-nano-cmake/sketches/libraries/Arduino-IRremote
 	url = https://github.com/z3t0/Arduino-IRremote
-[submodule "esp/esp32/arduino-espidf/components/arduino"]
-	path = esp/esp32/arduino-espidf-template/components/arduino
+[submodule "esp/esp32/arduino-espidf/arduino-espidf-libtemplate/components/arduino"]
+	path = esp/esp32/arduino-espidf/arduino-espidf-libtemplate/components/arduino
+	url = https://github.com/espressif/arduino-esp32.git
+[submodule "esp/esp32/arduino-espidf/arduino-espidf-template/components/arduino"]
+	path = esp/esp32/arduino-espidf/arduino-espidf-template/components/arduino
 	url = https://github.com/espressif/arduino-esp32.git
 [submodule "esp/esp32/arduino-espidf/ov7670-camera/components/arduino"]
 	path = esp/esp32/arduino-espidf/ov7670-camera/components/arduino

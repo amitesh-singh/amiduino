@@ -1,7 +1,8 @@
 # Cloning Tips
 
 git clone ..  
-git submodule update --recursive
+git submodule update --init --recursive #First time  
+git submodule update --recursive # Afterwards  
 
 # amiduino
 Arduino Samples/Learning
