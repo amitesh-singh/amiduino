@@ -1,0 +1,7 @@
+{
+    "sketch": "ESP32_WebSocket_Camera.ino",
+    "board": "esp32:esp32:esp32",
+    "output": "/tmp/esp32",
+    "configuration": "PSRAM=disabled,PartitionScheme=default,FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=921600,DebugLevel=none",
+    "port": "/dev/ttyUSB0"
+}

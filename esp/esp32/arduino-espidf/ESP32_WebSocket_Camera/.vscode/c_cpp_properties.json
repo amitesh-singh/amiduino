@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "/home/ami/.arduino15/packages/esp32/tools/**",
+                "/home/ami/.arduino15/packages/esp32/hardware/esp32/1.0.0/**",
+                "/home/ami/Arduino/libraries/**"
+            ],
+            "forcedInclude": [],
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}
