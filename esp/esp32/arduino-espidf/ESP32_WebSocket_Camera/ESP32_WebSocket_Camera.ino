@@ -5,7 +5,7 @@
 #include <WiFiClient.h>
 #include "canvas_htm.h"
 #include "OV7670.h"
-
+#include <ESPmDNS.h>
 
 const int SIOD = 21; //SDA
 const int SIOC = 22; //SCL
@@ -196,12 +196,19 @@ void initWifiStation()
 {
    WiFi.mode(WIFI_AP_STA);
    WiFi.begin(ssid, password);    
+   WiFi.setHostname("FrontCamera");
    Serial.println("Connecting to WiFi");
    while (WiFi.status() != WL_CONNECTED)
      {
         delay(50);
         Serial.print(".");
      }
+   if (MDNS.begin("frontcamera"))
+      {
+         Serial.println("MDNS responder started");
+      }
+  
+
    Serial.println(String("Connected to the WiFi network (") + ssid + ")" );
 
    Serial.print("Station IP address: ");
@@ -214,6 +221,7 @@ void setup()
    initWifiStation();
    startWebSocket();
    startWebServer();
+   MDNS.addService("_http", "_tcp", 80);
 }
 
 void loop()
