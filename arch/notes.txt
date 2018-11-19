@@ -17,4 +17,12 @@ modprobe rtl8188eu
 
 https://github.com/lwfinger/rtl8188eu
 
+### how to make your own pkg
+makepkg --skippgpcheck
+sudo pacman -U x.pkg.tar.gz
+To install 32bit version,
+   export CC='gcc -m32'
+   export CXX='g++ -m32'
+
+
 
