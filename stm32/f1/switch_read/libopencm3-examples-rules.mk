@@ -86,6 +86,7 @@ ifeq ($(strip $(DEVICE)),)
 # Old style, assume LDSCRIPT exists
 DEFS		+= -I$(OPENCM3_DIR)/include
 LDFLAGS		+= -L$(OPENCM3_DIR)/lib
+LDFLAGS		+= -L$(OPENCM3_DIR)/lib/stm32/f1
 LDLIBS		+= -l$(LIBNAME)
 LDSCRIPT	?= $(BINARY).ld
 else
