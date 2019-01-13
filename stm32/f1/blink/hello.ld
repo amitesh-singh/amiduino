@@ -29,6 +29,5 @@ MEMORY
 }
 
 /* Include the common ld script. */
-INCLUDE stm32f103x8.ld
-
+ INCLUDE cortex-m-generic.ld
 
