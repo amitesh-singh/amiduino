@@ -1,0 +1,2 @@
+# STMicroelectronics STM Device in DFU Mode (and clones)
+SUBSYSTEM=="usb", ATTR{idVendor}=="0483", ATTR{idProduct}=="df11", MODE="660", GROUP="plugdev"
