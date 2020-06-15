@@ -1,4 +1,4 @@
-const char mainPage[] PROGMEM = "<html> \
+const char mainPage[] = "<html> \
 <head> \
 <meta http-equiv='refresh' content='60'> \
 <title>Smart Humidifier by Ami</title> \

@@ -1,0 +1,6 @@
+{
+    "board": "esp8266:esp8266:generic",
+    "configuration": "xtal=80,vt=flash,exception=legacy,ssl=all,ResetMethod=ck,CrystalFreq=26,FlashFreq=40,FlashMode=qio,eesz=1M64,led=2,sdk=nonosdk_190703,ip=lm2f,dbg=Disabled,lvl=None____,wipe=none,baud=115200",
+    "sketch": "pwm.ino",
+    "port": "/dev/ttyUSB0"
+}

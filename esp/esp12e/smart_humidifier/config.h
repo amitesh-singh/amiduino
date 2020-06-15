@@ -5,7 +5,7 @@
 static const char ssid[] = "POOJA";
 
 //Add your wifi password here
-static const char password[] = "60276711";
+static const char password[] = "poojasingh";
 
 #define MYESP12E_BOARD
 
