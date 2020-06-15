@@ -9,28 +9,39 @@
 
 #define DAC D1
 #define LED D4
-ADC_MODE(ADC_VCC);
 
 static int dutycycle = 512;
 String line;
 static uint32_t vcc;
 
 static ESP8266WebServer server(80);
+static String vRefTemp;
+static String vRef[4] = {"0", "0", "0", "0"};
 
-static void handleSubmit()
+static void handleSubmit(int pin)
 {
-   String newHumidVal = server.arg("userVRef");
-
+   Serial.println("Pwm pin");
+   Serial.println(pin);
+   if (pin == D1)
+    vRefTemp = vRef[0]; //= server.arg("D1userVRef");
+   else if (pin == D2)
+    vRefTemp = vRef[1]; // = server.arg("D2userVref");
+   else if (pin == D3)
+    vRefTemp = vRef[2];
+   else if (pin == D4)
+    vRefTemp = vRef[3];
+     
    Serial.println("Set the Vref Value :");
-   Serial.print(newHumidVal);
-   float humidVal = newHumidVal.toFloat();
+   Serial.print(vRefTemp);
+   float humidVal = vRefTemp.toFloat();
    if (humidVal <= 3.3)
      {
         int dutyCycle = (1024/3.3)*humidVal;
-        Serial.println("DutyCycle=");
+        Serial.print("DutyCycle=");
         Serial.println(dutyCycle);
-        analogWrite(DAC, dutyCycle);
-        server.send(200, "text/html", newHumidVal);
+        analogWrite(pin, dutyCycle);
+        
+        server.send(200, "text/html", vRefTemp);
      }
    else
      server.send(200, "text/html", "Wrong humidity value");
@@ -40,17 +51,42 @@ static String s;
 
 static void handleRoot()
 {
-  
    s = mainPage;
 
-   if (server.hasArg("userVRef"))
+   if (server.hasArg("D1userVRef") && (vRef[0] = server.arg("D1userVRef")) != "")
      {
-        return handleSubmit();
+        return handleSubmit(D1);
      }
- 
- 
+
+    if (server.hasArg("D2userVRef") && (vRef[1] = server.arg("D2userVRef")) != "")
+     {
+      
+        Serial.println("D2 use Vref");
+        return handleSubmit(D2);
+     }
+
+      if (server.hasArg("D3userVRef") && (vRef[2] = server.arg("D3userVRef")) != "")
+     {
+      
+        Serial.println("D3 use Vref");
+        return handleSubmit(D3);
+     }
+      if (server.hasArg("D4userVRef") && (vRef[3] = server.arg("D4userVRef")) != "")
+     {
+      
+        Serial.println("D4 use Vref");
+        return handleSubmit(D4);
+     }
+  // if (pwmPin == D1) 
+    s.replace("@@d1VRef@@", String(vRef[0]));
+  // if (pwmPin == D2)
+    s.replace("@@d2VRef@@", String(vRef[1]));
+    s.replace("@@d3VRef@@", String(vRef[2]));
+  // if (pwmPin == D2)
+    s.replace("@@d4VRef@@", String(vRef[3]));
    server.send(200, "text/html", s);
 }
+
 static void handleNotFound();
 
 void setup()
@@ -58,12 +94,13 @@ void setup()
    pinMode(LED, OUTPUT);
    digitalWrite(LED, 0); // LED is ON
 
-
-   
-   
    Serial.begin(115200);
    //50% duty cycle
    pinMode(DAC, OUTPUT);
+   pinMode(D2, OUTPUT);
+   pinMode(D3, OUTPUT);
+   pinMode(D4, OUTPUT);
+   
    Serial.println("Starting....");
 
    //fix reconnect issue.
