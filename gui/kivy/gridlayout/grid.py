@@ -1,4 +1,11 @@
 #!/usr/bin/python
+from sys import platform
+import os
+
+if platform == "win32":
+    os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
+
+
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
