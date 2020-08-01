@@ -1,0 +1,57 @@
+#:kivy 1.10.1
+
+<ToolBar@BoxLayout>:
+    size_hint_y: None
+    height: 35
+    pos_hint: {'top': 1, 'y': 0}
+    padding: 5,2,5,2
+    spacing: 5
+
+    canvas:
+        Color:
+            rgba: .7, 1, .7, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<ToolButton@Button>:
+    color: 0,0,0,1
+    align: 'center'
+
+#Can be moved to another file if included with #:include filename.kv
+<ScreenOne>:
+    Label:
+        text: 'SCREEN ONE'
+        font_size:50
+
+#Can be moved to another file if included with #:include filename.kv
+<ScreenTwo>:
+    Label:
+        text: 'SCREEN TWO'
+        font_size:50
+
+#GridLayout used to separate the toolbar from the App's screens
+<MainScreen>:
+    rows: 2
+    size_hint: 1, 1
+
+    ToolBar:
+        ToolButton:
+            text: 'Screen one'
+            on_press:
+                root.ids.SS.current = 'sone'
+                #Use root.ids to find the ID of your ScreenManager class and 
+                #use it to call what you want from there
+
+        ToolButton:
+            text: 'Screen two'
+            on_press:
+                root.ids.SS.current = 'stwo'
+                #Use root.ids to find the ID of your ScreenManager class and
+                #use it to call what you want from there
+
+    ScreenSwitcher:
+        id: SS #Put an ID to your ScreenManager class
+        #instead of adding the screens on the __init__method you can also do
+        #ScreenOne:
+        #ScreenTwo:
