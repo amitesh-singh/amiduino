@@ -1,6 +1,7 @@
+from sys import platform
 import os
-
-os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
+if platform == 'win32':
+    os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
 
 
 import kivy

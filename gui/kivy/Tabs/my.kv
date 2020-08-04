@@ -1,0 +1,27 @@
+<Tabs>:
+    size_hint: 0.5, 0.5
+    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+    do_default_tab: False
+
+    TabbedPanelItem:
+        text: 'CC'
+        Label:
+            text: 'Constant Current'
+
+    TabbedPanelItem:
+        text: 'CV'
+        BoxLayout:
+            Label:
+                text: 'Constant Voltage'
+            Button:
+                text: 'Constant Voltage 2'
+
+    TabbedPanelItem:
+        text: 'CP'
+        BoxLayout:
+            orientation: 'vertical'
+            Button:
+                text: 'Constant Power 1'
+            Button:
+                text: 'Constant Power 2'
+
