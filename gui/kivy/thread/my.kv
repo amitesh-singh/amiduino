@@ -1,0 +1,11 @@
+<MyBox>:
+    BoxLayout:
+        TextInput:
+            id: txtinput
+            text: 'Numbers:'
+        Button:
+            text: 'with thread'
+            on_release: root.docalinthread()
+        Button:
+            text: 'blocking'
+            on_release: root.docalinmainloop()
