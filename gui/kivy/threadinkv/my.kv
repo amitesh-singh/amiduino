@@ -1,0 +1,10 @@
+#: import threading threading
+
+<MyBoxLayout>:
+    BoxLayout:
+        TextInput:
+            id: txtinput
+            hint_text: 'Numbers'
+        Button:
+            text: 'with thread'
+            on_release: threading.Thread(target=root.btnclick).start()
