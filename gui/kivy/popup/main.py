@@ -4,6 +4,7 @@ from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
+from mypopup import MyPopup
 
 
 class MyButton(BoxLayout):
@@ -22,6 +23,10 @@ class MyButton(BoxLayout):
                       size_hint=(0.5, 0.5), size=(200, 200),
                       pos_hint={'right': 0.9, 'top': 1})
         popup.open()
+    
+    def mypopup(self):
+        MyPopup().show(title='error', msg='Unable to connct')
+
 
 class MyApp(App):
     def build(self):
