@@ -12,7 +12,7 @@ class MyBoxLayout(BoxLayout):
 
     # call my_callback in 5 seconds
     def clickme(self):
-        Clock.schedule_once(self.callback, 2) 
+        Clock.schedule_once(self.callback, 2)
 
     def clickme2(self):
         Clock.schedule_interval(self.callback, 5)
@@ -21,7 +21,7 @@ class MyBoxLayout(BoxLayout):
 class MyApp(App):
     def build(self):
         return MyBoxLayout()
-    
+
 
 MyApp().run()
 
