@@ -18,4 +18,4 @@ set(SERIAL_DEV /dev/cu.SLAB_USBtoUART)
 set(EXTRA_LIBS "-Wl,--trace")
 
 # if you want to compile Arduino sketches, set this to the Arduino SDK dir (1.6.5)
-set(ARDUINO_SDK_PATH "/home/ami/arduino-1.6.12" CACHE STRING "Arduino SDK Path")
+set(ARDUINO_SDK_PATH "/home/ami/arduino-1.8.13" CACHE STRING "Arduino SDK Path")
