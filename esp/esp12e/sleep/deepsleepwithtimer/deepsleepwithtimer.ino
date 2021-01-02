@@ -1,3 +1,7 @@
+/*
+ * To use timer wake up with ESP8266, you need to connect the RST pin to GPIO 16
+ * which is labeled as D0, in a NodeMCU board.
+ */
 #include <Ticker.h>
 
 Ticker blinker;
