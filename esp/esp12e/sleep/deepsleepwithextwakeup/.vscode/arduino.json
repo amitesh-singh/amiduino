@@ -1,0 +1,6 @@
+{
+    "sketch": "deepsleepwithextwakeup.ino",
+    "board": "esp8266:esp8266:nodemcuv2",
+    "configuration": "xtal=80,vt=flash,exception=enabled,eesz=4M,ip=lm2f,dbg=Disabled,lvl=None____,wipe=none,baud=115200",
+    "output": "/tmp/"
+}
