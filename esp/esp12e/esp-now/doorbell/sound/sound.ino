@@ -1,5 +1,12 @@
 #include "espnowhelper.h"
 
+//update this whenever new device is added in the device tree.
+enum SensorId
+{
+    SOUND,
+    BALCONY
+};
+
 //TODO: disable it later
 #define DEBUG
 constexpr uint8_t WIFI_CHANNEL = 1;
@@ -10,6 +17,12 @@ struct doorbell
 {
     bool volatile pressed;
     uint32_t batteryVoltage;
+    uint8_t macaddr[6];
+};
+
+struct __attribute__((__packed__)) reply_data_t
+{
+    uint8_t id;
 };
 
 doorbell doorbell;
@@ -38,6 +51,7 @@ void setup()
     esp_now.addRecvCb([](uint8_t *macaddr, uint8_t *incomingdata, uint8_t len)
     {
         print_mac(macaddr);
+        memcpy(&doorbell.macaddr, macaddr, sizeof(doorbell.macaddr));
         memcpy(&doorbell.batteryVoltage, incomingdata, sizeof(doorbell.batteryVoltage));
         doorbell.pressed = true;
     }
@@ -53,5 +67,12 @@ void loop()
         doorbell.pressed = false;
         Serial.print("Sensor battery voltage (V):");
         Serial.println(doorbell.batteryVoltage/1000.0);
+        reply_data_t reply_data;
+        
+        reply_data.id = SensorId::SOUND;
+
+        //send reply to SENSOR 
+        esp_now.send(doorbell.macaddr, (uint8_t *)&reply_data, sizeof(reply_data));
+        delay(1000);
     }
 }
