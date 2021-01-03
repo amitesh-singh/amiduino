@@ -1,4 +1,5 @@
 #include "espnowhelper.h"
+#include <Ticker.h>
 
 //update this whenever new device is added in the device tree.
 enum SensorId
@@ -12,6 +13,7 @@ enum SensorId
 constexpr uint8_t WIFI_CHANNEL = 1;
 
 static espnow esp_now;
+Ticker blinker;
 
 struct doorbell
 {
@@ -30,6 +32,8 @@ doorbell doorbell;
 void system_init()
 {
     memset(&doorbell, 0, sizeof(doorbell));
+    pinMode(BUILTIN_LED, OUTPUT);
+    digitalWrite(BUILTIN_LED, HIGH);
 }
 
 static void print_mac(uint8_t *macaddr)
@@ -41,10 +45,20 @@ static void print_mac(uint8_t *macaddr)
    Serial.println(macStr);
 }
 
+static void blink_led(uint16_t timeout = 250)
+{
+    digitalWrite(BUILTIN_LED, LOW);
+    blinker.once_ms(timeout, []()
+    {
+        digitalWrite(BUILTIN_LED, HIGH);
+    }
+    );
+}
+
 void setup()
 {
     Serial.begin(115200);
-    
+
     system_init();
 
     esp_now.init(WIFI_STA, ESP_NOW_ROLE_SLAVE);    
@@ -62,11 +76,15 @@ void loop()
 {
     if (doorbell.pressed)
     {
+        //blink led whenever doorbell is pressed
+        blink_led();
+
         Serial.println("Doorbell is pressed");
         //play some sound?
         doorbell.pressed = false;
         Serial.print("Sensor battery voltage (V):");
         Serial.println(doorbell.batteryVoltage/1000.0);
+        Serial.println();
         reply_data_t reply_data;
         
         reply_data.id = SensorId::SOUND;
