@@ -4,16 +4,12 @@
 #define DEBUG
 constexpr uint8_t WIFI_CHANNEL = 1;
 
-struct __attribute__((__packed__)) data_t
- {
-     uint32_t batteryVoltage; 
- } data ;
-
 static espnow esp_now;
 
 struct doorbell
 {
     bool volatile pressed;
+    uint32_t batteryVoltage;
 };
 
 doorbell doorbell;
@@ -21,6 +17,15 @@ doorbell doorbell;
 void system_init()
 {
     memset(&doorbell, 0, sizeof(doorbell));
+}
+
+static void print_mac(uint8_t *macaddr)
+{
+   char macStr[18];
+   Serial.print("Packet received from: ");
+   snprintf(macStr, sizeof(macStr), "%02x:%02x:%02x:%02x:%02x:%02x",
+            macaddr[0], macaddr[1], macaddr[2], macaddr[3], macaddr[4], macaddr[5]);
+   Serial.println(macStr);
 }
 
 void setup()
@@ -32,7 +37,8 @@ void setup()
     esp_now.init(WIFI_STA, ESP_NOW_ROLE_SLAVE);    
     esp_now.addRecvCb([](uint8_t *macaddr, uint8_t *incomingdata, uint8_t len)
     {
-        memcpy(&data, incomingdata, sizeof(data));
+        print_mac(macaddr);
+        memcpy(&doorbell.batteryVoltage, incomingdata, sizeof(doorbell.batteryVoltage));
         doorbell.pressed = true;
     }
     );
@@ -45,5 +51,7 @@ void loop()
         Serial.println("Doorbell is pressed");
         //play some sound?
         doorbell.pressed = false;
-    }   
+        Serial.print("Sensor battery voltage (V):");
+        Serial.println(doorbell.batteryVoltage/1000.0);
+    }
 }
