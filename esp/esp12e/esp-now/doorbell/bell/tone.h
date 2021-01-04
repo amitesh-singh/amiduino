@@ -1,0 +1,20 @@
+#ifndef _TONE_H
+#define _TONE_H
+#include <Ticker.h>
+
+namespace sound
+{
+    class tone
+    {
+        public:
+        int _pin;
+        void play(int pin, int freq, int len);
+        void stop();
+
+        void play_imperial_march(int pin);
+        void play_close_encounter(int pin);
+        void play_ringer(int pin);
+    };
+}
+
+#endif

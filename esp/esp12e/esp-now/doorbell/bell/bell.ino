@@ -1,5 +1,6 @@
 #include "espnowhelper.h"
 #include <Ticker.h>
+#include "tone.h"
 
 //update this whenever new device is added in the device tree.
 enum SensorId
@@ -47,6 +48,7 @@ static void print_mac(uint8_t *macaddr)
 
 static void blink_led(uint16_t timeout = 250)
 {
+    blinker.detach();
     digitalWrite(BUILTIN_LED, LOW);
     blinker.once_ms(timeout, []()
     {
@@ -72,10 +74,14 @@ void setup()
     );
 }
 
+sound::tone mytone;
+int play_sound_count = 0;
+
 void loop()
 {
     if (doorbell.pressed)
     {
+        play_sound_count = BELL_RING_COUNT;
         //blink led whenever doorbell is pressed
         blink_led();
 
@@ -91,6 +97,13 @@ void loop()
 
         //send reply to SENSOR 
         esp_now.send(doorbell.macaddr, (uint8_t *)&reply_data, sizeof(reply_data));
-        delay(1000);
+        delay(250);
+    }
+
+    if (play_sound_count > 0)
+    {
+       --play_sound_count;
+       mytone.play_imperial_march(D2);
+       delay(100);
     }
 }
