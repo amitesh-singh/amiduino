@@ -29,9 +29,6 @@ class espnow
     public:
     esp_err_t init(WiFiMode_t mode = WIFI_STA, esp_now_role role = ESP_NOW_ROLE_CONTROLLER)
     {
-        //WiFi.mode(mode);
-        //WiFi.disconnect();
-
         esp_err_t ret = esp_now_init();
         if (ret != 0)
         {

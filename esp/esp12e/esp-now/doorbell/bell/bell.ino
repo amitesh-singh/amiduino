@@ -66,6 +66,17 @@ static void blink_led(uint16_t timeout = 250)
     );
 }
 
+bool doorbell_sound_enabled = true;
+
+BLYNK_WRITE(V0)
+{
+    int val = param.asInt();
+    if (val == 1)
+        doorbell_sound_enabled = true;
+    else
+        doorbell_sound_enabled = false;
+}
+
 void setup()
 {
     Serial.begin(115200);
@@ -105,13 +116,15 @@ void loop()
         reply_data_t reply_data;
         
         reply_data.id = SensorId::SOUND;
-
         //send reply to SENSOR 
         esp_now.send(doorbell.macaddr, (uint8_t *)&reply_data, sizeof(reply_data));
         delay(250);
+        Blynk.notify("Yo! Someone is at door!");
+        Blynk.virtualWrite(V1, doorbell.batteryVoltage/1000.0);
+        Blynk.email("singh.amitesh@gmail.com", "Doorbell", "someone is at the door");
     }
 
-    if (play_sound_count > 0)
+    if (play_sound_count > 0 && doorbell_sound_enabled)
     {
        --play_sound_count;
        mytone.play_imperial_march(D2);
