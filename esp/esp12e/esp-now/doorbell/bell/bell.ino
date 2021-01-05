@@ -1,7 +1,15 @@
+#define BLYNK_PRINT Serial
+
+#include <BlynkSimpleEsp8266.h>
+
 #include "espnowhelper.h"
 #include <Ticker.h>
 #include "tone.h"
 #include "config.h"
+
+char auth[] = "SN91GWaN9V-pPz4zhUN4kMFdVNJBz_-z";
+char ssid[] = "Aviaarav-2.4G";
+char pass[] = "poojasingh";
 
 //update this whenever new device is added in the device tree.
 enum SensorId
@@ -61,9 +69,10 @@ static void blink_led(uint16_t timeout = 250)
 void setup()
 {
     Serial.begin(115200);
-
+    Blynk.begin(auth, ssid, pass);
     system_init();
 
+    WiFi.mode(WIFI_STA);
     esp_now.init(WIFI_STA, ESP_NOW_ROLE_SLAVE);    
     esp_now.addRecvCb([](uint8_t *macaddr, uint8_t *incomingdata, uint8_t len)
     {
@@ -80,6 +89,7 @@ int play_sound_count = 0;
 
 void loop()
 {
+    Blynk.run();
     if (doorbell.pressed)
     {
         play_sound_count = BELL_RING_COUNT;
