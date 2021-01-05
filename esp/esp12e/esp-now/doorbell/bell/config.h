@@ -3,7 +3,9 @@
 
 #include <stdint.h>
 
+#define DEBUG
+
 constexpr uint8_t BELL_RING_COUNT = 3;
+constexpr uint8_t WIFI_CHANNEL = 1;
 
-
-#endif 
+#endif

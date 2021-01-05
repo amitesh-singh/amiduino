@@ -18,10 +18,6 @@ enum SensorId
     BALCONY
 };
 
-//TODO: disable it later
-#define DEBUG
-constexpr uint8_t WIFI_CHANNEL = 1;
-
 static espnow esp_now;
 Ticker blinker;
 
@@ -66,7 +62,7 @@ static void blink_led(uint16_t timeout = 250)
     );
 }
 
-bool doorbell_sound_enabled = true;
+bool volatile doorbell_sound_enabled = true;
 
 BLYNK_WRITE(V0)
 {
@@ -103,7 +99,10 @@ void loop()
     Blynk.run();
     if (doorbell.pressed)
     {
-        play_sound_count = BELL_RING_COUNT;
+        if (doorbell_sound_enabled)
+            play_sound_count = BELL_RING_COUNT;
+        else
+            play_sound_count = 0;
         //blink led whenever doorbell is pressed
         blink_led();
 
