@@ -1,6 +1,7 @@
 #include "espnowhelper.h"
 #include <Ticker.h>
 #include "tone.h"
+#include "config.h"
 
 //update this whenever new device is added in the device tree.
 enum SensorId
