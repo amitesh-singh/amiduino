@@ -69,6 +69,12 @@ BLYNK_WRITE(V0)
     doorbell_sound_enabled = (param.asInt() == 1) ? true : false;
 }
 
+//for testing purpose. probably keep it
+BLYNK_WRITE(V2)
+{
+    doorbell.pressed = (param.asInt() == 1) ? true: false;
+}
+
 void setup()
 {
     Serial.begin(115200);
