@@ -7,7 +7,7 @@
 #include "tone.h"
 #include "config.h"
 
-char auth[] = "SN91GWaN9V-pPz4zhUN4kMFdVNJBz_-z";
+char auth[] = "PSgQp0vmw9uKa5cHWtunjdgmwP0OUnSz";
 char ssid[] = "Aviaarav-2.4G";
 char pass[] = "poojasingh";
 
@@ -66,11 +66,7 @@ bool volatile doorbell_sound_enabled = true;
 
 BLYNK_WRITE(V0)
 {
-    int val = param.asInt();
-    if (val == 1)
-        doorbell_sound_enabled = true;
-    else
-        doorbell_sound_enabled = false;
+    doorbell_sound_enabled = (param.asInt() == 1) ? true : false;
 }
 
 void setup()
@@ -118,7 +114,7 @@ void loop()
         //send reply to SENSOR 
         esp_now.send(doorbell.macaddr, (uint8_t *)&reply_data, sizeof(reply_data));
         delay(250);
-        Blynk.notify("Yo! Someone is at door!");
+        Blynk.notify("Yo! Someone is at the door!");
         Blynk.virtualWrite(V1, doorbell.batteryVoltage/1000.0);
         Blynk.email("singh.amitesh@gmail.com", "Doorbell", "someone is at the door");
     }
