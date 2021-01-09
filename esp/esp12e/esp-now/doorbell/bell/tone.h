@@ -14,6 +14,7 @@ namespace sound
         void play_imperial_march(int pin);
         void play_close_encounter(int pin);
         void play_ringer(int pin);
+        void play_harry_potter(int);
     };
 }
 

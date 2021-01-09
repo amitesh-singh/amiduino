@@ -5,7 +5,6 @@
 
 #define DEBUG
 
-constexpr uint8_t BELL_RING_COUNT = 5;
 constexpr uint8_t WIFI_CHANNEL = 1;
 
 #endif

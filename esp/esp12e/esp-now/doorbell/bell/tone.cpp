@@ -62,4 +62,29 @@ namespace sound
        play(_pin, Note_F6, 75);
        play(_pin, Note_F5, 75);
     }
+
+void tone::play_harry_potter(int _pin)
+ {
+
+  play(_pin, Note_DS5, 300);
+  play(_pin, Note_GS5, 450);
+  play(_pin, Note_B5, 150);
+  play(_pin, Note_A5, 300);
+  play(_pin, Note_GS5, 600);
+  play(_pin, Note_DS6, 300);
+  play(_pin, Note_CS6, 750);
+  play(_pin, Note_AS5, 750);
+
+  play(_pin, Note_GS5, 450);
+  play(_pin, Note_B5, 150);
+  play(_pin, Note_A5, 300);
+
+  //  play(Note_F5, 600);
+  play(_pin, Note_G5, 600);
+
+  play(_pin, Note_A5, 300);
+  play(_pin, Note_DS5, 750);
+
+} // End of Harry Potter
+
 }

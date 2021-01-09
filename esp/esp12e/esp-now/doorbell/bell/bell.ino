@@ -75,6 +75,13 @@ BLYNK_WRITE(V2)
     doorbell.pressed = (param.asInt() == 1) ? true: false;
 }
 
+static uint8_t BELL_RING_COUNT = 20;
+
+BLYNK_WRITE(V3)
+{
+    BELL_RING_COUNT = param.asInt();
+}
+
 void setup()
 {
     Serial.begin(115200);
@@ -119,7 +126,6 @@ void loop()
         reply_data.id = SensorId::SOUND;
         //send reply to SENSOR 
         esp_now.send(doorbell.macaddr, (uint8_t *)&reply_data, sizeof(reply_data));
-        delay(250);
         Blynk.notify("Yo! Someone is at the door!");
         Blynk.virtualWrite(V1, doorbell.batteryVoltage/1000.0);
         Blynk.email("singh.amitesh@gmail.com", "Doorbell", "someone is at the door");
@@ -128,7 +134,9 @@ void loop()
     if (play_sound_count > 0 && doorbell_sound_enabled)
     {
        --play_sound_count;
-       mytone.play_imperial_march(D2);
-       delay(100);
+       //mytone.play_imperial_march(D2);
+       mytone.play_ringer(D2);
+       //mytone.play_close_encounter(D2);
+       delay(1000);
     }
 }
