@@ -1,2 +1,2 @@
 - automatic DND mode during night time?
-- option to select no. of counts of doorbell?
+- option to select no. of counts of doorbell? -- Done
