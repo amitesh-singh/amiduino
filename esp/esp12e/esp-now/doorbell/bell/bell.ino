@@ -142,6 +142,8 @@ void loop()
        //mytone.play_ringer(D2);
        //mytone.play_close_encounter(D2);
        mytone.play_tone_up(D2);
+       delay(200);
+
        mytone.play_tone_down(D2);
        delay(1000);
     }
