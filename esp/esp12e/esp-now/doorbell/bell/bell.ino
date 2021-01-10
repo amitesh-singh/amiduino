@@ -40,6 +40,10 @@ void system_init()
     memset(&doorbell, 0, sizeof(doorbell));
     pinMode(BUILTIN_LED, OUTPUT);
     digitalWrite(BUILTIN_LED, HIGH);
+    
+    //get the updated value set in the phone app ?
+
+    Blynk.syncAll();
 }
 
 static void print_mac(uint8_t *macaddr)
@@ -75,7 +79,7 @@ BLYNK_WRITE(V2)
     doorbell.pressed = (param.asInt() == 1) ? true: false;
 }
 
-static uint8_t BELL_RING_COUNT = 20;
+static uint8_t BELL_RING_COUNT = 30;
 
 BLYNK_WRITE(V3)
 {
