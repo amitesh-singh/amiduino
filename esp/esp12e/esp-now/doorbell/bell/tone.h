@@ -15,6 +15,8 @@ namespace sound
         void play_close_encounter(int pin);
         void play_ringer(int pin);
         void play_harry_potter(int);
+        void play_tone_down(int);
+        void play_tone_up(int);
     };
 }
 

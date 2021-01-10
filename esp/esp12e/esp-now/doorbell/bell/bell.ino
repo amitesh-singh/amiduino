@@ -139,8 +139,10 @@ void loop()
     {
        --play_sound_count;
        //mytone.play_imperial_march(D2);
-       mytone.play_ringer(D2);
+       //mytone.play_ringer(D2);
        //mytone.play_close_encounter(D2);
+       mytone.play_tone_up(D2);
+       mytone.play_tone_down(D2);
        delay(1000);
     }
 }

@@ -87,4 +87,16 @@ void tone::play_harry_potter(int _pin)
 
 } // End of Harry Potter
 
+void tone::play_tone_down(int _pin) {
+  play(_pin, Note_F6, 200); // F6
+  play(_pin, Note_F5, 200); // F5
+  play(_pin, Note_C6, 200); // C6
+} // End of beep
+
+void tone::play_tone_up(int _pin) {
+  play(_pin, Note_C6, 200); // C6
+  play(_pin, Note_F5, 200); // F5
+  play(_pin, Note_F6, 200); // F6
+} // End of beep
+
 }
