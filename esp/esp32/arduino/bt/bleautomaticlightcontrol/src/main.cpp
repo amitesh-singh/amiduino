@@ -37,7 +37,7 @@ void setup()
   Serial.println("Scanning..");
   
   pinMode(lightpin, OUTPUT);
-  pinMode(lightpin, HIGH);
+  digitalWrite(lightpin, HIGH);
 
   BLEDevice::init("");
   pBLEScan = BLEDevice::getScan();
@@ -71,13 +71,13 @@ void loop()
     if (detectMiBand3(d))
     {
       Serial.println(d.getRSSI());
-      if (d.getRSSI() > -60 && lightstate != ON)
+      if (d.getRSSI() >= -65 && lightstate != ON)
       {
           Serial.println("light is ON");
           digitalWrite(lightpin, LOW);
           lightstate = ON;       
       }
-      else if (d.getRSSI() < -60 && lightstate == ON)
+      else if (d.getRSSI() < -65 && lightstate == ON)
       {
         Serial.println("Light is OFF");
         lightstate = OFF;
