@@ -35,7 +35,8 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("Scanning..");
-  
+
+  //still trigger issue on bootup ..
   pinMode(lightpin, OUTPUT);
   digitalWrite(lightpin, HIGH);
 
@@ -56,6 +57,8 @@ enum LightState
 
 LightState lightstate = OFF;
 
+const int THRESHOLD = -70;
+
 void loop()
 {
    // put your main code here, to run repeatedly:
@@ -71,13 +74,13 @@ void loop()
     if (detectMiBand3(d))
     {
       Serial.println(d.getRSSI());
-      if (d.getRSSI() >= -65 && lightstate != ON)
+      if (d.getRSSI() >= THRESHOLD && lightstate != ON)
       {
           Serial.println("light is ON");
           digitalWrite(lightpin, LOW);
-          lightstate = ON;       
+          lightstate = ON;
       }
-      else if (d.getRSSI() < -65 && lightstate == ON)
+      else if (d.getRSSI() < THRESHOLD && lightstate == ON)
       {
         Serial.println("Light is OFF");
         lightstate = OFF;
