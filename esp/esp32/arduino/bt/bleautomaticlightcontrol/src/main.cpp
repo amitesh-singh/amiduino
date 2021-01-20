@@ -36,9 +36,8 @@ void setup()
   Serial.begin(115200);
   Serial.println("Scanning..");
 
-  //still trigger issue on bootup ..
+  //lightpin is connected to IN-
   pinMode(lightpin, OUTPUT);
-  digitalWrite(lightpin, HIGH);
 
   BLEDevice::init("");
   pBLEScan = BLEDevice::getScan();
@@ -77,14 +76,14 @@ void loop()
       if (d.getRSSI() >= THRESHOLD && lightstate != ON)
       {
           Serial.println("light is ON");
-          digitalWrite(lightpin, LOW);
+          digitalWrite(lightpin, HIGH);
           lightstate = ON;
       }
       else if (d.getRSSI() < THRESHOLD && lightstate == ON)
       {
         Serial.println("Light is OFF");
         lightstate = OFF;
-        digitalWrite(lightpin, HIGH);
+        digitalWrite(lightpin, LOW);
       }
     }
   }
