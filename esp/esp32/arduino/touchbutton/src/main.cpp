@@ -28,5 +28,5 @@ void setup()
 void loop()
 {
   Serial.println(touchRead(4)); //Get the value of Touch 0 -> GPIO4
-  delay(1000);
+  delay(100);
 }
