@@ -1,0 +1,9 @@
+pico_sdk/
+*.in
+cmake_install.cmake
+Makefile
+CMakeDoxygen*
+elf2uf2/
+generated/
+CMakeFiles/
+CMakeCache.txt
