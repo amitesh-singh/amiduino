@@ -1,0 +1,9 @@
+Tx - GPIO 1
+RX - GPIO 3
+GPIO0 and GPIO2 are other digital pins
+
+GPIO 1 is connected to led.
+use led = 1, for blinking.. remmeber Tx is also gpio 1.. so it won't work
+
+to program, gpio 0 should be connected to GND on boot up, then only
+u can program
