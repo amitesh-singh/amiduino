@@ -1,11 +1,12 @@
 #include <ESP8266WiFi.h>
 #include "ESPAsyncUDP.h"
+#include "udplogger.h"
 
 const char * ssid = "Aviaarav-2.4G";
 const char * password = "poojasingh";
 
-AsyncUDP udp;
-
+//AsyncUDP udp;
+udplogger logger;
 void setup()
 {
    WiFi.mode(WIFI_STA);
@@ -17,7 +18,10 @@ void setup()
         Serial.print(".");
      }
    Serial.printf("Connected to %s\r\n", WiFi.localIP());
+   logger.setServer(IPAddress(192, 168, 1, 11), 16003);
+   logger.connect();
 
+   /*
    bool ret = udp.connect(IPAddress(192, 168, 1, 11), 16003);
    if  (!ret)
      {
@@ -45,12 +49,15 @@ void setup()
                      packet.printf("Got %u bytes of data", packet.length());
                      });
      }
-
    udp.print("Hello Server");
+   */
 }
 
 void loop()
 {
-   udp.print("Hello Server");
+   //udp.print("Hello Server");
+   logger.print("Hello from udplogger");
+   logger.println("new line");
+   logger.println(String("new string"));
    delay(1000);
 }
