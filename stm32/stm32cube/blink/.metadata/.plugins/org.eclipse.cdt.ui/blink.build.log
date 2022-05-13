@@ -1,0 +1,8 @@
+01:12:56 **** Incremental Build of configuration Debug for project blink ****
+make -j4 all 
+arm-none-eabi-size   blink.elf 
+Finished building: default.size.stdout
+ 
+
+01:12:56 Build Finished. 0 errors, 0 warnings. (took 466ms)
+
