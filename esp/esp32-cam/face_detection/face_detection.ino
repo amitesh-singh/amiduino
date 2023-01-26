@@ -30,12 +30,21 @@ AsyncWebServer server(80);
 #define VSYNC_GPIO_NUM    25
 #define HREF_GPIO_NUM     23
 #define PCLK_GPIO_NUM     22
+#define LED_GPIO_NUM      33
+
+#define LED_LEDC_CHANNEL 2 //Using different ledc channel/timer than camera
+
+void setupLedFlash(int pin) 
+{
+    ledcSetup(LED_LEDC_CHANNEL, 5000, 8);
+    ledcAttachPin(pin, LED_LEDC_CHANNEL);
+}
 
 bool initCamera()
 {
   camera_config_t config;
  
-  config.ledc_channel = LEDC_CHANNEL_0;
+   config.ledc_channel = LEDC_CHANNEL_0;
   config.ledc_timer = LEDC_TIMER_0;
   config.pin_d0 = Y2_GPIO_NUM;
   config.pin_d1 = Y3_GPIO_NUM;
@@ -54,17 +63,48 @@ bool initCamera()
   config.pin_pwdn = PWDN_GPIO_NUM;
   config.pin_reset = RESET_GPIO_NUM;
   config.xclk_freq_hz = 20000000;
-  config.pixel_format = PIXFORMAT_JPEG;
-  config.frame_size = FRAMESIZE_QVGA;
-  config.jpeg_quality = 10;
+  config.frame_size = FRAMESIZE_UXGA;
+  //config.pixel_format = PIXFORMAT_JPEG; // for streaming
+  config.pixel_format = PIXFORMAT_RGB565; // for face detection/recognition
+  config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;
+  config.fb_location = CAMERA_FB_IN_PSRAM;
+  config.jpeg_quality = 12;
   config.fb_count = 1;
+  
+  // if PSRAM IC present, init with UXGA resolution and higher JPEG quality
+  //                      for larger pre-allocated frame buffer.
+  if(config.pixel_format == PIXFORMAT_JPEG){
+    if(psramFound()){
+      config.jpeg_quality = 10;
+      config.fb_count = 10;
+      config.grab_mode = CAMERA_GRAB_LATEST;
+    } else {
+      // Limit the frame size when PSRAM is not available
+      config.frame_size = FRAMESIZE_SVGA;
+      config.fb_location = CAMERA_FB_IN_DRAM;
+    }
+  } else {
+    // Best option for face detection/recognition
+    config.frame_size = FRAMESIZE_240X240;
+#if CONFIG_IDF_TARGET_ESP32S3
+    config.fb_count = 2;
+#endif
+  }
+
 
   esp_err_t result = esp_camera_init(&config);
  
   if (result != ESP_OK) {
+    Serial.println("Failed to start camera");
     return false;
   }
- 
+
+  sensor_t *s = esp_camera_sensor_get();
+  if (s->id.PID == OV2640_PID)
+  {
+    Serial.println("OV2640 camera detected");
+  }
+  setupLedFlash(LED_GPIO_NUM);
   return true;
 }
 
@@ -82,6 +122,7 @@ void detect_human_face()
         Serial.println("unable to get FB from camera");
         return;
     }
+    Serial.println("got valid Framebuffer");
   //esp-dl is used for detecting the human face and recognition.
     #if TWO_STAGE
     HumanFaceDetectMSR01 s1(0.1F, 0.5F, 10, 0.2F);
