@@ -9,6 +9,7 @@ mp_draw = mp.solutions.drawing_utils
 
 url ="http://192.168.1.248:81/stream"
 cap = cv2.VideoCapture(url)
+frames_len = 0
 
 with mp_facedetector.FaceDetection(min_detection_confidence=0.7) as face_detection:
     while cap.isOpened():    
@@ -26,7 +27,7 @@ with mp_facedetector.FaceDetection(min_detection_confidence=0.7) as face_detecti
         if results.detections:
             for id, detection in enumerate(results.detections):
                 mp_draw.draw_detection(img, detection)
-                print(id, detection)
+                #print(id, detection)
 
                 bBox = detection.location_data.relative_bounding_box
 
@@ -34,13 +35,22 @@ with mp_facedetector.FaceDetection(min_detection_confidence=0.7) as face_detecti
 
                 boundBox = int(bBox.xmin * w), int(bBox.ymin * h), int(bBox.width * w), int(bBox.height * h)
 
-                cv2.putText(img, f'{int(detection.score[0]*100)}%', (boundBox[0], boundBox[1] - 20), cv2.FONT_HERSHEY_SIMPLEX, 2, (0,255,0), 2)
+                cv2.putText(img, f'{int(detection.score[0]*100)}%', (boundBox[0], boundBox[1] - 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
+                if detection.score[0] > 0.7:
+                    frames_len = frames_len + 1
+                    print(frames_len)
+                    if frames_len > 15: # this is the threshold
+                        print("human is detected:")
+                else:
+                    frames_len = 0
         
         
-            cv2.imshow('Face Detection', img)
+        cv2.imshow('Face Detection', img)
               # 27 is escape key
-            if cv2.waitKey(5) & 0xFF == 27:
-                break
+        key = cv2.waitKey(1)
+
+        if key & 0xFF == 27 or key & 0xFF == ord('q'):
+            break
 
 cap.release()
 
