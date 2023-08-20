@@ -8,6 +8,8 @@
 #include <zephyr/drivers/gpio.h>
 #include <vector>
 
+//since C++20
+
 /* 1000 msec = 1 sec */
 #define SLEEP_TIME_MS   2000
 
@@ -18,27 +20,33 @@
  * A build error on this line means your board is unsupported.
  * See the sample documentation for information on how to fix this.
  */
-static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
+
+class led {
+
+constexpr static const struct gpio_dt_spec red_led = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
+public:
+  led()
+  {
+      if (!gpio_is_ready_dt(&red_led)) {
+          printk("Failed to initialize");
+      }
+      auto ret = gpio_pin_configure_dt(&red_led, GPIO_OUTPUT_ACTIVE);
+      if (ret < 0) {
+          printk("something wrong happened");
+      }
+  }
+  void toggle()
+  {
+      gpio_pin_toggle_dt(&red_led);
+  }
+};
 
 int main(void)
 {
-	if (!gpio_is_ready_dt(&led)) {
-		return 0;
-	}
-
-
-  //use a cpp library
-	auto ret = gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE);
-	if (ret < 0) {
-		return 0;
-	}
-
+  led led;
 	while (1) {
-		ret = gpio_pin_toggle_dt(&led);
+		led.toggle();
 		printk("Hello world\n");
-		if (ret < 0) {
-			return 0;
-		}
 		k_msleep(SLEEP_TIME_MS);
 	}
 	return 0;
