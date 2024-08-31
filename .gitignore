@@ -3,3 +3,6 @@ incremental_db/
 *.v.bak
 output_files/
 simulation/
+a.out
+*.qws
+
