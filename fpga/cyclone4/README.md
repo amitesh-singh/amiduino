@@ -1,5 +1,6 @@
 # Cyclone 4 (bought from china) EP4CE6E22C8
-
+## IC
+- EP4CE6E22C8 pins are 3.3v tolerant. But not 5v.  
 ## Installation
 
 
