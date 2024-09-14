@@ -51,4 +51,4 @@ make PROJECT=led
 ## links for CPU design
 
 - [8 bit cpu design using FPGA](https://austinmorlan.com/posts/8bit_breadboard_fpga/)
-- 
+- [https://zipcpu.com/tutorial/](https://zipcpu.com/tutorial/)
