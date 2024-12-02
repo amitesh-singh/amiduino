@@ -2299,7 +2299,7 @@ class ThingTab:
     def search( self, values ):
         self.clear()
         sql, args = self.get_search_sql( values )
-        sql += " LIMIT 100"
+        sql += " LIMIT 500"
         rowiter = self.application.database.fetch( sql, args )
         n = len( self.detail_field_names )
         for row in rowiter:
