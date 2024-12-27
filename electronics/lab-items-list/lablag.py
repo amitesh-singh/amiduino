@@ -120,7 +120,7 @@ class Database:
         self.__db.execute( """
             create table CONFIG (
                 CF_NAME                 text    not null,
-                CF_VALUE                text    not null, 
+                CF_VALUE                text    not null,
                 constraint CONFIG_PK primary key ( CF_NAME )
             )
         """ )
@@ -147,6 +147,7 @@ class Database:
         """ )
 
         # create table 'PARTTAG'
+        # ++++++ amount as float?
         self.__db.execute( """
             create table PARTTAG (
                 P_ID                    integer not null,
@@ -254,7 +255,7 @@ class Database:
                 CR_CURRENCY_TO_CD       integer not null,
                 CR_TIMESTAMP            integer not null,
                 CR_RATE                 real    not null,
-                constraint CONVERSIONRATE_PK primary key ( 
+                constraint CONVERSIONRATE_PK primary key (
                     CR_CURRENCY_FROM_CD, CR_CURRENCY_TO_CD, CR_CURRENCY_TO_CD
                 )
             )
@@ -957,7 +958,7 @@ class Codes:
             prev_deleted = codeobj.deleted
             args = [ values["text"], values["unused"], values["deleted"], code ]
             self.database.execute( sql, args )
-            # 
+            #
             self.database.commit()
             # +++ sort!?!
             codeobj.text = values["text"]
@@ -1025,7 +1026,7 @@ class Codes:
                 self.database.execute( sql, args )
                 ancestorobj = self.get_code( ancestorobj.parent )
                 depthdiff += 1
-            # 
+            #
             self.database.commit()
             self.add_code_object( codeobj )
         except:
@@ -2002,7 +2003,7 @@ class ThingTab:
         self.detail_grid.set_row_spacing( 3 )
         self.detail_grid.set_column_spacing( 6 )
         buttons = self.create_standard_buttons( self.detail_clear,
-            self.detail_new, self.detail_save )
+            self.detail_new, self.detail_save, self.detail_delete )
         self.detail_grid.attach( buttons, 0, 0, 2, 1 )
         y = 1
         for name, label, typ, args in self.get_detail_field_types():
@@ -2038,18 +2039,26 @@ class ThingTab:
         return vbox
     # }}} create_detail_page( self )
 
-    # {{{ create_standard_buttons( self, clearfunc, newfunc, savefunc )
-    def create_standard_buttons( self, clearfunc, newfunc, savefunc ):
+    # {{{ create_standard_buttons( self, clearfunc, newfunc, savefunc, deletefunc )
+    def create_standard_buttons( self, clearfunc, newfunc, savefunc, deletefunc ):
         hbox = Gtk.Box( orientation=Gtk.Orientation.HORIZONTAL, spacing=3 )
+
         button = Gtk.Button( label="Clear" )
         button.connect( "clicked", clearfunc )
         hbox.pack_start( button, False, False, 0 )
+
         button = Gtk.Button( label="New" )
         button.connect( "clicked", newfunc )
         hbox.pack_start( button, False, False, 0 )
+
         button = Gtk.Button( label="Save" )
         button.connect( "clicked", savefunc )
         hbox.pack_start( button, False, False, 0 )
+
+        button = Gtk.Button( label="Delete" )
+        button.connect( "clicked", deletefunc )
+        hbox.pack_start( button, False, False, 0 )
+
         return hbox
     # }}} create_standard_buttons( self, clearfunc, newfunc, savefunc )
 
@@ -2239,6 +2248,72 @@ class ThingTab:
             return
         # +++ update selected_object and view
     # }}} detail_save( self, button )
+
+    # {{{ detail_delete( self, button )
+    def detail_delete( self, button ):
+        # check if there is an object selected
+        if self.selected_object is None:
+            return
+
+        # really?
+        dialog = Gtk.MessageDialog(
+                #transient_for=self,  # how to get window?
+                flags=0,
+                message_type=Gtk.MessageType.QUESTION,
+                buttons=Gtk.ButtonsType.OK_CANCEL,
+                text="Delete?"
+        )
+        # +++++ text should be improved...
+        dialog.format_secondary_text( "Really delete this object?" )
+        response = dialog.run()
+        dialog.destroy()
+        if response != Gtk.ResponseType.OK:
+            print( "delete canceled" )
+            return
+
+        self.detail_do_delete( self.selected_object )
+    # }}} detail_delete( self, button )
+
+    # {{{ detail_do_delete( self, obj )
+    def detail_do_delete( self, obj ):
+        # delete row by id
+        database = self.application.database
+        database.begin()
+        try:
+            types = self.get_db_field_types()
+            for tablename, cols in types:
+                sql = "delete from %s" % tablename
+                args = []
+                pre = " where "
+                for colname, coltype, usage, value in cols:
+                    if usage == "rowid":
+                        # delete it
+                        sql = "delete from %s where %s = ?" % ( tablename, colname )
+                        args = [ self.get_detail_input_value( value ) ]
+                        break
+                    elif usage in ( "key", "upd" ):
+                        sql += "%s%s = ?" % ( pre, colname )
+                        fieldvalue = self.get_detail_input_value( value )
+                        args.append( fieldvalue )
+                        pre = " and "
+                print( ( sql, args ) )
+                database.execute( sql, args )
+            # +++++ may need to delete additional data?
+            database.commit()
+        except:
+            traceback.print_exc()
+            # WTF? where's my transaction?
+            try:
+                database.rollback()
+            except:
+                pass
+            # ++++ meckermecker
+            return
+
+        # deleted, clear it
+        self.detail_clear( None )
+        # +++++ remove it from the search results
+    # }}} detail_do_delete( self, obj )
 
     # {{{ code_to_text( self, code )
     def code_to_text( self, code ):
