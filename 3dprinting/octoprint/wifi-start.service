@@ -1,0 +1,12 @@
+[Unit]
+Description=start wifi
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=wpa_supplicant -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlan0
+
+[Install]
+WantedBy=multi-user.target
