@@ -21,12 +21,41 @@ and then reboot
 
 also using sudo rasp-config to enable legacy camera stack
 
+# plugins
 
-# how to install plugins using pip
+## how to install plugins using pip
 
 ~/oprint/bin/pip install https://github.com/OctoPrint/OctoPrint-FileCheck/archive/master.zip
 
+## bed visualizer plugin setup
+
+- refer to https://github.com/jneilliii/OctoPrint-BedLevelVisualizer/
+- wiki: https://github.com/jneilliii/OctoPrint-BedLevelVisualizer/blob/master/wiki/index.md
+
+### settings
+
+go to collection and add 
+@BEDLEVELVISUALIZER 
+M420 V
+![screenshot](image.png)
+
+# mininmizing writing to SD card
+
+limit the journald logs to RAM 
 
 ```
+sudo vim /etc/systemd/journald.conf
+
+```
+
+Add these two lines
+```
+Storage=volatile
+RuntimeMaxUse=16M
 ```
 ```
+sudo systemctl restart systemd-journald
+
+```
+
+
