@@ -39,7 +39,7 @@ go to collection and add
 M420 V
 ![screenshot](image.png)
 
-# mininmizing writing to SD card
+# writing to SD card
 
 limit the journald logs to RAM 
 
@@ -58,4 +58,7 @@ sudo systemctl restart systemd-journald
 
 ```
 
+This seems to work well.
+
+![/run/](image-1.png)
 
