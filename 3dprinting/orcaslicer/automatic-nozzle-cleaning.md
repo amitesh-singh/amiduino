@@ -5,6 +5,10 @@
 
 
 ## start g code
+
+Orca slicer -> Printer -> Machine G code -> Machine start g code
+
+
 ```
 M220 S100 ;Reset Feedrate 
 M221 S100 ;Reset Flowrate 
@@ -20,15 +24,14 @@ M109 S[nozzle_temperature_initial_layer] ;Wait for nozzle temp to stabilize
 
 ; for cleaning the nozzle
 G1 X30 Y-12 Z6 F5000.0 ;Start posistion for wipe
-G1 Z3.0 F5000.0 ;Lower to wipe height
-G1 X75 Y-10 Z3.0 F5000.0 ;Wipe 1
-G1 X30 Y-12 Z3.0 F5000.0 ;Wipe 2
-G1 X75 Y-14 Z3.0 F5000.0 ;Wipe 3
-G1 X60 Y-10 Z3.0 F500.0 ;Wipe 4
-G1 Z6 F5000.0 ; Move up
+G1 Z4.0 F5000.0 ;Lower to wipe height
+G1 X75 Y-10 Z4.0 F5000.0 ;Wipe 1
+G1 X30 Y-12 Z4.0 F5000.0 ;Wipe 2
+G1 X75 Y-14 Z4.0 F5000.0 ;Wipe 3
+G1 X60 Y-10 Z4.0 F500.0 ;Wipe 4
+G1 Z7 F5000.0 ; Move up
 G1 X-2.1 Y20 Z0.28 F5000.0 ;Move to start position 
 ; nozzle cleaning ended
-
 
 G1 X-2.1 Y145.0 Z0.28 F1500.0 E15 ;Draw the first line 
 G1 X-2.4 Y145.0 Z0.28 F5000.0 ;Move to side a little 
