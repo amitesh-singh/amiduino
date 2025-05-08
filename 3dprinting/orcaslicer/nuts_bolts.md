@@ -1,6 +1,30 @@
 # 3dprinting nuts and bolts in freeCAD 
 
-## creating nuts
+## creating bolts using Fastener
+
+- use Fastener bench to create the bolt
+- create Add DIN threadedrod metric threaded rod, shown below.
+![DIN ThreadedRod metric threaded rod](image.png)
+- go the settings of this model, and enable threaded to yes. also change the length and pitch accordingly
+- go back to part design workbench and create a sketch at the top surface. create a circle with required size
+- pad the circle.. for better printing.. go to sketch properties, and select attachment and set the z offset to -0.5mm
+
+
+## Creating nuts using cut feature and custom screw/bolt type
+- Refer to this video: https://www.youtube.com/watch?v=ojfOp16CDwQ
+- Use fastener workbench and create DIN
+![DIN ThreadedRod metric threaded rod](image.png)
+- go the settings of this model, set the bolt type to M3 and enable threaded to yes. also change the length and pitch accordingly.
+  For better results, For M3, change the Pitch to 0.75
+
+- rest of the stuff is like below
+
+- Now it's time to create custom stuff
+- create a new 
+
+
+
+## creating nuts using part design hole feature
 
 ![ Walls printing order](image-1.png)
 
@@ -25,11 +49,4 @@ Tips:
 
   It turned out that `outer/inner` always yeilds excellent dimensional accuracy for printing bolts/nuts.
  
-## creating bolts
 
-- use Fastener bench to create the bolt
-- create Add DIN threadedrod metric threaded rod, shown below.
-![DIN ThreadedRod metric threaded rod](image.png)
-- go the settings of this model, and enable threaded to yes. also change the length and pitch accordingly
-- go back to part design workbench and create a sketch at the top surface. create a circle with required size
-- pad the circle.. for better printing.. go to sketch properties, and select attachment and set the z offset to -0.5mm
