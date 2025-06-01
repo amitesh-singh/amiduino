@@ -19,8 +19,10 @@
 
 - rest of the stuff is like below
 
-- Now it's time to create custom stuff
-- create a new 
+- Now it's time to create custom nut
+- create a new body and name it `Nut`
+- create a sketch and make a sketch; for M3, the edge dimension is 3mm. To make the design constrained
+- 
 
 
 
