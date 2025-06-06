@@ -25,11 +25,15 @@ This test is done to avoid stringing;
 
 ### max volumentric speed
 
+generally this is provided by the vendor; 
+
 I reduced it to 12mm and it yearns better results.
 
-### flow ration
+### flow ratio
 
 reduced it to 0.96 from 0.98.. less overflow; 
+
+Refer to (detailed flow ration)[./flow-ratio-calibration.md]
 
 ## Numaker PETG violet
 
@@ -55,3 +59,26 @@ Following orca slicer calibration tests are conducted:
 ### ASA black
 
 Calibration tests were not done
+
+#### Pressure advance
+
+did the lines test
+- value set is 0.02;
+
+#### Flow ratio
+
+This is also provided by numakers which is 0.95
+flow ratio is set to 0.926; 0.95 will work too?
+
+
+#### volumentric speed limit
+
+numakers recommends it to be 12
+
+## Dream Polymers
+
+### TPU 95A black
+
+#### Pressure advance test
+ 
+- set the value to 0.04
