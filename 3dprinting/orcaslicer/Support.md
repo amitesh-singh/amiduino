@@ -9,3 +9,5 @@
 ![Top/Bottom Z distance](image-2.png)
 
 Refer to this video too: https://www.youtube.com/watch?v=2BWQ-C-Rcic
+
+This worked really well for Numakers PETG. 

@@ -24,6 +24,11 @@ Set this value radius = (0.7 + 0.6 + 0.7 + 0.7)/4/2 = 0.337 mm in X-Y Hole Compe
 
 ![orca slicer setting](image-5.png)
 
+## Numakers PETG bright voilet
+
+Did the holes calibration test and I got the same results
+set the X-Y hole compensation to 0.337, same as for PLA+
+
 ## Numakers ASA black
 
 TODO
