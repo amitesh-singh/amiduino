@@ -1,5 +1,18 @@
 # Support
 
+## Tips
+
+- 0.28 Top/Bottom Z distance; 
+- layer height; 0.20
+
+0.28/0.20 = 1.4 -> constant which works well in our testing 
+
+lets say my layer height is 0.30
+
+in this case, the top/bottom z distance gonna be 1.4 * 0.30 = .52 
+
+
+
 ## Tree (auto) works good most of the time
 
 ### Easy removing supports
