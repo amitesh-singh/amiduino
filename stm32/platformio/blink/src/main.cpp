@@ -66,7 +66,8 @@ int main()
     }
 }
 
-extern "C" void SysTick_Handler(void) 
+// on C++, it's very important to add extern "C" or else IRQ won't work
+extern "C" void SysTick_Handler(void)
 {
   HAL_IncTick();
 }

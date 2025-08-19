@@ -1,0 +1,22 @@
+* Z:\home\ami\work\repos\amiduino\ltspice\basic\OpAmpCurrentBoosting.asc
+XU2 N003 N005 V+ 0 N004 level1 Avol=1Meg GBW=10Meg Vos=0 En=0 Enk=0 In=0 Ink=0 Rin=500Meg
+V V+ 0 12
+V1 N003 0 0.3
+R1 N004 N005 10k
+Q1 0 N006 Vout 0 2N3906
+Q2 V+ N002 Vout 0 2N3904
+R3 V+ N002 1.2k
+D1 N002 N004 1N914
+R4 N006 0 1.2k
+D2 N004 N006 1N914
+R2 N005 0 1k
+R5 Vout 0 50
+.model D D
+.lib C:\users\ami\AppData\Local\LTspice\lib\cmp\standard.dio
+.model NPN NPN
+.model PNP PNP
+.lib C:\users\ami\AppData\Local\LTspice\lib\cmp\standard.bjt
+.op
+.lib UniversalOpAmp1.lib
+.backanno
+.end

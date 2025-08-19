@@ -2,4 +2,4 @@
 .global start
 
 start:
-    b _start
+    b start

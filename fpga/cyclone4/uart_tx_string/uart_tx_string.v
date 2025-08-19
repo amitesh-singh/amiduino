@@ -5,7 +5,7 @@ module uart_tx_string(
     output led4
 );
 
-    parameter TX_CLK_CYCLE = 50_000_000/(2 * 9600);
+    parameter TX_CLK_CYCLE = 50_000_000/(2 * 115200);
     reg[24:0] counter = 0;
     reg [7:0] data = 0;
     reg txclk = 0;

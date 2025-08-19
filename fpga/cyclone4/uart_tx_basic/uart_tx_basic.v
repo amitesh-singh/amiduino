@@ -5,9 +5,9 @@ module uart_tx_basic(
     output led4
 );
 
-    parameter TX_CLK_CYCLE = 50_000_000/(2 * 9600);
+    parameter TX_CLK_CYCLE = 50_000_000/(2 * 115200);
     reg[24:0] counter = 0;
-    reg [7:0] data = 8'h42; //A - we send 'A' on uart ;'0b1000001'
+    reg [7:0] data = 8'h41; //A - we send 'A' on uart ;'0b1000001'
     reg txclk = 0;
     reg switch = 1;
     reg busy = 0;

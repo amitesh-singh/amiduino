@@ -21,7 +21,6 @@ module uart_tx_timer(
         if (counter >= (50_000_000)) begin
             counter <= 0;
             switch <= 1;
-            //led4 <= ~led4;
         end else begin
             counter <= counter + 1;
             if (busy && switch == 1) begin
