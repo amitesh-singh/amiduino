@@ -36,3 +36,11 @@ TODO
 ## Dream Polymers TPU 95A black
 
 TODO
+
+## Numakers Grey PLA Pro
+
+### A1
+
+On A1, the measured diamters are 9.8, 
+
+0.2 mm around Dia hence 0.2/2 = 0.1 mm
