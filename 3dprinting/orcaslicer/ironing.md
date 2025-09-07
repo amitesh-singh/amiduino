@@ -1,5 +1,11 @@
 # Ironing
 
+## ender 3v3 se
+
+default profile works well with ender 3v3 se
+
+
+## A1 
 This is for getting smooth top surface.
 
 According to the author, this is the settings for A1. I've not tested it for ender 3v3 se yet.
@@ -18,3 +24,6 @@ Flow: 10% ---> 30%
 
 2.
 ![Speed-> Ironing speed](image-8.png)
+
+
+
