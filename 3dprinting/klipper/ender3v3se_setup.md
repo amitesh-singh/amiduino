@@ -27,7 +27,9 @@ Use `KIAUH` to install klipper, moonraker and fluidd/mainsail
 
 # Slicer Setup
 
-Used following config: https://github.com/shubham0x13/ender-3-v3-se-klipper
+Used following config: https://github.com/shubham0x13/ender-3-v3-se-klipper as the base.
+
+my config: https://github.com/amitesh-singh/klipper_ender3v3se_config
 
 ## Start GCode in Orca Slicer
 
@@ -65,3 +67,7 @@ PRINT_END
 # klipper address
 
 it's running at the port 81.
+
+# pr touch support
+
+currently using 
