@@ -1,6 +1,7 @@
 # Installation
 
-https://athemis.me/projects/klipper_guide/
+~~https://athemis.me/projects/klipper_guide/~~
+https://pblvsky.gitbook.io/ender3v3se/remote-control/klipper
 
 In a nutshell,
 
