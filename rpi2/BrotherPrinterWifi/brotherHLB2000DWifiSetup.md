@@ -98,3 +98,16 @@ sudo dpkg -i
 Also refer to:
 https://github.com/amitesh-singh/amiduino/tree/master/3dprinting/octoprint#writing-to-sd-card
 quite handy for powering off rpi without sd card crash
+
+## Adding the Cups printer on Windows
+
+press `#` key, and go to printer and click for add 
+
+ideally, it should just detect the printer and configure itself.
+
+## Adding the cups printer on linux 
+
+go to (local cups server)[https://localhost:631/admin], add printer, select http based ipp and then add following entry
+`http://192.168.1.18:631/printers/Brother_HL-B2000D_series` and in the next screen select, Generic -> Generic IPP Everywhere Printer
+
+![BrotherWifi](image.png)
