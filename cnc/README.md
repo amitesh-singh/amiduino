@@ -9,3 +9,4 @@ https://anolexcnc.com/collections/cnc-machines/products/anolex-cnc-router-machin
 - [Bed Model - with hole location](https://www.printables.com/model/1511599-anolex-3030-evo-max-bed-model-with-hole-locations)
 
 - https://www.mcmaster.com/  <-- excellent for downloading the STEP files of different mechanical parts.
+- https://www.linearmotiontips.com/examining-screws-three-different-angles/
