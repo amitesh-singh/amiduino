@@ -14,8 +14,6 @@ In orca slicer, add following entries
 PRINT_START BED=[bed_temperature_initial_layer_single] EXTRUDER=[nozzle_temperature_initial_layer]
 
 ```
-In orca, both label object and exclude object boxes must be selected.
-![orca settings](image-1.png)
-
-It is not required to select print by object. print by layer also works fine.
+In orca, exclude object boxes must be selected.
+![orca settings](image-3.png)
 
