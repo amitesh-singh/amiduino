@@ -2,13 +2,22 @@
 
 ## Design 
 
-### for mounting a plastic part to another part
+### Injection molding one - cheap but not good
+
+These can be used where the high torque is not required. quite a good option
+for pcb enclosure or cosmetic stuff.
+
+
+#### design cosiderations: for mounting a plastic part to another part
+
 ![M3x4 design](image-1.png)
 
 ![freeCAD design](image-2.png)
 
-one example is the linear rails mount on 
+one example is the linear rails mount on the base of the ender 3v3 se printer. 
 
+### the right ones - bought from dc3d.in, onlyscrews.in
+These are the excellent ones, 
 
 ## Dimensions
 ### M3 x 4 mm - traditional inserts

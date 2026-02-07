@@ -7,6 +7,15 @@
 
 <img width="335" height="510" alt="image" src="https://github.com/user-attachments/assets/26b22577-60a9-4d6b-a382-d693fb67ff72" />
 
+![try 1](image-11.png)
+![try 2](image-10.png)
+
+- Tried following combinations and got amazing results on ender 3v3 se
+
+![Quality settings](image-12.png)
+![Surface finish](image-13.png)
+![Top surface speed](image-14.png)
+
 # Ironing
 
 ## ender 3v3 se
