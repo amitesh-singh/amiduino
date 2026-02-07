@@ -1,3 +1,20 @@
-# Guide
+# Threaded inserts
 
 ## Design 
+
+### for mounting a plastic part to another part
+![M3x4 design](image-1.png)
+
+![freeCAD design](image-2.png)
+
+one example is the linear rails mount on 
+
+
+## Dimensions
+### M3 x 4 mm - traditional inserts
+
+These are NOT an ideal choice for 3d printed parts. It's used for moulded parts.
+Since it's readily available and cheap, hence can be considered for making enclosures
+for PCB projects.
+
+![M3x4](image-1.png)
