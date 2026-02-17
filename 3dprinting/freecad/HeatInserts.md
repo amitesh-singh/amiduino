@@ -27,3 +27,9 @@ Since it's readily available and cheap, hence can be considered for making enclo
 for PCB projects.
 
 ![M3x4](image-1.png)
+
+### right ones for 3d printing parts
+
+![M3X6](image-3.png)
+
+- https://onlyscrews.in/products/m3-x-6mm-3d-printing-brass-threaded-inserts-dia-3mm-length-6mm
