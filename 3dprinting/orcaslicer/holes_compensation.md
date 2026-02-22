@@ -22,6 +22,10 @@ so the difference average dia was (0.7 + 0.6 + 0.7 + 0.7)/4
 Set this value radius = (0.7 + 0.6 + 0.7 + 0.7)/4/2 = 0.337 mm in X-Y Hole Compensation
 
 
+After installing linear rails on x and y axis, it turns out that we need to calibrate this option
+again.
+
+With 0.337 x-y hole compensation
 ![orca slicer setting](image-5.png)
 
 ## Numakers PETG bright voilet

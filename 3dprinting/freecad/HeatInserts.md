@@ -10,7 +10,12 @@ for pcb enclosure or cosmetic stuff.
 
 #### design cosiderations: for mounting a plastic part to another part
 
+On measuring, these are measured as `4.7 mm` in diameter instead
+
 ![M3x4 design](image-1.png)
+
+It is recommened to use 4.7 mm dia for fitting mold normal heat inset. Always measure them
+before including them in your designs.
 
 ![freeCAD design](image-2.png)
 
