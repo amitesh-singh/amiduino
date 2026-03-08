@@ -1,5 +1,11 @@
 # FreeCAD tips
 
+## How to fix b0rked freeCAD 
+
+```
+sudo snap refresh freecad --edge --progress
+```
+
 ## Add-Ons
 
 Mod Path for apt-get installed freecad or downloaded one: ~/.local/share/FreeCAD/Mod
