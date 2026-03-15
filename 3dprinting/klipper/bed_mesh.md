@@ -15,5 +15,5 @@ PRINT_START BED=[bed_temperature_initial_layer_single] EXTRUDER=[nozzle_temperat
 
 ```
 In orca, exclude object boxes must be selected.
-![orca settings](image-3.png)
+![orca settings](image-1.png)
 
