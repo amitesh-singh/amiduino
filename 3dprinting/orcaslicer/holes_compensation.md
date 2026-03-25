@@ -28,6 +28,10 @@ again.
 With 0.337 x-y hole compensation
 ![orca slicer setting](image-5.png)
 
+
+- *Update* - After installing linear rails and fixing the dodgy y axis idler holder,
+Set the x-y hole compensation to 0.07
+
 ## Numakers PETG bright voilet
 
 Did the holes calibration test and I got the same results

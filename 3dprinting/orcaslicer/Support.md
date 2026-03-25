@@ -11,11 +11,13 @@ lets say my layer height is 0.30
 
 in this case, the top/bottom z distance gonna be 1.4 * 0.30 = .52 
 
+Generally, it is recommended to only remove top z distance
+
 ## Tree (auto) works good most of the time
 
 ### Easy removing supports for PETG
 - Support -> Advance -> Top Z distance -> 0.28
-- Support -> Advance -> Bottom Z distance -> 0.28 
+- Support -> Advance -> Bottom Z distance -> 0.20
 
 ![Top/Bottom Z distance](image-2.png)
 
