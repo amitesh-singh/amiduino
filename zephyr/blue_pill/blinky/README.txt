@@ -13,3 +13,6 @@ st-flash write build/zephyr/zephyr.bin 0x08000000
 
 or alias flash_bluepill
 
+Programming disable issue
+-------------------------
+Make sure to add CONFIG_DEBUG=y in prj.conf
