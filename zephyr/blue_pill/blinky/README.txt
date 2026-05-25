@@ -4,12 +4,8 @@ export ZEPHYR_BASE=/home/ami/zephyrproject/zephyr
 
 build for blue pill
 --------------------
-west build -p always -b stm32f103_mini
 
-or
-
-west build -p always -b stm32_min_dev_blue
-
+west build -p always -b stm32_min_dev
 
 flash
 -----
