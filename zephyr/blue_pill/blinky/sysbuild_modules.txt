@@ -1,1 +1,0 @@
-"mcuboot":"/home/ami/zephyrproject/bootloader/mcuboot":"/home/ami/zephyrproject/bootloader/mcuboot/boot/zephyr/sysbuild"
