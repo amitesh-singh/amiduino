@@ -9,12 +9,46 @@ sudo usermod -aG uucp alarm
 ```
 
 ## wifi setup
-i use old usb dongle which is nicely supported in arch linux 
+I use old usb dongle which is nicely supported in arch linux 
 
 ```
 sudo systemctl enable dhcpcd
 ```
 
+create the `/etc/wpa_supplicant/wpa_supplicant.conf` 
+```
+wpa_passphrase "ssid" "password" | sudo tee /etc/wpa_supplicant/wpa_supplicant.conf
+```
+
+how to make sure wifi inteface name is `wlan0`
+
+- Open the kernel boot configuration file (/boot/cmdline.txt).
+- Add `net.ifnames=0` to the end of the line.
+```
+[alarm@alarmpi printer_data]$ cat /etc/systemd/system/wifi-start.service
+[Unit]
+Description=start wifi
+After=network.target
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+ExecStart=wpa_supplicant -c /etc/wpa_supplicant/wpa_supplicant.conf -i wlan0
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```
+sudo systemctl enable wifi-start
+sudo systemctl start wifi-start
+```
+```
+cat << 'EOF' > /etc/udev/rules.d/10-network.rules
+SUBSYSTEM=="net", ACTION=="add", ATTR{address}=="YOUR_MAC_ADDRESS", NAME="wlan0"
+EOF
+```
 ## Install the packages beforehand
 
 ```
