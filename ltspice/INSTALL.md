@@ -19,6 +19,6 @@ sudo apt install -y wine64 wine32
 wget https://ltspice.analog.com/software/LTspice64.exe
 
 
-wine ./LTspice63.py
+wine ./LTspice64.py
 
 ```
