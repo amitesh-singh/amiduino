@@ -1,5 +1,11 @@
 # klipper setup on Arch linux on rpi2
 
+## Set the hostname to klipper
+
+```
+sudo hostnamectl set-hostname ender3v3se-klipper
+```
+
 ## Add a new user ami
 
 ```
@@ -24,6 +30,11 @@ I use old usb dongle which is nicely supported in arch linux
 pacman -S bash-completion
 ```
 
+also enable to systemd-resolvd service to fix wlan0.ra error
+
+```
+systemctl enable systemd-resolved.service
+```
 
 ```
 sudo systemctl enable dhcpcd
@@ -115,7 +126,11 @@ source ~/klippy-env/bin/activate
 # open the klippy-requirements.txt and comment out python-can, greenlet, setuptools
 pip install -r ~/klipper/scripts/klippy-requirements.txt
 
-an example of my klippy requirements
+```
+an example of my klippy requirements - i commented a few - although i think
+it's not compatible as on upgrading klipper it might break.
+
+```
 [ami@alarmpi ~]$ cat ~/klipper/scripts/klippy-requirements.txt
 # This file describes the Python virtualenv package requirements for
 # the Klipper host software (Klippy).  These package requirements are
@@ -181,6 +196,15 @@ cd ~
 git clone https://github.com/Arksine/moonraker.git
 python -m venv --system-site-packages ~/moonraker-env
 
+```
+
+dbus-fast could not build on rpi2.
+
+```
+sudo pacman -S python-dbus-fast
+
+```
+```
 
 source ~/moonraker-env/bin/activate
 
@@ -238,6 +262,8 @@ trusted_clients:
 ```
 cd ~
 git clone https://github.com/mainsail-crew/mainsail.git
+
+sudo pacman -S zip
 
 cd ~/mainsail
 npm set progress=false
@@ -316,6 +342,23 @@ sudo nano /etc/nginx/conf.d/mainsail.conf
 ```
 Paste your entire server { ... } block into that file.
 
+also had to add following line in `/etc/nginx/nginx.conf` - 
+without the below line, the nginx was not start on bootup.
+```
+    types_hash_max_size 2048;
+```
+
+```
+http {
+    types_hash_max_size 2048;
+
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    ...
+}
+
+```
 ## Mainsail cfg
 
 This is required or else we get https://docs.mainsail.xyz/configuration/mainsail-cfg/ errors 
@@ -344,3 +387,37 @@ sudo systemctl reload nginx
 
 http://192.168.1.28/access/api_key
 
+## use the working config from github
+
+```
+git clone https://github.com/amitesh-singh/klipper_ender3_v3_se ~/printer_data/config
+```
+
+## how to reduce sdcard wear-out
+
+```
+mkdir /run/klipper
+
+sudo chown  -R ami:ami /run/klipper
+
+[ami@ender3v3seklipper ~]$ cat /etc/systemd/system/klipper.service
+[Unit]
+Description=Klipper
+After=network.target
+
+[Service]
+User=ami
+WorkingDirectory=/home/ami/klipper
+ExecStart=/home/ami/klippy-env/bin/python \
+    /home/ami/klipper/klippy/klippy.py \
+    /home/ami/printer_data/config/printer.cfg \
+#  -l /home/ami/printer_data/logs/klippy.log \
+    -l /run/klipper/klippy.log \
+    -a /home/ami/printer_data/comms/klippy.sock
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+
+```
