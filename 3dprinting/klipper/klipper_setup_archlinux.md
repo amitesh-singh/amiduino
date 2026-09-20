@@ -1,15 +1,29 @@
 # klipper setup on Arch linux on rpi2
+
+## Add a new user ami
+
+```
+sudo useradd -m -s /bin/bash ami
+sudo passwd ami
+sudo usermod -aG wheel ami
+
+```
+
 ## usb permission fix
 
 
-
 ```
-sudo usermod -aG uucp alarm
+sudo usermod -aG uucp ami
 
 ```
 
 ## wifi setup
 I use old usb dongle which is nicely supported in arch linux 
+
+```
+pacman -S bash-completion
+```
+
 
 ```
 sudo systemctl enable dhcpcd
@@ -90,13 +104,42 @@ mkdir -p ~/printer_data/{config,gcodes,logs,comms,systemd}
 ```
 cd ~
 
-git clone https://github.com/amitesh-singh/klipper_ender3v3se_config klipper/
+sudo pacman -S python-setuptools python-wheel python-cffi python-pyserial python-msgspec python-yaml
+
+git clone https://github.com/amitesh-singh/klipper_ender3_v3_se klipper/
 
 # --system-site-packages is required because of failure to install `greenlet` using pip or venv
 python -m venv --system-site-packages ~/klippy-env
 
 source ~/klippy-env/bin/activate
+# open the klippy-requirements.txt and comment out python-can, greenlet, setuptools
 pip install -r ~/klipper/scripts/klippy-requirements.txt
+
+an example of my klippy requirements
+[ami@alarmpi ~]$ cat ~/klipper/scripts/klippy-requirements.txt
+# This file describes the Python virtualenv package requirements for
+# the Klipper host software (Klippy).  These package requirements are
+# typically installed via the command:
+#   pip install -r klippy-requirements.txt
+
+# greenlet is used by the reactor.py code
+#greenlet==2.0.2 ; python_version < '3.12'
+#greenlet==3.1.1 ; python_version >= '3.12'
+# cffi is used by "chelper" code and by greenlet
+#cffi==1.14.6 ; python_version < '3.12'
+#cffi==1.17.1 ; python_version >= '3.12'
+# Jinja2 is used by gcode_macro.py
+Jinja2==2.11.3
+markupsafe==1.1.1       # Needed by Jinja2
+# pyserial is used by serialhdl.py (for USB and UART mcu connections)
+#pyserial==3.4
+# python-can is used by serialhdl.py (for canbus mcu connections)
+#python-can==3.3.4
+#setuptools==78.1.1 ; python_version >= '3.12' # Needed by python-can
+# msgspec is an optional dependency of webhooks.py
+#msgspec==0.19.0 ; python_version >= '3.9'
+
+
 
 ```
 ## Create the klipper systemd service
@@ -109,13 +152,13 @@ Description=Klipper
 After=network.target
 
 [Service]
-User=alarm
-WorkingDirectory=/home/alarm/klipper
-ExecStart=/home/alarm/klippy-env/bin/python \
-    /home/alarm/klipper/klippy/klippy.py \
-    /home/alarm/printer_data/config/printer.cfg \
-    -l /home/alarm/printer_data/logs/klippy.log \
-    -a /home/alarm/printer_data/comms/klippy.sock
+User=ami
+WorkingDirectory=/home/ami/klipper
+ExecStart=/home/ami/klippy-env/bin/python \
+    /home/ami/klipper/klippy/klippy.py \
+    /home/ami/printer_data/config/printer.cfg \
+    -l /home/ami/printer_data/logs/klippy.log \
+    -a /home/ami/printer_data/comms/klippy.sock
 Restart=always
 RestartSec=5
 
@@ -141,7 +184,7 @@ python -m venv --system-site-packages ~/moonraker-env
 
 source ~/moonraker-env/bin/activate
 
-pip install -r ~/moonraker/scripts/moonraker-requirements.txt
+pip install -r ~/moonraker/scripts/moonraker-requirements.txt --break-system-packages
 
 ```
 
@@ -155,11 +198,11 @@ Description=Moonraker
 After=klipper.service
 
 [Service]
-User=alarm
-WorkingDirectory=/home/alarm/moonraker
-ExecStart=/home/alarm/moonraker-env/bin/python \
+User=ami
+WorkingDirectory=/home/ami/moonraker
+ExecStart=/home/ami/moonraker-env/bin/python \
     -m moonraker \
-    -d /home/alarm/printer_data
+    -d /home/ami/printer_data
 Restart=always
 
 [Install]
