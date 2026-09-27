@@ -1,9 +1,7 @@
 # Tips for printing numakers ABS
 
 ## First layer speed
-
-
-
+- 80 mm/s is ideal - default is set 120 for ender 3v3 se
 
 
 ## Support
@@ -25,3 +23,8 @@ I printed a complex design (oakter router ups) which had bunch of support and I 
 ### Brim settings
 
 ![Brim Settings](image-17.png)
+
+
+## Numaker Shrinkage for ABS black
+
+- `99.372%` in orca slicer for filament settings (Numakers ABS)
