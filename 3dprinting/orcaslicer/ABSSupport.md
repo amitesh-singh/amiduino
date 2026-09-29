@@ -3,6 +3,9 @@
 ## First layer speed
 - 80 mm/s is ideal - default is set 120 for ender 3v3 se
 
+### experiment with 0.12 profile for ender3v3 se with abs
+
+- print turned out to be great actually
 
 ## Support
 ### Support settings in OrcaSlicer
