@@ -38,3 +38,5 @@ for PCB projects.
 ![M3X6](image-3.png)
 
 - https://onlyscrews.in/products/m3-x-6mm-3d-printing-brass-threaded-inserts-dia-3mm-length-6mm
+- I use 4.1 mm dia for these inserts
+
