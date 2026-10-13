@@ -44,3 +44,42 @@ I've a macro too
 
 ![automatic z offset macro](image-2.png)
 
+I've noticed that the z offset calculation is generally off by 0.06mm 
+
+```
+commit 5814eeb92dbd65a0dad207730f7ee40fa62e3b83
+Author: Amitesh Singh <singh.amitesh@gmail.com>
+Date:   Tue Oct 13 09:52:23 2026 +0530
+
+    new z offset after abs printing - looks good
+
+diff --git a/printer.cfg b/printer.cfg
+index b0793fc..7e69650 100644
+--- a/printer.cfg
++++ b/printer.cfg
+@@ -269,7 +269,7 @@ pin: PB0
+ #*# DO NOT EDIT THIS BLOCK OR BELOW. The contents are auto-generated.
+ #*#
+ #*# [bltouch]
+-#*# z_offset = 2.080
++#*# z_offset = 2.020
+ #*#
+ #*# [bed_mesh default]
+ #*# version = 1
+```
+
+- possible solutions
+    * live with it, and adjust 0.06 everytime
+    * try 
+```
+PRTOUCH_PROBE_ZOFFSET PROBE_SPEED=1.0
+```
+To make it permanent: add following entry in printer.cfg
+```
+prtouch]
+probe_speed: 1.0
+```
+Default is 2.0, valid range is 0.1 to 10.0 mm/s.
+
+
+
