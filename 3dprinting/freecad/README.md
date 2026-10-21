@@ -14,6 +14,7 @@ since i use dev version: mod path is ~/snap/freecad/common/Mod
 - Fused Filament Design
 - KicadStepup - for importing kicad PCBs
   To make kicadstepup mod work, I had to do some changes
+- hexfill : make honeycomb pattern
 
 Add following lines in ~/.profile and restart the laptop
 
