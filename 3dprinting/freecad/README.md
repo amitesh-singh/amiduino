@@ -15,6 +15,8 @@ since i use dev version: mod path is ~/snap/freecad/common/Mod
 - KicadStepup - for importing kicad PCBs
   To make kicadstepup mod work, I had to do some changes
 - hexfill : make honeycomb pattern
+- curves workbench - for creating texts on surfaces
+- FreeCad-next - for awesome ui; search `Nxt` in `Tools->AddOn Manager`
 
 Add following lines in ~/.profile and restart the laptop
 
