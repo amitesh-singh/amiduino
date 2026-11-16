@@ -13,7 +13,10 @@
 uint8_t led = 1;
 void setup()
 {
+   Serial.begin(115200);
    pinMode(led, OUTPUT);     // Initialize the LED_BUILTIN pin as an output
+   
+   Serial.println("led setup is done");
 }
 
 // the loop function runs over and over again forever
@@ -25,4 +28,5 @@ void loop()
    delay(1000);                      // Wait for a second
    digitalWrite(led, HIGH);  // Turn the LED off by making the voltage HIGH
    delay(2000);                      // Wait for two seconds (to demonstrate the active low LED)
+   Serial.println("Blink");
 }
