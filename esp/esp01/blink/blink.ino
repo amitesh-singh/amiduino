@@ -1,32 +1,19 @@
-/*
-   ESP8266 Blink by Simon Peter
-   Blink the blue LED on the ESP-01 module
-   This example code is in the public domain
 
-   The blue LED on the ESP-01 module is connected to GPIO1 
-   (which is also the TXD pin; so we cannot use Serial.print() at the same time)
+// esp01 has led at Tx end, led = 1
+// esp01s the one which has pullup at CH_PD has LED at GPIO2
+//uint8_t led = 1;
+uint8_t led = 2;
 
-   Note that this sketch uses LED_BUILTIN to find the pin with the internal LED
- */
-
-// In pins_arduino.h, LED_BUILTIN is defined as 1 which is GPIO_1 actually (TXD)
-uint8_t led = 1;
 void setup()
 {
-   Serial.begin(115200);
-   pinMode(led, OUTPUT);     // Initialize the LED_BUILTIN pin as an output
-   
-   Serial.println("led setup is done");
+   //Serial.begin(115200);
+   pinMode(led, OUTPUT);   
 }
 
-// the loop function runs over and over again forever
 void loop()
 {
-   digitalWrite(led, LOW);   // Turn the LED on (Note that LOW is the voltage level
-   // but actually the LED is on; this is because 
-   // it is acive low on the ESP-01)
-   delay(1000);                      // Wait for a second
-   digitalWrite(led, HIGH);  // Turn the LED off by making the voltage HIGH
-   delay(2000);                      // Wait for two seconds (to demonstrate the active low LED)
-   Serial.println("Blink");
+   digitalWrite(led, LOW);   
+   delay(1000);                     
+   digitalWrite(led, HIGH);  
+   delay(2000);
 }
