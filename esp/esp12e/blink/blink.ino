@@ -2,6 +2,7 @@
 #define LOLLIN_LED BUILTIN_LED
 //In my esp12e board on Perfboard has LED on Digital port 2 
 #define MYESPBOARD_LED 2
+// this works on nodemcuv3 board which I've
 
 void setup()
 {
