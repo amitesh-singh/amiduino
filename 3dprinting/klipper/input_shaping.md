@@ -7,8 +7,10 @@ place adxl or mpu on tool head and run following command
 TEST_RESONANCES AXIS=X FREQ_START=5 FREQ_END=100 OUTPUT=raw_data
 ```
 ## y
-place 
 
+```
+TEST_RESONANCES AXIS=Y FREQ_START=5 FREQ_END=100 OUTPUT=raw_data
+```
 
  
 This is the command for doing everything

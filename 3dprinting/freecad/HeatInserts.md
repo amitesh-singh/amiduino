@@ -7,6 +7,15 @@
 These can be used where the high torque is not required. quite a good option
 for pcb enclosure or cosmetic stuff.
 
+For these heat inserts, use press fit method
+
+design the holes with following size: 5 mm dia hole with 1 mm chamfer
+
+Always measure the holes using vernier calliper - I found these to be 4.8 mm in dia
+
+Instead of iron, use a soft hammer to push them in instead.
+
+![injection molding heat inserts dimensions](image-5.png)
 
 #### design cosiderations: for mounting a plastic part to another part
 

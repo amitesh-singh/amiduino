@@ -1,5 +1,12 @@
 # esp01
 
+## pin details while booting
+
+GPIO0: boot failure if pulled LOW
+ GPIO1: TX pin is high at BOOT, boot failure if pulled LOW
+ GPIO2: pin is high on BOOT, boot failure if pulled LOW
+ GPIO3: RX pin is high at BOOT
+
 ## esp01 vs esp01s
 
 
